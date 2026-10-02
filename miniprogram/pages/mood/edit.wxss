@@ -1,0 +1,221 @@
+/* pages/mood/edit.wxss  蓝粉浪漫风 - 记录心情 */
+
+.page {
+  font-family: "Comic Sans MS", "Marker Felt", "STKaiti", "KaiTi", "PingFang SC", sans-serif;
+  position: relative;
+}
+
+/* 整页背景统一走 page-bg 组件（无图时兜底蓝粉渐变） */
+.notebook-bg {
+  min-height: 100vh;
+}
+
+.content {
+  padding: 0 24rpx 80rpx;
+  position: relative;
+  z-index: 5;
+}
+
+.edit-date {
+  text-align: center;
+  font-size: 28rpx;
+  color: rgba(255, 255, 255, 0.8);
+  padding: 24rpx 0 10rpx;
+}
+
+/* 今日心情卡片（复用主页样式） */
+.nb-today {
+  margin-top: 20rpx;
+  padding: 24rpx 20rpx;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  border-radius: 24rpx;
+  border: 2rpx dashed rgba(255, 255, 255, 0.6);
+  box-shadow: 0 8rpx 30rpx rgba(186, 104, 200, 0.15);
+}
+
+.nb-today-title {
+  text-align: center;
+  font-size: 28rpx;
+  color: #8D9AA8;
+  margin-bottom: 20rpx;
+  letter-spacing: 4rpx;
+}
+
+.nb-today-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.nb-today-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.nb-avatar {
+  width: 110rpx;
+  height: 110rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10rpx;
+}
+
+/* 老婆圆形头像 */
+.nb-avatar-wife {
+  border-radius: 50%;
+  background: rgba(255, 182, 193, 0.5);
+  border: 3rpx solid rgba(232, 93, 162, 0.3);
+}
+
+/* 老公方形头像（绿改蓝） */
+.nb-avatar-husband {
+  border-radius: 20rpx;
+  background: rgba(179, 229, 252, 0.5);
+  border: 3rpx solid rgba(79, 195, 247, 0.4);
+}
+
+.nb-avatar-emoji {
+  font-size: 52rpx;
+}
+
+.nb-today-name {
+  font-size: 26rpx;
+  color: #37474F;
+  margin-bottom: 6rpx;
+  font-weight: 500;
+}
+
+.nb-today-mood {
+  font-size: 24rpx;
+  color: #F06292;
+  font-weight: 600;
+}
+
+.nb-today-empty {
+  font-size: 22rpx;
+  color: #8D9AA8;
+}
+
+.nb-heart {
+  font-size: 32rpx;
+}
+
+/* 选择心情 */
+.nb-select {
+  margin-top: 30rpx;
+  padding: 24rpx 20rpx;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  border-radius: 24rpx;
+  border: 2rpx dashed rgba(255, 255, 255, 0.6);
+  box-shadow: 0 8rpx 30rpx rgba(186, 104, 200, 0.15);
+}
+
+.nb-select-title {
+  text-align: center;
+  font-size: 28rpx;
+  color: #8D9AA8;
+  margin-bottom: 24rpx;
+  letter-spacing: 4rpx;
+}
+
+.nb-mood-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20rpx;
+  margin-bottom: 30rpx;
+}
+
+.nb-mood-opt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24rpx 10rpx;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 20rpx;
+  border: 2rpx solid transparent;
+  transition: all 0.2s ease;
+}
+
+.nb-mood-opt:active {
+  transform: scale(0.95);
+}
+
+.nb-mood-opt-selected {
+  background: rgba(248, 187, 208, 0.35);
+  border-color: #FF80AB;
+  box-shadow: 0 4rpx 12rpx rgba(186, 104, 200, 0.25);
+}
+
+.nb-mood-emoji {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.06);
+}
+
+.nb-mood-emoji text {
+  font-size: 44rpx;
+}
+
+.nb-mood-label {
+  font-size: 26rpx;
+  color: #37474F;
+}
+
+.nb-mood-opt-selected .nb-mood-label {
+  color: #F06292;
+  font-weight: 600;
+}
+
+/* 保存按钮 - 粉紫渐变 */
+.nb-save-btn {
+  width: 70%;
+  margin: 0 auto;
+  padding: 24rpx 0;
+  background: linear-gradient(135deg, #CE93D8 0%, #BA68C8 100%);
+  color: #fff;
+  border-radius: 50rpx;
+  text-align: center;
+  font-size: 32rpx;
+  font-weight: 600;
+  letter-spacing: 4rpx;
+  line-height: 1.2;
+  border: none;
+  box-shadow: 0 6rpx 20rpx rgba(186, 104, 200, 0.35);
+  transition: transform 0.15s ease;
+}
+
+.nb-save-btn::after {
+  border: none;
+}
+
+.nb-save-btn:active {
+  transform: scale(0.96) translateY(2rpx);
+  box-shadow: 0 3rpx 10rpx rgba(186, 104, 200, 0.25);
+}
+
+.nb-btn-loading {
+  opacity: 0.7;
+}
+
+/* 漂浮装饰 */
+.deco {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+}
+.deco-heart1 { top: 14%; right: 8%; font-size: 22px; animation: floatY 3s ease-in-out infinite; }
+.deco-star1 { top: 20%; left: 10%; font-size: 16px; animation: twinkle 2s ease-in-out infinite; }
+.deco-cloud1 { top: 12%; left: 30%; font-size: 26px; opacity: 0.7; animation: cloudMove 5s ease-in-out infinite; }
+@keyframes floatY { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@keyframes twinkle { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.8); } }
+@keyframes cloudMove { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(10px); } }

@@ -1,0 +1,9 @@
+{
+  "name": "imgSecCheck",
+  "version": "1.0.0",
+  "description": "图片内容安全审核",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

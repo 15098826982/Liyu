@@ -1,0 +1,50 @@
+/* components/page-bg/index.wxss */
+.page-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  overflow: hidden;
+}
+
+/* 背景图：全屏铺满 + 轻微模糊 + 半透明 */
+.bg-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: blur(3px);
+  opacity: 0.55;
+}
+
+/* 白色半透明遮罩，保证内容可读 */
+.bg-mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.4);
+}
+
+/* 探针：1px 不可见，仅用于触发 binderror 探测 URL 是否过期 */
+.bg-probe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* 没上传背景图时的默认蓝粉渐变 */
+.page-bg:not(.has-image) {
+  background: linear-gradient(180deg, #4FC3F7 0%, #81D4FA 15%, #B39DDB 40%, #CE93D8 60%, #F8BBD0 85%, #F48FB1 100%);
+}

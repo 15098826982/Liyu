@@ -1,0 +1,28 @@
+<page-bg />
+<view class="container">
+  <!-- 漂浮装饰 -->
+  <view class="deco deco-heart1">💕</view>
+  <view class="deco deco-star1">✨</view>
+  <view class="deco deco-cloud1">☁️</view>
+
+  <view class="empty" wx:if="{{grouped.length === 0 && !loading}}">还没有历史记录</view>
+
+  <view class="date-group" wx:for="{{grouped}}" wx:key="orderDate">
+    <view class="date-title">{{item.orderDate}}</view>
+    <view class="card">
+      <view class="order-row" wx:for="{{item.orders}}" wx:for-item="o" wx:key="_id">
+        <view class="order-info">
+          <view class="dish-row">
+            <text class="dish-name">{{o.dish.name}}</text>
+            <text class="tag tag-meat" wx:if="{{o.dish.category}}">{{o.dish.category}}</text>
+          </view>
+          <text class="order-by">点的：{{o.user.nickname}}</text>
+        </view>
+        <text class="status {{o.status === 'done' ? 'status-done' : 'status-pending'}}">{{o.status === 'done' ? '已做' : '未做'}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="loading-more" wx:if="{{loading}}">加载中...</view>
+  <view class="loading-more" wx:if="{{!hasMore && grouped.length > 0}}">没有更多了</view>
+</view>

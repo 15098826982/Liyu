@@ -1,0 +1,278 @@
+/* app.wxss 全局样式 - 蓝粉浪漫梦幻风 */
+page {
+  background: linear-gradient(180deg, #4FC3F7 0%, #81D4FA 15%, #B39DDB 40%, #CE93D8 60%, #F8BBD0 85%, #F48FB1 100%);
+  font-size: 28rpx;
+  color: #37474F;
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
+
+  /* ===== Vant Weapp 蓝粉浪漫风主题 ===== */
+  /* 主色：紫 #BA68C8 / 粉 #FF80AB，辅助：浅紫 #CE93D8 */
+  --button-primary-background-color: linear-gradient(135deg, #CE93D8 0%, #BA68C8 100%);
+  --button-primary-border-color: #BA68C8;
+  --button-warning-background-color: #FF80AB;
+  --button-warning-border-color: #FF80AB;
+  --button-round-border-radius: 999px;
+
+  --tag-primary-color: #BA68C8;
+  --tag-success-color: #4FC3F7;
+  --tag-warning-color: #FF80AB;
+  --tag-danger-color: #F06292;
+
+  --dialog-confirm-button-text-color: #BA68C8;
+  --dialog-header-font-weight: 600;
+
+  --action-sheet-cancel-text-color: #BA68C8;
+  --action-sheet-item-name-color: #37474F;
+
+  --tab-active-text-color: #BA68C8;
+  --tabs-bottom-bar-color: #BA68C8;
+
+  --switch-on-background-color: #BA68C8;
+
+  --grid-item-text-active-color: #BA68C8;
+
+  --checkbox-checked-icon-color: #FF80AB;
+  --radio-checked-icon-color: #BA68C8;
+
+  --stepper-button-round-theme-color: #BA68C8;
+
+  --submit-bar-button-background-color: #BA68C8;
+
+  --card-background-color: #ffffff;
+  --card-thumb-size: 100px;
+  --card-thumb-border-radius: 16px;
+
+  --empty-image-size: 120px;
+
+  --sidebar-selected-border-color: #BA68C8;
+  --sidebar-selected-text-color: #BA68C8;
+  --sidebar-selected-background-color: rgba(255, 255, 255, 0.7);
+  --sidebar-background-color: rgba(255, 255, 255, 0.6);
+}
+
+.container {
+  padding: 30rpx;
+  box-sizing: border-box;
+}
+
+/* 主按钮：粉紫渐变 */
+.btn-primary {
+  background: linear-gradient(135deg, #CE93D8 0%, #BA68C8 100%);
+  color: #fff;
+  border-radius: 50rpx;
+  padding: 22rpx 40rpx;
+  text-align: center;
+  font-size: 30rpx;
+  border: none;
+  box-shadow: 0 6rpx 20rpx rgba(186, 104, 200, 0.35);
+}
+.btn-primary[disabled] {
+  background: #E1BEE7;
+  color: rgba(255, 255, 255, 0.9);
+}
+.btn-ghost {
+  background: rgba(255, 255, 255, 0.85);
+  color: #BA68C8;
+  border: 2rpx solid #BA68C8;
+  border-radius: 50rpx;
+  padding: 20rpx 40rpx;
+  text-align: center;
+  font-size: 30rpx;
+  backdrop-filter: blur(10px);
+}
+
+/* 卡片：白色半透明毛玻璃 */
+.card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 24rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 8rpx 30rpx rgba(186, 104, 200, 0.15);
+}
+
+/* 列表项 */
+.list-item {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 20rpx;
+  padding: 24rpx 28rpx;
+  margin-bottom: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4rpx 16rpx rgba(186, 104, 200, 0.12);
+}
+
+/* 标题 */
+.title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #37474F;
+  margin-bottom: 20rpx;
+}
+.subtitle {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 16rpx;
+}
+
+/* 空状态 */
+.empty {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 26rpx;
+  padding: 80rpx 0;
+}
+
+/* 标签 */
+.tag {
+  display: inline-block;
+  padding: 4rpx 16rpx;
+  border-radius: 20rpx;
+  font-size: 22rpx;
+}
+.tag-meat { background: #FCE4EC; color: #F06292; }
+.tag-veg  { background: #E1F5FE; color: #29B6F6; }
+
+/* 顶部安全区 */
+.safe-top { padding-top: 20rpx; }
+
+/* 占位页通用样式 */
+.placeholder {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 24rpx;
+  padding: 80rpx 40rpx;
+  text-align: center;
+  box-shadow: 0 8rpx 30rpx rgba(186, 104, 200, 0.15);
+  margin-top: 20rpx;
+}
+
+.ph-emoji {
+  font-size: 96rpx;
+  margin-bottom: 24rpx;
+}
+
+.ph-title {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #BA68C8;
+  margin-bottom: 20rpx;
+}
+
+.ph-sub {
+  font-size: 26rpx;
+  color: #8D9AA8;
+  line-height: 1.8;
+}
+
+.ph-tag {
+  display: inline-block;
+  margin-top: 36rpx;
+  padding: 12rpx 28rpx;
+  background: #FCE4EC;
+  color: #F06292;
+  border-radius: 30rpx;
+  font-size: 24rpx;
+}
+
+/* ============================================================
+   全局交互反馈样式
+   ============================================================ */
+
+/* 通用点击反馈：缩小 + 背景加深 + 阴影变小
+   用法：给可点击 view 加 class="tap-feedback"，同时加 hover-class="tap-active" */
+.tap-feedback {
+  transition: transform 0.12s ease-out, background-color 0.12s ease-out, box-shadow 0.12s ease-out;
+  will-change: transform;
+}
+
+.tap-feedback.tap-active,
+.tap-feedback:active {
+  transform: scale(0.96);
+  background-color: rgba(186, 104, 200, 0.08) !important;
+  box-shadow: 0 1rpx 6rpx rgba(186, 104, 200, 0.15) !important;
+}
+
+/* 右侧箭头点击右移动画 */
+.tap-feedback .row-arrow {
+  transition: transform 0.12s ease-out;
+}
+.tap-feedback.tap-active .row-arrow,
+.tap-feedback:active .row-arrow {
+  transform: translateX(8rpx);
+}
+
+/* 卡片 hover（电脑端鼠标移入上浮） */
+.card-hover {
+  transition: transform 0.25s ease-out, box-shadow 0.25s ease-out;
+}
+@media (hover: hover) {
+  .card-hover:hover {
+    transform: translateY(-4rpx);
+    box-shadow: 0 12rpx 36rpx rgba(186, 104, 200, 0.25);
+  }
+}
+
+/* 主要按钮发光 + 按压反馈 */
+.btn-glow {
+  position: relative;
+  transition: transform 0.12s ease-out, box-shadow 0.2s ease-out, filter 0.12s ease-out;
+}
+.btn-glow::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 6rpx 24rpx rgba(186, 104, 200, 0.35);
+  opacity: 0.7;
+  transition: opacity 0.2s ease-out;
+  pointer-events: none;
+}
+.btn-glow:active {
+  transform: scale(0.96);
+  filter: brightness(0.92);
+}
+.btn-glow:active::after {
+  opacity: 1;
+  box-shadow: 0 4rpx 16rpx rgba(255, 128, 171, 0.5);
+}
+
+/* Vant 主按钮按压反馈（覆盖默认） */
+.van-button--primary:active {
+  transform: scale(0.96);
+  filter: brightness(0.92);
+}
+
+/* 页面切换转场（配合 navigateTo 原生右滑，这里补充淡入） */
+.page-enter {
+  animation: pageFadeIn 0.25s ease-out;
+}
+@keyframes pageFadeIn {
+  from { opacity: 0; transform: translateX(30rpx); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* 列表项进入动画（依次淡入上移） */
+.list-enter {
+  animation: listSlideUp 0.35s ease-out both;
+}
+@keyframes listSlideUp {
+  from { opacity: 0; transform: translateY(20rpx); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* 加载中按钮防重复点击遮罩 */
+.btn-loading-wrap {
+  position: relative;
+}
+.btn-loading-wrap[disabled]::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}

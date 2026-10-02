@@ -1,0 +1,53 @@
+<page-bg />
+<view class="join-page">
+  <!-- 漂浮装饰（少量，z-index 低于内容） -->
+  <view class="deco deco-heart">💕</view>
+  <view class="deco deco-star">✨</view>
+  <view class="deco deco-cloud">☁️</view>
+
+  <!-- 顶部导航 -->
+  <view class="top-nav" style="padding-top: {{statusBarHeight}}px;">
+    <view class="nav-back" hover-class="nav-back-active" bindtap="goBack">
+      <text class="nav-back-arrow">←</text>
+    </view>
+    <view class="nav-title">加入家庭</view>
+    <view class="nav-right"></view>
+  </view>
+
+  <!-- 主插画（与创建页同款） -->
+  <view class="hero">
+    <image class="hero-img" src="/images/create-family-illustration.webp" mode="aspectFit" />
+  </view>
+
+  <!-- 标题 -->
+  <view class="title-area">
+    <view class="main-title">
+      <text class="title-icon">🏡</text>
+      <text class="title-text">加入我们的小窝</text>
+      <text class="title-icon">💕</text>
+    </view>
+    <view class="sub-title">输入TA分享的6位邀请码，一起住进温馨小窝</view>
+  </view>
+
+  <!-- 表单 -->
+  <view class="form-area">
+    <view class="form-label">输入邀请码</view>
+    <input
+      class="code-input {{inputFocus ? 'input-focus' : ''}}"
+      placeholder="{{ph.familyCode}}"
+      placeholder-class="input-ph"
+      type="number"
+      value="{{familyCode}}"
+      maxlength="6"
+      bindinput="onInput"
+      bindfocus="onInputFocus"
+      bindblur="onInputBlur"
+      data-ph="familyCode"
+    />
+    <button class="join-btn {{joining ? 'btn-loading' : ''}}" hover-class="btn-active" bindtap="onJoin">
+      <text class="btn-emoji">💫</text>
+      <text>{{joining ? '加入中...' : '加入我们的小窝'}}</text>
+    </button>
+    <view class="join-link" hover-class="join-link-active" bindtap="goCreate">还没有小窝？去创建一个 →</view>
+  </view>
+</view>

@@ -1,0 +1,208 @@
+/* pages/login/login.wxss  登录页（蓝粉浪漫梦幻风） */
+.page {
+  min-height: 100vh;
+}
+
+.login-page {
+  position: relative;
+  min-height: 100vh;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 40rpx;
+  overflow-x: hidden;
+  font-family: "PingFang SC", "Helvetica Neue", sans-serif;
+}
+
+/* ===== 漂浮装饰（z-index 0，低于内容区，不遮挡点击） ===== */
+.deco {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+}
+.deco-heart1 { top: 14%; right: 8%; font-size: 22px; animation: floatY 3s ease-in-out infinite; }
+.deco-star1  { top: 20%; left: 10%; font-size: 16px; animation: twinkle 2s ease-in-out infinite; }
+.deco-cloud1 { top: 12%; left: 30%; font-size: 26px; opacity: 0.7; animation: cloudMove 5s ease-in-out infinite; }
+
+@keyframes floatY {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.4; transform: scale(0.8); }
+}
+@keyframes cloudMove {
+  0%, 100% { transform: translateX(0); }
+  50%      { transform: translateX(10px); }
+}
+
+/* ===== 内容区（z-index 高于装饰） ===== */
+.login-content {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ===== 顶部插画 ===== */
+.login-illu {
+  width: 70%;
+  margin-top: 20vh;
+  animation: illuDrop 0.4s ease-out both;
+}
+.illu-img {
+  width: 100%;
+  display: block;
+  /* 边缘羽化：四周柔和淡出，让插画融入渐变背景 */
+  -webkit-mask-image: radial-gradient(ellipse 95% 90% at 50% 50%, #000 70%, transparent 100%);
+  mask-image: radial-gradient(ellipse 95% 90% at 50% 50%, #000 70%, transparent 100%);
+}
+
+@keyframes illuDrop {
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== 标题（白色 + 发光呼吸动画） ===== */
+.login-title {
+  display: flex;
+  align-items: center;
+  margin-top: 8vh;
+  animation: fadeUp 0.4s ease-out 0.1s both;
+}
+.title-main {
+  font-size: 56rpx;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 4rpx;
+  text-shadow: 0 2px 10px rgba(186, 104, 200, 0.5);
+  animation: glow 2.5s ease-in-out infinite;
+}
+.title-heart {
+  font-size: 40rpx;
+  margin-left: 12rpx;
+  animation: heartBeat 1.2s ease-in-out infinite;
+}
+.login-subtitle {
+  margin-top: 12px;
+  font-size: 28rpx;
+  color: rgba(255, 255, 255, 0.85);
+  text-shadow: 0 1px 6px rgba(186, 104, 200, 0.35);
+  animation: fadeUp 0.4s ease-out 0.2s both;
+}
+
+@keyframes glow {
+  0%, 100% { text-shadow: 0 2px 10px rgba(186, 104, 200, 0.4); }
+  50%      { text-shadow: 0 2px 18px rgba(255, 128, 171, 0.6); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes heartBeat {
+  0%, 100% { transform: scale(1); }
+  15%      { transform: scale(1.25); }
+  30%      { transform: scale(1); }
+  45%      { transform: scale(1.15); }
+  60%      { transform: scale(1); }
+}
+
+/* ===== 登录按钮（白色毛玻璃 + 粉紫文字，按压反馈保留） ===== */
+.login-btn {
+  width: 80%;
+  height: 100rpx;
+  margin: 10vh auto 0;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50rpx;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8rpx 30rpx rgba(186, 104, 200, 0.2);
+  transition: transform 0.1s ease-out, box-shadow 0.1s ease-out, filter 0.1s ease-out;
+  box-sizing: border-box;
+  pointer-events: auto;
+  line-height: 1.2;
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #BA68C8;
+  text-align: center;
+}
+.login-btn::after {
+  border: none;
+}
+.btn-active {
+  transform: scale(0.97);
+  filter: brightness(0.95);
+  box-shadow: 0 4rpx 12rpx rgba(186, 104, 200, 0.3);
+}
+/* ===== 协议 ===== */
+.login-agree {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;              /* 按内容撑开，保证一行 */
+  max-width: 90%;
+  margin-top: 32rpx;
+  padding: 16rpx 24rpx;
+  box-sizing: border-box;
+  pointer-events: auto;
+}
+.agree-check {
+  width: 36rpx;
+  height: 36rpx;
+  border-radius: 50%;
+  border: 3rpx solid rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 14rpx;
+  transition: transform 0.2s ease-out, background-color 0.2s ease-out, border-color 0.2s ease-out;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+.check-active {
+  transform: scale(0.8);
+}
+.agree-checked {
+  background: #FF80AB;
+  border-color: #FF80AB;
+}
+.agree-tick {
+  font-size: 22rpx;
+  color: #fff;
+  font-weight: 700;
+  line-height: 1;
+}
+.agree-text {
+  font-size: 22rpx;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.6;
+  white-space: nowrap;      /* 强制整行显示，不换行 */
+}
+.agree-link {
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 700;
+  text-shadow: 0 1px 6px rgba(186, 104, 200, 0.4);
+}
+
+/* 协议未勾选时抖动 */
+.shake-on {
+  animation: shakeX 0.4s ease-in-out;
+}
+
+@keyframes shakeX {
+  0%, 100% { transform: translateX(0); }
+  25%      { transform: translateX(-5px); }
+  50%      { transform: translateX(5px); }
+  75%      { transform: translateX(-3px); }
+}

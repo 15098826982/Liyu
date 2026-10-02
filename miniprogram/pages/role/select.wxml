@@ -1,0 +1,69 @@
+<page-bg />
+<view class="select-page">
+  <!-- 漂浮装饰（少量，z-index 低于内容，不遮挡操作） -->
+  <view class="deco deco-heart1">💕</view>
+  <view class="deco deco-star1">✨</view>
+  <view class="deco deco-cloud1">☁️</view>
+
+  <!-- 顶部导航 -->
+  <view class="top-nav" style="padding-top: {{statusBarHeight}}px;">
+    <view class="nav-back" hover-class="nav-back-active" bindtap="goBack">
+      <text class="nav-back-arrow">←</text>
+    </view>
+    <view class="nav-title">选择身份</view>
+    <view class="nav-right"></view>
+  </view>
+
+  <!-- 主插画 -->
+  <view class="hero">
+    <image class="hero-img" src="/images/role-illustration.webp" mode="aspectFit" />
+  </view>
+
+  <!-- 标题 -->
+  <view class="title-area">
+    <view class="main-title">
+      <text class="title-text">你是谁？</text>
+    </view>
+    <view class="sub-title">选完身份后，会进入对应首页</view>
+  </view>
+
+  <!-- 身份卡片 -->
+  <view class="cards">
+    <view class="role-card boss {{selected === 'boss' ? 'role-selected' : ''}} {{shaking ? 'shake-on' : ''}}"
+          bindtap="onSelect" data-role="boss">
+      <view class="role-check" wx:if="{{selected === 'boss'}}">✓</view>
+      <view class="role-text">
+        <view class="role-tag">一家之主</view>
+        <view class="role-name">老婆</view>
+        <view class="role-desc">我要点菜，我来当家</view>
+      </view>
+      <view class="role-img-wrap">
+        <image class="role-img" src="/images/role-wife.webp" mode="aspectFit" />
+      </view>
+    </view>
+
+    <view class="role-card manager {{selected === 'manager' ? 'role-selected' : ''}} {{shaking ? 'shake-on' : ''}}"
+          bindtap="onSelect" data-role="manager">
+      <view class="role-check" wx:if="{{selected === 'manager'}}">✓</view>
+      <view class="role-text">
+        <view class="role-tag">管家</view>
+        <view class="role-name">老公</view>
+        <view class="role-desc">我来做饭，我来照顾你</view>
+      </view>
+      <view class="role-img-wrap">
+        <image class="role-img" src="/images/role-husband.webp" mode="aspectFit" />
+      </view>
+    </view>
+  </view>
+
+  <!-- 确认按钮 -->
+  <button class="confirm-btn {{selected ? 'confirm-active' : ''}} {{shaking ? 'shake-on' : ''}}"
+          hover-class="btn-active" bindtap="onConfirm" disabled="{{submitting}}">
+    <text wx:if="{{!selected}}">请先选择身份</text>
+    <text wx:elif="{{selected === 'boss'}}">👸 确认当老婆</text>
+    <text wx:else>🤴 确认当老公</text>
+  </button>
+
+  <!-- 底部文字 -->
+  <view class="hint">身份可以不同，但都在同一个家庭里 💕</view>
+</view>

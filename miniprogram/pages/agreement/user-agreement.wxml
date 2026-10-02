@@ -1,0 +1,54 @@
+<page-bg />
+<view class="agree-page">
+  <nav-bar title="用户协议" showBack="{{true}}" />
+
+  <scroll-view class="agree-scroll" scroll-y>
+    <view class="agree-card">
+      <view class="doc-title">用户协议</view>
+      <view class="doc-meta">
+        <text>更新日期：2026年9月20日</text>
+        <text class="meta-line">生效日期：2026年9月20日</text>
+      </view>
+
+      <view class="doc-para">欢迎使用情侣小窝（以下简称"本服务"）。请您仔细阅读本用户协议的全部内容。您点击"同意"并使用本服务，即表示您已阅读、理解并同意接受本协议的全部条款。</view>
+
+      <view class="sec-title">一、服务内容</view>
+      <view class="doc-para">1. 本服务为情侣用户提供共同记录生活的工具，包括但不限于：家庭创建与邀请、菜品管理与随机推荐、心情打卡、经期记录、心愿清单、打卡规划、共同备忘录等功能。</view>
+      <view class="doc-para">2. 我们有权根据业务发展需要，调整、增加或减少服务内容，并会在页面上进行公示。</view>
+
+      <view class="sec-title">二、账号注册与使用</view>
+      <view class="doc-para">1. 您需要通过微信授权登录本服务，我们会获取您的微信昵称、头像和openid，用于创建您的账号。</view>
+      <view class="doc-para">2. 您可以创建家庭或通过邀请码加入家庭，每个家庭最多两名成员。</view>
+      <view class="doc-para">3. 您应妥善保管自己的账号信息，不得将账号借给他人使用。因您保管不善导致的损失，由您自行承担。</view>
+      <view class="doc-para">4. 您不得利用本服务从事任何违法违规活动，包括但不限于发布违法内容、侵犯他人权益、恶意攻击等。</view>
+
+      <view class="sec-title">三、用户内容</view>
+      <view class="doc-para">1. 您在本服务中创建和上传的内容（包括但不限于文字、图片、打卡记录等），其知识产权归您所有。</view>
+      <view class="doc-para">2. 您保证您上传的内容不侵犯任何第三方的合法权益，不违反法律法规。因您上传的内容引发的纠纷，由您自行承担责任。</view>
+      <view class="doc-para">3. 我们有权对违法违规的内容进行删除，并视情况限制您的账号使用。</view>
+
+      <view class="sec-title">四、数据存储与保护</view>
+      <view class="doc-para">1. 您的数据存储在微信云开发服务器上，我们会采取合理的技术措施保护您的数据安全。</view>
+      <view class="doc-para">2. 您可以随时删除自己创建的内容。注销账号后，我们会删除您的全部个人数据。</view>
+      <view class="doc-para">3. 因不可抗力、系统维护等原因导致的数据丢失，我们不承担责任，但会尽力协助恢复。</view>
+
+      <view class="sec-title">五、服务变更与中断</view>
+      <view class="doc-para">1. 我们可能会根据业务需要，对服务进行升级、维护或调整，可能会导致服务暂时中断。</view>
+      <view class="doc-para">2. 我们会提前通知用户维护时间，尽量减少对用户的影响。</view>
+      <view class="doc-para">3. 因业务调整，我们有权终止部分或全部服务，并会提前通知用户。</view>
+
+      <view class="sec-title">六、免责声明</view>
+      <view class="doc-para">1. 本服务按"现状"提供，我们不保证服务不会中断或完全无错误。</view>
+      <view class="doc-para">2. 因使用本服务产生的任何直接或间接损失，我们不承担赔偿责任，但法律另有规定的除外。</view>
+      <view class="doc-para">3. 本服务中的经期预测、打卡提醒等功能仅供参考，不构成任何医疗建议。如有健康问题，请及时就医。</view>
+
+      <view class="sec-title">七、协议修改</view>
+      <view class="doc-para">1. 我们有权根据业务发展需要修改本协议，修改后的协议会在页面上公示。</view>
+      <view class="doc-para">2. 如果您不同意修改后的协议，可以停止使用本服务。继续使用即表示您同意修改后的协议。</view>
+
+      <view class="sec-title">八、联系我们</view>
+      <view class="doc-para">如果您对本协议有任何疑问，可以通过以下方式联系我们：</view>
+      <view class="doc-para">- 邮箱：15098826982@163.com</view>
+    </view>
+  </scroll-view>
+</view>

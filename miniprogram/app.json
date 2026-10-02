@@ -1,0 +1,31 @@
+{
+  "pages": [
+    "pages/home/index",
+    "pages/meal/index",
+    "pages/wishlist/index",
+    "pages/checkin/index",
+    "pages/mood/index",
+    "pages/mood/edit",
+    "pages/period/index",
+    "pages/memo/index",
+    "pages/login/login",
+    "pages/agreement/user-agreement",
+    "pages/agreement/privacy-policy",
+    "pages/family/create",
+    "pages/family/join",
+    "pages/role/select",
+    "pages/random/random",
+    "pages/history/index",
+    "pages/settings/index"
+  ],
+  "window": {
+    "navigationBarTitleText": "温馨小窝",
+    "navigationBarBackgroundColor": "#81D4FA",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#B39DDB",
+    "backgroundTextStyle": "light"
+  },
+  "sitemapLocation": "sitemap.json",
+  "style": "v2",
+  "lazyCodeLoading": "requiredComponents"
+}

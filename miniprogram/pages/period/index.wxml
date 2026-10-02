@@ -1,0 +1,186 @@
+<page-bg />
+<view class="page page-enter notebook-bg">
+  <nav-bar title="" transparent />
+
+  <!-- 漂浮装饰 -->
+  <view class="deco deco-heart1">💕</view>
+  <view class="deco deco-star1">✨</view>
+  <view class="deco deco-cloud1">☁️</view>
+
+  <view class="content">
+    <!-- 顶部日期 + 月份选择 -->
+    <view class="nb-header">
+      <view class="nb-date">
+        <view class="nb-month">{{calendarMonthText}}</view>
+        <view class="nb-year">{{calendarYearText}}</view>
+      </view>
+      <picker mode="date" fields="month" value="{{calendarMonth}}" bindchange="onPickMonth">
+        <view class="nb-cal-icon">📅</view>
+      </picker>
+    </view>
+
+    <!-- 老公视角温馨提示 -->
+    <view wx:if="{{!isWife && tip}}" class="nb-tip">
+      <text class="nb-tip-icon">🌸</text>
+      <text class="nb-tip-text">{{tip}}</text>
+    </view>
+
+    <!-- 日历卡片 -->
+    <view class="nb-card">
+      <!-- 月份切换 -->
+      <view class="nb-month-nav">
+        <view class="nb-nav-btn tap-feedback" hover-class="tap-active" bindtap="onPrevMonth">‹</view>
+        <view class="nb-month-title">{{calendarYearText}}{{calendarMonthText}}</view>
+        <view class="nb-nav-btn tap-feedback" hover-class="tap-active" bindtap="onNextMonth">›</view>
+      </view>
+
+      <view class="nb-weekdays">
+        <text class="nb-wd" wx:for="{{weekdays}}" wx:key="*this">{{item}}</text>
+      </view>
+
+      <view class="nb-grid">
+        <view class="nb-cell {{item.empty ? 'nb-empty' : ''}}"
+              wx:for="{{calendarDays}}" wx:key="index">
+          <block wx:if="{{!item.empty}}">
+            <view class="nb-day-wrap">
+              <view wx:if="{{item.status}}" class="nb-day nb-{{item.status}}">
+                <text class="nb-day-text">{{item.date}}</text>
+              </view>
+              <text wx:else class="nb-day-plain">{{item.date}}</text>
+              <!-- 今天的红圈 -->
+              <view wx:if="{{item.isToday}}" class="nb-today-circle">
+                <text class="nb-today-text">今</text>
+              </view>
+            </view>
+          </block>
+        </view>
+      </view>
+
+      <!-- 图例 -->
+      <view class="nb-legend">
+        <view class="nb-legend-item">
+          <view class="nb-legend-dot nb-period"></view>
+          <text class="nb-legend-text">经期</text>
+        </view>
+        <view class="nb-legend-item">
+          <view class="nb-legend-dot nb-predicted_period"></view>
+          <text class="nb-legend-text">预测经期</text>
+        </view>
+        <view class="nb-legend-item">
+          <view class="nb-legend-dot nb-ovulation"></view>
+          <text class="nb-legend-text">排卵期</text>
+        </view>
+        <view class="nb-legend-item">
+          <view class="nb-legend-dot nb-ovulation_day"></view>
+          <text class="nb-legend-text">排卵日</text>
+        </view>
+        <view class="nb-legend-help tap-feedback" hover-class="tap-active" bindtap="showLegendHelp">?</view>
+      </view>
+
+      <!-- 无历史提示 -->
+      <view wx:if="{{!hasHistory && isWife}}" class="nb-empty-tip">
+        还没有记录，点击下方「记录经期」开始吧 🌸
+      </view>
+    </view>
+
+    <!-- 记录按钮 -->
+    <view wx:if="{{isWife}}"
+          class="nb-record card-hover tap-feedback" hover-class="tap-active"
+          bindtap="openRecord">
+      <view class="nb-record-icon">📝</view>
+      <text class="nb-record-text">记录经期</text>
+      <text class="nb-record-arrow row-arrow">›</text>
+    </view>
+
+    <view wx:else class="nb-record nb-record-disabled">
+      <view class="nb-record-icon">👀</view>
+      <text class="nb-record-text">只有老婆可以记录经期</text>
+    </view>
+  </view>
+
+  <!-- 记录弹窗 -->
+  <van-popup show="{{showRecord}}" position="bottom" round
+            bind:close="closeRecord" custom-style="max-height:85vh;">
+    <view class="nb-form">
+      <view class="nb-form-title">记录经期</view>
+      <scroll-view scroll-y class="nb-form-scroll">
+        <!-- 开始日期 -->
+        <view class="nb-form-row">
+          <text class="nb-form-label">开始日期</text>
+          <picker mode="date" value="{{recordForm.startDate}}" bindchange="onPickStart">
+            <view class="nb-form-value">{{recordForm.startDate || '请选择'}}</view>
+          </picker>
+        </view>
+        <!-- 结束日期 -->
+        <view class="nb-form-row">
+          <text class="nb-form-label">结束日期（可选）</text>
+          <picker mode="date" value="{{recordForm.endDate}}" start="{{recordForm.startDate}}" bindchange="onPickEnd">
+            <view class="nb-form-value">{{recordForm.endDate || '还没结束'}}</view>
+          </picker>
+        </view>
+        <!-- 经量 -->
+        <view class="nb-form-row">
+          <text class="nb-form-label">经量</text>
+          <view class="nb-opt-group">
+            <view wx:for="{{flowOpts}}" wx:key="value"
+                  class="nb-opt tap-feedback {{recordForm.flow === item.value ? 'nb-opt-on' : ''}}"
+                  hover-class="tap-active"
+                  data-field="flow" data-value="{{item.value}}" bindtap="onOptionTap">
+              <text>{{item.label}}</text>
+            </view>
+          </view>
+        </view>
+        <!-- 痛经 -->
+        <view class="nb-form-row">
+          <text class="nb-form-label">痛经程度</text>
+          <view class="nb-opt-group">
+            <view wx:for="{{painOpts}}" wx:key="value"
+                  class="nb-opt tap-feedback {{recordForm.pain === item.value ? 'nb-opt-on' : ''}}"
+                  hover-class="tap-active"
+                  data-field="pain" data-value="{{item.value}}" bindtap="onOptionTap">
+              <text>{{item.label}}</text>
+            </view>
+          </view>
+        </view>
+        <!-- 心情 -->
+        <view class="nb-form-row">
+          <text class="nb-form-label">心情</text>
+          <view class="nb-opt-group">
+            <view wx:for="{{moodOpts}}" wx:key="value"
+                  class="nb-opt tap-feedback {{recordForm.mood === item.value ? 'nb-opt-on' : ''}}"
+                  hover-class="tap-active"
+                  data-field="mood" data-value="{{item.value}}" bindtap="onOptionTap">
+              <text>{{item.emoji}} {{item.label}}</text>
+            </view>
+          </view>
+        </view>
+        <!-- 症状 -->
+        <view class="nb-form-row">
+          <text class="nb-form-label">症状（可多选）</text>
+          <view class="nb-opt-group nb-opt-multi">
+            <view wx:for="{{symptomOpts}}" wx:key="value"
+                  class="nb-opt tap-feedback {{item.checked ? 'nb-opt-on' : ''}}"
+                  hover-class="tap-active"
+                  data-value="{{item.value}}" bindtap="onSymptomTap">
+              <text>{{item.value}}</text>
+            </view>
+          </view>
+        </view>
+        <!-- 备注 -->
+        <view class="nb-form-row">
+          <text class="nb-form-label">备注</text>
+          <textarea class="nb-form-textarea" placeholder="{{ph.note}}"
+                    value="{{recordForm.note}}" bindinput="onNoteInput"
+                    bindfocus="onFieldFocus" bindblur="onFieldBlur" data-ph="note"
+                    maxlength="100" />
+        </view>
+      </scroll-view>
+      <view class="nb-form-actions">
+        <view class="nb-btn nb-btn-ghost tap-feedback" hover-class="tap-active" bindtap="closeRecord">取消</view>
+        <view class="nb-btn nb-btn-primary btn-glow {{submitting ? 'nb-btn-loading' : ''}}" bindtap="onSave">
+          {{submitting ? '保存中' : '保存'}}
+        </view>
+      </view>
+    </view>
+  </van-popup>
+</view>

@@ -1,0 +1,13 @@
+{
+  "navigationBarTitleText": "干饭",
+  "navigationStyle": "custom",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "page-bg": "/components/page-bg/index",
+    "van-button": "@vant/weapp/button/index",
+    "van-dialog": "@vant/weapp/dialog/index",
+    "van-popup": "@vant/weapp/popup/index",
+    "van-field": "@vant/weapp/field/index",
+    "van-empty": "@vant/weapp/empty/index"
+  }
+}

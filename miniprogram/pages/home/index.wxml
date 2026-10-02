@@ -1,0 +1,97 @@
+<page-bg />
+<view class="page page-enter">
+  <!-- 漂浮装饰 -->
+  <view class="deco deco-heart1">💕</view>
+  <view class="deco deco-star1">✨</view>
+  <view class="deco deco-cloud1">☁️</view>
+
+  <sidebar current="home" />
+
+  <view class="content">
+    <!-- 顶部信息栏：相恋天数 + 纪念日倒计时 -->
+    <top-bar />
+
+    <view class="container">
+      <view class="date-bar">📅 {{todayDate}}</view>
+
+      <!-- 今日要点卡片 -->
+      <view class="card today-card card-hover">
+        <view class="today-title">今日要点 ✨</view>
+
+        <!-- 今天吃什么 -->
+        <view class="today-row tap-feedback" hover-class="tap-active" bindtap="goMeal">
+          <view class="row-left">
+            <text class="row-emoji">🍚</text>
+            <view class="row-info">
+              <view class="row-label">今天吃什么</view>
+              <view class="row-sub" wx:if="{{todayOrders.length > 0}}">已点 {{todayOrders.length}} 道菜</view>
+              <view class="row-sub" wx:else>还没点，去看看吧</view>
+            </view>
+          </view>
+          <text class="row-arrow">›</text>
+        </view>
+
+        <!-- 老婆端：快速操作 -->
+        <block wx:if="{{user.role === 'boss'}}">
+          <view class="today-row tap-feedback" hover-class="tap-active" bindtap="goMeal">
+            <view class="row-left">
+              <text class="row-emoji">🍽️</text>
+              <view class="row-info">
+                <view class="row-label">去点菜</view>
+                <view class="row-sub">挑几道今天想吃的</view>
+              </view>
+            </view>
+            <text class="row-arrow">›</text>
+          </view>
+          <view class="today-row tap-feedback" hover-class="tap-active" bindtap="goRandom">
+            <view class="row-left">
+              <text class="row-emoji">🎰</text>
+              <view class="row-info">
+                <view class="row-label">随机推荐</view>
+                <view class="row-sub">不知道吃啥？点我试试</view>
+              </view>
+            </view>
+            <text class="row-arrow">›</text>
+          </view>
+        </block>
+
+        <!-- 老公端：今日菜单 -->
+        <block wx:else>
+          <view class="today-row" style="border-bottom:none;">
+            <view class="row-left">
+              <text class="row-emoji">📋</text>
+              <view class="row-info">
+                <view class="row-label">今日菜单</view>
+                <view class="row-sub" wx:if="{{todayOrders.length > 0}}">{{todayOrders.length}} 道菜待做</view>
+                <view class="row-sub" wx:else>家人还没点菜</view>
+              </view>
+            </view>
+          </view>
+        </block>
+      </view>
+
+      <!-- 老公端：今日菜单详情 + 完成卡片 -->
+      <view class="card" wx:if="{{user.role !== 'boss' && todayOrders.length > 0}}">
+        <view class="title">待做清单</view>
+        <view class="order-card {{item.status === 'done' ? 'order-done' : ''}} {{item._id === animOrderId ? 'order-pop' : ''}}"
+              wx:for="{{todayOrders}}" wx:key="_id">
+          <view class="order-main">
+            <view class="dish-row">
+              <text class="dish-name">{{item.dish.name}}</text>
+              <text class="tag tag-meat" wx:if="{{item.dish.category}}">{{item.dish.category}}</text>
+            </view>
+            <text class="order-by">下单人：{{item.user.nickname}}</text>
+          </view>
+          <view class="order-foot">
+            <view class="order-status {{item.status === 'done' ? 'status-done' : 'status-pending'}} tap-feedback"
+                  hover-class="tap-active"
+                  data-id="{{item._id}}" bindtap="onMarkDone">
+              <text class="status-mark">{{item.status === 'done' ? '✓' : '○'}}</text>
+              <text>{{item.status === 'done' ? '已做' : '未做'}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

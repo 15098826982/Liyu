@@ -1,0 +1,9 @@
+{
+  "name": "period",
+  "version": "1.0.0",
+  "description": "经期管理",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "latest"
+  }
+}

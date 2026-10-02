@@ -1,0 +1,123 @@
+<page-bg />
+<view class="page page-enter">
+  <nav-bar title="设置" />
+
+  <!-- 漂浮装饰 -->
+  <view class="deco deco-heart1">💕</view>
+  <view class="deco deco-star1">✨</view>
+  <view class="deco deco-cloud1">☁️</view>
+
+  <view class="content">
+    <view class="container">
+      <!-- 用户资料卡片 -->
+      <view class="card profile-card">
+        <view class="avatar-section">
+          <view class="avatar-circle tap-feedback" hover-class="tap-active" bindtap="onChooseAvatar">
+            <image class="avatar" src="{{avatarUrl || (user.role === 'manager' ? '/images/default-avatar-husband.jpg' : '/images/default-avatar-wife.jpg')}}" mode="aspectFill" />
+            <view class="avatar-edit">📷</view>
+            <view class="avatar-clear" wx:if="{{user.avatar}}" catchtap="onClearAvatar">✕</view>
+          </view>
+          <view class="avatar-hint">点击更换头像</view>
+        </view>
+        <view class="profile-info">
+          <view class="nickname-row tap-feedback" hover-class="tap-active" bindtap="onEditNickname">
+            <text class="nickname">{{user.nickname || '未设置昵称'}}</text>
+            <text class="edit-icon">✏️</text>
+          </view>
+          <text class="tag {{user.role === 'boss' ? 'tag-meat' : 'tag-veg'}}">{{user.role === 'boss' ? '一家之主' : '管家'}}</text>
+        </view>
+      </view>
+
+      <!-- 家庭邀请码 -->
+      <view class="card invite-card">
+        <view class="title">家庭邀请码</view>
+        <view class="invite-info">
+          <text class="invite-name">{{familyName}}</text>
+          <text class="invite-count">{{memberCount}}/2 成员</text>
+        </view>
+        <view class="invite-box tap-feedback" hover-class="tap-active" bindtap="onCopyFamilyCode">
+          <text class="invite-code">{{familyCode}}</text>
+          <text class="invite-copy">复制</text>
+        </view>
+        <view class="invite-tip" wx:if="{{memberCount < 2}}">把这串邀请码发给另一半，对方在「加入家庭」里输入即可加入</view>
+        <view class="invite-tip invite-tip-full" wx:else>家庭已满2人，无法再邀请新成员</view>
+      </view>
+
+      <!-- 我们的时光 -->
+      <view class="card">
+        <view class="title">我们的时光</view>
+
+        <view class="edit-label">顶部封面图</view>
+        <view class="cover-picker" bindtap="onChooseCover">
+          <image wx:if="{{couple.coverImage}}" class="cover-preview" src="{{coverThumb || couple.coverImage}}" mode="aspectFill" />
+          <view wx:else class="cover-placeholder">
+            <text class="cover-emoji">🖼️</text>
+            <text class="cover-text">点击上传情侣合照</text>
+          </view>
+          <view class="cover-clear" wx:if="{{couple.coverImage}}" catchtap="onClearCover">✕</view>
+        </view>
+
+        <view class="edit-label">页面背景图</view>
+        <view class="cover-picker" bindtap="onChoosePageBg">
+          <image wx:if="{{couple.pageBg}}" class="cover-preview" src="{{pageBgThumb || couple.pageBg}}" mode="aspectFill" />
+          <view wx:else class="cover-placeholder">
+            <text class="cover-emoji">🖼️</text>
+            <text class="cover-text">点击上传页面背景图</text>
+          </view>
+          <view class="cover-clear" wx:if="{{couple.pageBg}}" catchtap="onClearPageBg">✕</view>
+        </view>
+
+        <view class="edit-label">相恋日期</view>
+        <picker mode="date" value="{{couple.loveStartDate}}" bindchange="onLoveDateChange">
+          <view class="date-picker">{{couple.loveStartDate || '请选择相恋日期'}}</view>
+        </picker>
+
+        <view class="edit-label">纪念日（每年这天）</view>
+        <picker mode="date" value="{{couple.anniversaryDate}}" bindchange="onAnniChange">
+          <view class="date-picker">{{couple.anniversaryDate || '请选择纪念日'}}</view>
+        </picker>
+
+        <view class="save-couple-wrap">
+          <van-button type="primary" block round loading="{{savingCouple}}" bind:click="onSaveCouple">保存</van-button>
+        </view>
+      </view>
+
+      <!-- 操作列表 -->
+      <view class="card">
+        <view class="setting-item tap-feedback" hover-class="tap-active" bindtap="onSwitchRole">
+          <text class="setting-label">切换身份</text>
+          <text class="setting-value">{{user.role === 'boss' ? '老婆' : '老公'}}</text>
+          <text class="setting-arrow row-arrow">›</text>
+        </view>
+        <view class="setting-item tap-feedback" hover-class="tap-active" bindtap="onLeave">
+          <text class="setting-label setting-danger">退出家庭</text>
+          <text class="setting-arrow">›</text>
+        </view>
+      </view>
+
+      <!-- 测试功能：只在开发版/体验版显示，正式版用户看不到 -->
+      <view class="card test-card" wx:if="{{isDev}}">
+        <view class="setting-item tap-feedback" hover-class="tap-active" bindtap="onSimulateManager">
+          <text class="setting-label">{{user.openid === 'test-manager' ? '👀 正在模拟老公视角' : '🧪 模拟老公视角（测试）'}}</text>
+          <text class="setting-value" wx:if="{{user.openid === 'test-manager'}}">模拟中</text>
+          <text class="setting-arrow row-arrow">›</text>
+        </view>
+        <view class="setting-item tap-feedback" hover-class="tap-active" bindtap="onRestoreSelf" wx:if="{{user.openid === 'test-manager'}}">
+          <text class="setting-label">切回自己的视角</text>
+          <text class="setting-arrow row-arrow">›</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 昵称编辑弹窗 -->
+    <view class="mask" wx:if="{{showNicknameEdit}}" bindtap="onHideNicknameEdit"></view>
+    <view class="edit-sheet" wx:if="{{showNicknameEdit}}" catchtap="noop">
+      <view class="sheet-title">修改昵称</view>
+      <input class="sheet-input" placeholder="{{ph.nickname}}" value="{{nickname}}" maxlength="20" bindinput="onNicknameInput" bindfocus="onFieldFocus" bindblur="onFieldBlur" data-ph="nickname" />
+      <view class="edit-btns">
+        <button class="btn-ghost" bindtap="onHideNicknameEdit">取消</button>
+        <button class="btn-primary" bindtap="onSaveNickname">保存</button>
+      </view>
+    </view>
+  </view>
+</view>

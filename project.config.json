@@ -1,0 +1,288 @@
+{
+  "miniprogramRoot": "miniprogram/",
+  "cloudfunctionRoot": "cloudfunctions/",
+  "setting": {
+    "urlCheck": false,
+    "es6": true,
+    "enhance": true,
+    "postcss": true,
+    "preloadBackgroundData": false,
+    "minified": true,
+    "newFeature": true,
+    "coverView": true,
+    "nodeModules": false,
+    "packNpmManually": true,
+    "packNpmRelationList": [
+      {
+        "packageJsonPath": "./miniprogram/package.json",
+        "miniprogramNpmDistDir": "./miniprogram/"
+      }
+    ],
+    "autoAudits": false,
+    "showShadowRootInWxmlPanel": true,
+    "scopeDataCheck": false,
+    "uglifyFileName": false,
+    "checkInvalidKey": true,
+    "checkSiteMap": true,
+    "uploadWithCodeRootPath": false,
+    "useCompileModule": true,
+    "userConfirmedUseCompileModule": true,
+    "useApiHook": true,
+    "useApiProcess": true,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    },
+    "compileWorklet": false,
+    "uploadWithSourceMap": true,
+    "minifyWXSS": true,
+    "minifyWXML": true,
+    "localPlugins": false,
+    "disableUseStrict": false,
+    "useCompilerPlugins": false,
+    "condition": false
+  },
+  "appid": "wxcfc53cfcefc2031f",
+  "projectname": "wife-order",
+  "libVersion": "2.31.0",
+  "cloudfunctionTemplateRoot": "",
+  "condition": {},
+  "srcMiniprogramRoot": "miniprogram/",
+  "compileType": "miniprogram",
+  "simulatorPluginLibVersion": {},
+  "packOptions": {
+    "ignore": [
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/action-sheet",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/area",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/calendar",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/card",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/cascader",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/checkbox",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/checkbox-group",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/circle",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/col",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/collapse",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/collapse-item",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/config-provider",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/count-down",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/datetime-picker",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/divider",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/dropdown-item",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/dropdown-menu",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/goods-action-icon",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/grid",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/grid-item",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/image",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/index-anchor",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/index-bar",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/nav-bar",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/notice-bar",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/notify",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/panel",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/picker",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/picker-column",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/progress",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/radio",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/radio-group",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/rate",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/row",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/search",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/share-sheet",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/sidebar",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/sidebar-item",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/skeleton",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/slider",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/stepper",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/steps",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/sticky",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/submit-bar",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/swipe-cell",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/tab",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/tabbar",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/tabbar-item",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/tabs",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/tag",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/toast",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/tree-select",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/uploader",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/dialog/dialog.js",
+        "type": "file"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/field/types.js",
+        "type": "file"
+      },
+      {
+        "value": "miniprogram/miniprogram_npm/@vant/weapp/cell-group",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/node_modules",
+        "type": "folder"
+      }
+    ],
+    "include": []
+  },
+  "editorSetting": {}
+}

@@ -1,0 +1,24 @@
+<view class="topbar {{coverUrl ? 'has-cover' : ''}}"
+      style="{{coverUrl ? 'background-image: url(' + coverUrl + ');' : ''}}">
+  <view class="topbar-overlay" wx:if="{{coverUrl}}"></view>
+  <!-- 探针：仅用于探测封面缩略图 URL 是否失效，失效则兜底原图 -->
+  <image wx:if="{{coverUrl}}" class="topbar-probe" src="{{coverUrl}}" binderror="onCoverError" />
+
+  <view class="topbar-item">
+    <text class="topbar-emoji">💖</text>
+    <view class="topbar-text">
+      <text class="topbar-num">{{loveDays}}</text>
+      <text class="topbar-label">天</text>
+    </view>
+  </view>
+
+  <view class="topbar-divider"></view>
+
+  <view class="topbar-item">
+    <text class="topbar-emoji">🎀</text>
+    <view class="topbar-text">
+      <text class="topbar-num">{{daysToNext}}</text>
+      <text class="topbar-label">天后纪念日</text>
+    </view>
+  </view>
+</view>

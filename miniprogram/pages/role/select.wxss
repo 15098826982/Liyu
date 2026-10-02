@@ -1,0 +1,333 @@
+/* pages/role/select.wxss  选择身份页（蓝粉高级浪漫风，与登录/创建家庭统一） */
+.select-page {
+  position: relative;
+  min-height: 100vh;
+  box-sizing: border-box;
+  overflow: hidden;
+  font-family: "PingFang SC", "Helvetica Neue", sans-serif;
+}
+
+/* ===== 漂浮装饰（少量，z-index 低于内容） ===== */
+.deco {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+}
+.deco-heart1 {
+  top: 15%;
+  right: 10%;
+  font-size: 20px;
+  animation: floatY 3s ease-in-out infinite;
+}
+.deco-star1 {
+  top: 22%;
+  left: 10%;
+  font-size: 15px;
+  animation: twinkle 2s ease-in-out infinite;
+}
+.deco-cloud1 {
+  top: 10%;
+  left: 34%;
+  font-size: 24px;
+  opacity: 0.65;
+  animation: cloudMove 5s ease-in-out infinite;
+}
+
+@keyframes floatY {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.4; transform: scale(0.8); }
+}
+@keyframes cloudMove {
+  0%, 100% { transform: translateX(0); }
+  50%      { transform: translateX(10px); }
+}
+
+/* ===== 顶部导航（与创建家庭页一致） ===== */
+.top-nav {
+  position: relative;
+  z-index: 20;
+  height: 44px;
+  box-sizing: content-box;
+  padding-left: 20px;
+  padding-right: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-back {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 2px 10px rgba(186, 104, 200, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.1s ease-out, background-color 0.1s ease-out;
+}
+.nav-back-active {
+  transform: scale(0.9);
+  background: rgba(255, 255, 255, 0.8);
+}
+.nav-back-arrow {
+  font-size: 20px;
+  color: #fff;
+  font-weight: 700;
+  line-height: 1;
+  text-shadow: 0 1px 6px rgba(186, 104, 200, 0.5);
+}
+.nav-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(186, 104, 200, 0.45);
+}
+.nav-right {
+  width: 36px;
+  height: 36px;
+}
+
+/* ===== 主插画（轻微浮动） ===== */
+.hero {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+  animation: heroDrop 0.5s ease-out both;
+}
+.hero-img {
+  width: 150px;
+  height: 150px;
+  animation: heroFloat 3s ease-in-out infinite;
+}
+@keyframes heroDrop {
+  from { opacity: 0; transform: translateY(-24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes heroFloat {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+
+/* ===== 标题 ===== */
+.title-area {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  margin-top: 16px;
+  animation: fadeUp 0.4s ease-out 0.15s both;
+}
+.main-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.title-text {
+  font-size: 26px;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 2px 12px rgba(255, 255, 255, 0.5), 0 2px 14px rgba(186, 104, 200, 0.5);
+  letter-spacing: 1px;
+}
+.title-icon {
+  font-size: 16px;
+  margin: 0 10px;
+  opacity: 0.9;
+}
+.sub-title {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.6;
+  margin-top: 8px;
+  text-shadow: 0 1px 6px rgba(186, 104, 200, 0.35);
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== 身份卡片（毛玻璃，两卡依次滑入） ===== */
+.cards {
+  position: relative;
+  z-index: 10;
+  padding: 0 25px;
+  margin-top: 22px;
+}
+.role-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 20px;
+  padding: 18px 20px;
+  margin-bottom: 18px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  transition: transform 0.25s ease-out, border-color 0.25s ease-out, box-shadow 0.25s ease-out;
+  animation: fadeUp 0.4s ease-out both;
+}
+.role-card.boss {
+  background: rgba(248, 187, 208, 0.35);
+  box-shadow: 0 4px 16px rgba(244, 143, 177, 0.25);
+}
+.role-card.manager {
+  background: rgba(206, 147, 216, 0.35);
+  box-shadow: 0 4px 16px rgba(186, 104, 200, 0.25);
+  animation-delay: 0.1s;
+}
+.role-card.role-selected {
+  transform: scale(1.03);
+  box-shadow: 0 10px 28px rgba(244, 143, 177, 0.4);
+}
+.role-card.boss.role-selected {
+  border-color: #FF80AB;
+}
+.role-card.manager.role-selected {
+  border-color: #BA68C8;
+  box-shadow: 0 10px 28px rgba(186, 104, 200, 0.4);
+}
+
+/* 选中对勾（粉色/紫色圆形背景） */
+.role-check {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+  animation: checkPop 0.25s ease-out both;
+}
+.role-card.boss .role-check {
+  background: #FF80AB;
+  box-shadow: 0 2px 8px rgba(255, 128, 171, 0.5);
+}
+.role-card.manager .role-check {
+  background: #BA68C8;
+  box-shadow: 0 2px 8px rgba(186, 104, 200, 0.5);
+}
+@keyframes checkPop {
+  from { opacity: 0; transform: scale(0.4); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* 左侧文字区（自适应，不被图片挡住） */
+.role-text {
+  flex: 1;
+  min-width: 0;
+}
+.role-tag {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.3);
+  color: #fff;
+  margin-bottom: 8px;
+  text-shadow: 0 1px 4px rgba(186, 104, 200, 0.4);
+}
+.role-name {
+  font-size: 24px;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 2px 10px rgba(255, 255, 255, 0.4), 0 2px 12px rgba(186, 104, 200, 0.5);
+  margin-bottom: 6px;
+}
+/* 右侧形象图片（透明PNG，轻微浮动） */
+.role-img-wrap {
+  flex-shrink: 0;
+  margin-left: 12px;
+  margin-top: 34px; /* 让出右上角对勾的位置 */
+}
+.role-img {
+  width: 65px;
+  max-height: 110px;
+  animation: heroFloat 3s ease-in-out infinite;
+}
+.role-card.manager .role-img {
+  animation-delay: 0.5s;
+}
+
+.role-desc {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.5;
+  text-shadow: 0 1px 4px rgba(186, 104, 200, 0.35);
+}
+
+/* ===== 确认按钮 ===== */
+.confirm-btn {
+  position: relative;
+  z-index: 10;
+  width: calc(100% - 50px);
+  height: 50px;
+  margin: 20px auto 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 25px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  color: rgba(186, 104, 200, 0.6);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.2;
+  opacity: 0.6;
+  transition: transform 0.1s ease-out, opacity 0.2s ease-out, background 0.2s ease-out, box-shadow 0.2s ease-out;
+  animation: fadeUp 0.4s ease-out 0.2s both;
+}
+.confirm-btn::after { border: none; }
+.confirm-btn[disabled] { opacity: 0.6; }
+.confirm-active {
+  opacity: 1;
+  background: linear-gradient(135deg, #CE93D8 0%, #BA68C8 100%);
+  border: none;
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(186, 104, 200, 0.4);
+}
+.btn-active {
+  transform: scale(0.97);
+}
+
+/* ===== 底部文字（纯白，清晰可读） ===== */
+.hint {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: #FFFFFF;
+  margin-top: 15px;
+  padding-bottom: 30px;
+  text-shadow: 0 1px 8px rgba(186, 104, 200, 0.5);
+  animation: fadeUp 0.4s ease-out 0.3s both;
+}
+
+/* ===== 未选中点确认：抖动 ===== */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%      { transform: translateX(-10px); }
+  40%      { transform: translateX(10px); }
+  60%      { transform: translateX(-6px); }
+  80%      { transform: translateX(6px); }
+}
+.shake-on {
+  animation: shake 0.5s ease-in-out;
+}

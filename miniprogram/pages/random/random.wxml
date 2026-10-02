@@ -1,0 +1,33 @@
+<page-bg />
+<view class="page">
+  <nav-bar title="随机推荐" />
+
+  <!-- 漂浮装饰 -->
+  <view class="deco deco-heart1">💕</view>
+  <view class="deco deco-star1">✨</view>
+  <view class="deco deco-cloud1">☁️</view>
+
+  <view class="container">
+  <view class="card hero">
+    <view class="hero-title">不知道吃什么？</view>
+    <view class="hero-tip">让我来帮你抽一道荤菜 + 两道素菜</view>
+    <button class="btn-primary btn-pick" bindtap="onPick" loading="{{loading}}">给我抽一个</button>
+  </view>
+
+  <view class="empty" wx:if="{{dishes.length === 0 && !loading}}">点击上方按钮开始</view>
+
+  <view class="result-list" wx:if="{{dishes.length > 0}}">
+    <view class="list-item result-item" wx:for="{{dishes}}" wx:key="_id">
+      <view class="dish-info">
+        <text class="dish-name">{{item.name}}</text>
+        <text class="tag tag-meat" wx:if="{{item.category}}">{{item.category}}</text>
+      </view>
+      <button class="btn-mini {{ordered[item._id] ? 'btn-done' : ''}}"
+              data-id="{{item._id}}" bindtap="onOrder"
+              disabled="{{ordered[item._id]}}">
+        {{ordered[item._id] ? '已加入' : '就吃这个'}}
+      </button>
+    </view>
+  </view>
+  </view>
+</view>

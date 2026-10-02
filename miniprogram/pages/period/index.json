@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "经期管理",
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "page-bg": "/components/page-bg/index",
+    "nav-bar": "/components/nav-bar/index",
+    "van-popup": "@vant/weapp/popup/index"
+  }
+}

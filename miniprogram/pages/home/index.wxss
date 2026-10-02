@@ -1,0 +1,207 @@
+/* pages/home/index.wxss  首页 - 侧边栏布局（蓝粉浪漫梦幻风） */
+
+/* 页面容器：relative 供漂浮装饰定位 */
+.page {
+  position: relative;
+}
+
+/* 内容区右侧，留出侧边栏宽度；z-index 高于装饰 */
+.content {
+  margin-left: 200rpx;
+  min-height: 100vh;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 5;
+}
+
+/* ===== 漂浮装饰（z-index 0，pointer-events 不挡点击） ===== */
+.deco {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+}
+.deco-heart1 { top: 14%; right: 8%; font-size: 22px; animation: floatY 3s ease-in-out infinite; }
+.deco-star1  { top: 20%; left: 10%; font-size: 16px; animation: twinkle 2s ease-in-out infinite; }
+.deco-cloud1 { top: 12%; left: 30%; font-size: 26px; opacity: 0.7; animation: cloudMove 5s ease-in-out infinite; }
+
+@keyframes floatY {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.4; transform: scale(0.8); }
+}
+@keyframes cloudMove {
+  0%, 100% { transform: translateX(0); }
+  50%      { transform: translateX(10px); }
+}
+
+/* 日期条 */
+.date-bar {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.85);
+  padding: 4rpx 0 16rpx;
+  text-shadow: 0 2rpx 8rpx rgba(186, 104, 200, 0.45);
+}
+
+/* 今日要点卡片 */
+.today-card {
+  padding: 30rpx 28rpx;
+}
+
+.today-title {
+  font-size: 34rpx;
+  font-weight: 700;
+  color: #BA68C8;
+  margin-bottom: 20rpx;
+}
+
+.today-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22rpx 8rpx;
+  border-bottom: 1rpx solid rgba(255, 255, 255, 0.6);
+}
+
+.today-row:active {
+  background: rgba(186, 104, 200, 0.06);
+}
+
+.row-left {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.row-emoji {
+  font-size: 40rpx;
+  margin-right: 18rpx;
+}
+
+.row-info {
+  flex: 1;
+}
+
+.row-label {
+  font-size: 28rpx;
+  color: #37474F;
+  font-weight: 500;
+}
+
+.row-sub {
+  font-size: 22rpx;
+  color: #8D9AA8;
+  margin-top: 4rpx;
+}
+
+.row-arrow {
+  font-size: 40rpx;
+  color: #CE93D8;
+}
+
+/* 待做清单卡片 */
+.order-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  border: 2rpx solid rgba(255, 255, 255, 0.6);
+  border-radius: 20rpx;
+  padding: 22rpx 24rpx;
+  margin-bottom: 16rpx;
+  box-shadow: 0 4rpx 16rpx rgba(186, 104, 200, 0.15);
+  transition: background-color 0.4s ease-out, border-color 0.4s ease-out, box-shadow 0.4s ease-out;
+}
+
+.order-main {
+  flex: 1;
+  min-width: 0;
+  margin-right: 16rpx;
+}
+
+.dish-name {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #37474F;
+  transition: color 0.4s ease-out;
+}
+
+.dish-row {
+  display: flex;
+  align-items: center;
+}
+
+.dish-row .tag {
+  margin-left: 12rpx;
+}
+
+.order-by {
+  font-size: 22rpx;
+  color: #8D9AA8;
+  margin-top: 8rpx;
+}
+
+/* 右下角状态标记 */
+.order-foot {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.order-status {
+  display: flex;
+  align-items: center;
+  gap: 6rpx;
+  font-size: 24rpx;
+  padding: 10rpx 22rpx;
+  border-radius: 30rpx;
+  font-weight: 500;
+  transition: background-color 0.3s ease-out, color 0.3s ease-out;
+}
+
+.status-mark {
+  font-size: 26rpx;
+  line-height: 1;
+}
+
+.status-pending {
+  background: rgba(255, 255, 255, 0.5);
+  color: #8E24AA;
+  border: 2rpx solid #F8BBD0;
+}
+
+.status-done {
+  background: #F3E5F5;
+  color: #BA68C8;
+  border: 2rpx solid #CE93D8;
+}
+
+/* 已完成：整个卡片变淡紫 */
+.order-done {
+  background: #F3E5F5;
+  border-color: #CE93D8;
+  box-shadow: 0 2rpx 12rpx rgba(186, 104, 200, 0.15);
+}
+
+.order-done .dish-name {
+  color: #BA68C8;
+  text-decoration: line-through;
+}
+
+.order-done .order-by {
+  color: #8D9AA8;
+}
+
+/* 完成时的整卡弹跳反馈 */
+.order-pop {
+  animation: orderPop 0.45s ease-out;
+}
+
+@keyframes orderPop {
+  0% { transform: scale(1); }
+  35% { transform: scale(1.04); box-shadow: 0 6rpx 20rpx rgba(186, 104, 200, 0.3); }
+  100% { transform: scale(1); }
+}

@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "选择身份",
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "page-bg": "/components/page-bg/index"
+  }
+}

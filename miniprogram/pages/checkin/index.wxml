@@ -1,0 +1,181 @@
+<page-bg />
+<view class="page page-enter notebook-bg">
+  <nav-bar title="" transparent></nav-bar>
+
+  <!-- 漂浮装饰 -->
+  <view class="deco deco-heart1">💕</view>
+  <view class="deco deco-star1">✨</view>
+  <view class="deco deco-cloud1">☁️</view>
+
+  <view class="content">
+    <!-- 标题区 -->
+    <view class="nb-title">
+      <view class="nb-title-main">
+        <text class="nb-title-icon">✅</text>
+        <text class="nb-title-text">打卡规划</text>
+      </view>
+      <view class="nb-title-sub">一起坚持，一起变好</view>
+    </view>
+
+    <!-- 两列卡片网格 -->
+    <view class="nb-grid" wx:if="{{goals.length}}">
+      <view class="nb-card tap-feedback card-hover list-enter {{item.mode === 'wish' ? 'nb-card-wish' : ''}} {{item.todayAnyChecked ? 'nb-card-checked' : ''}} {{item.status === 'completed' ? 'nb-card-done' : ''}}"
+            hover-class="tap-active"
+            style="animation-delay: {{index * 100}}ms"
+            wx:for="{{goals}}" wx:key="_id"
+            data-id="{{item._id}}"
+            bindtap="onCheckin"
+            bindlongpress="onDelete">
+        <!-- 图标 + 标题 -->
+        <view class="nb-card-head">
+          <text class="nb-card-icon">{{item.icon}}</text>
+          <text class="nb-card-title">{{item.title}}</text>
+          <text class="nb-mode-tag" wx:if="{{item.mode === 'wish'}}">愿望</text>
+        </view>
+
+        <!-- 删除按钮 -->
+        <view class="nb-card-del tap-feedback" hover-class="tap-active" catchtap="onDelete" data-id="{{item._id}}">×</view>
+
+        <!-- 描述 -->
+        <view class="nb-card-desc" wx:if="{{item.description}}">{{item.description}}</view>
+        <view class="nb-card-desc nb-card-desc-empty" wx:elif="{{item.mode === 'checkin'}}">坚持 {{item.duration}} 天</view>
+
+        <!-- 进度条 -->
+        <view class="nb-progress">
+          <view class="nb-progress-bar" style="width: {{item.progress}}%"></view>
+        </view>
+
+        <!-- 百分比 + 状态 + 目标日期 -->
+        <view class="nb-card-meta">
+          <text class="nb-percent">{{item.progress}}%</text>
+          <text class="nb-status nb-status-{{item.status}}">{{item.statusText}}</text>
+          <view class="nb-date">
+            <text class="nb-date-icon">📅</text>
+            <text class="nb-date-text">{{item.endDateShort}}</text>
+          </view>
+        </view>
+
+        <!-- 步骤勾选 -->
+        <view class="nb-stages" wx:if="{{item.stages.length}}">
+          <view class="nb-stage {{item.mode === 'wish' ? 'nb-stage-tap' : ''}} {{stage.completed ? 'nb-stage-done' : ''}}"
+                wx:for="{{item.stages}}" wx:for-item="stage" wx:key="name"
+                catchtap="onStageTap" data-id="{{item._id}}" data-index="{{index}}">
+            <text class="nb-stage-mark">{{stage.completed ? '✓' : '○'}}</text>
+            <text class="nb-stage-name">{{stage.name}}</text>
+          </view>
+        </view>
+
+        <!-- 今日已打卡标记 -->
+        <view class="nb-today-badge" wx:if="{{item.todayAnyChecked}}">今日已打卡</view>
+      </view>
+    </view>
+
+    <!-- 空状态 -->
+    <view class="nb-empty" wx:elif="{{!loading}}">
+      <view class="nb-empty-emoji">🎯</view>
+      <view class="nb-empty-title">还没有打卡目标</view>
+      <view class="nb-empty-sub">点击右上角"添加"创建第一个目标</view>
+      <view class="nb-empty-sub">一起坚持，一起变好 💕</view>
+    </view>
+  </view>
+
+  <!-- 添加弹窗 -->
+  <van-popup show="{{showAdd}}" position="bottom" round bind:close="onCloseAdd" custom-style="max-height: 80vh;">
+    <view class="nb-form">
+      <view class="nb-form-title">新建目标</view>
+
+      <!-- 目标类型 -->
+      <view class="nb-form-row">
+        <view class="nb-form-label">目标类型</view>
+        <view class="nb-chips">
+          <view class="nb-chip {{form.mode === item.value ? 'nb-chip-active' : ''}}"
+                wx:for="{{modeOptions}}" wx:key="value"
+                data-value="{{item.value}}"
+                bindtap="onPickMode">{{item.label}}</view>
+        </view>
+      </view>
+
+      <!-- 目标名称 -->
+      <view class="nb-form-row">
+        <view class="nb-form-label">目标名称</view>
+        <input class="nb-form-input" placeholder="{{form.mode === 'wish' ? ph.titleWish : ph.title}}" placeholder-class="nb-ph" value="{{form.title}}" bindinput="onTitleInput" bindfocus="onFieldFocus" bindblur="onFieldBlur" data-ph="{{form.mode === 'wish' ? 'titleWish' : 'title'}}" maxlength="20" />
+      </view>
+
+      <!-- 描述 -->
+      <view class="nb-form-row">
+        <view class="nb-form-label">描述（选填）</view>
+        <input class="nb-form-input" placeholder="{{form.mode === 'wish' ? ph.descriptionWish : ph.description}}" placeholder-class="nb-ph" value="{{form.description}}" bindinput="onDescInput" bindfocus="onFieldFocus" bindblur="onFieldBlur" data-ph="{{form.mode === 'wish' ? 'descriptionWish' : 'description'}}" maxlength="30" />
+      </view>
+
+      <!-- 图标选择 -->
+      <view class="nb-form-row">
+        <view class="nb-form-label">选择图标</view>
+        <view class="nb-icon-grid">
+          <view class="nb-icon-item {{form.icon === item.icon ? 'nb-icon-active' : ''}}"
+                wx:for="{{iconOptions}}" wx:key="icon"
+                data-icon="{{item.icon}}"
+                bindtap="onPickIcon">
+            <text class="nb-icon-emoji">{{item.icon}}</text>
+            <text class="nb-icon-label">{{item.label}}</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 打卡型：频率 + 时长 + 开始日期 -->
+      <block wx:if="{{form.mode === 'checkin'}}">
+        <view class="nb-form-row">
+          <view class="nb-form-label">打卡频率</view>
+          <view class="nb-chips">
+            <view class="nb-chip {{form.frequency === item ? 'nb-chip-active' : ''}}"
+                  wx:for="{{frequencyOptions}}" wx:key="*this"
+                  data-value="{{item}}"
+                  bindtap="onPickFrequency">{{item}}</view>
+          </view>
+        </view>
+
+        <view class="nb-form-row">
+          <view class="nb-form-label">目标时长</view>
+          <view class="nb-chips">
+            <view class="nb-chip {{form.duration === item.value ? 'nb-chip-active' : ''}}"
+                  wx:for="{{durationOptions}}" wx:key="value"
+                  data-value="{{item.value}}"
+                  bindtap="onPickDuration">{{item.label}}</view>
+          </view>
+        </view>
+
+        <view class="nb-form-row">
+          <view class="nb-form-label">开始日期</view>
+          <picker mode="date" value="{{form.startDate}}" start="{{minDate}}" bindchange="onStartDateChange">
+            <view class="nb-form-input nb-form-picker">{{form.startDate}}</view>
+          </picker>
+        </view>
+      </block>
+
+      <!-- 愿望型：步骤 + 目标日期 -->
+      <block wx:else>
+        <view class="nb-form-row">
+          <view class="nb-form-label">步骤（选填，逗号分隔）</view>
+          <input class="nb-form-input" placeholder="{{ph.steps}}" placeholder-class="nb-ph" value="{{form.steps}}" bindinput="onStepsInput" bindfocus="onFieldFocus" bindblur="onFieldBlur" data-ph="steps" maxlength="60" />
+        </view>
+
+        <view class="nb-form-row">
+          <view class="nb-form-label">目标日期（选填）</view>
+          <picker mode="date" value="{{form.goalDate}}" start="{{minDate}}" bindchange="onGoalDateChange">
+            <view class="nb-form-input nb-form-picker">{{form.goalDate}}</view>
+          </picker>
+        </view>
+      </block>
+
+      <!-- 提交按钮 -->
+      <button class="nb-form-submit btn-glow" bindtap="onSubmit" loading="{{submitting}}" disabled="{{submitting}}">创建目标</button>
+    </view>
+  </van-popup>
+
+  <!-- 右下角添加按钮 -->
+  <view class="nb-fab tap-feedback" hover-class="tap-active" bindtap="onOpenAdd">
+    <text class="nb-fab-icon">+</text>
+  </view>
+
+  <!-- 打卡成功浮层 -->
+  <view class="nb-pop" wx:if="{{showPop}}">{{popEmoji}}</view>
+</view>

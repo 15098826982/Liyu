@@ -1,0 +1,127 @@
+/* components/sidebar/index.wxss  侧边栏样式 - 蓝粉浪漫梦幻风 */
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 200rpx;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(20px);
+  border-right: 1px solid rgba(255, 255, 255, 0.5);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 4rpx 0 24rpx rgba(186, 104, 200, 0.12);
+  z-index: 100;
+}
+
+/* 顶部用户区 */
+.sidebar-top {
+  padding: 36rpx 16rpx 24rpx;
+  text-align: center;
+  border-bottom: 1rpx dashed rgba(206, 147, 216, 0.5);
+}
+
+.user-avatar-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 14rpx;
+}
+
+.user-avatar {
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 50%;
+  border: 4rpx solid #fff;
+  box-shadow: 0 4rpx 14rpx rgba(186, 104, 200, 0.25);
+}
+
+.user-name {
+  font-size: 26rpx;
+  color: #BA68C8;
+  font-weight: 600;
+  margin-bottom: 6rpx;
+}
+
+.user-role-tag {
+  display: inline-block;
+  font-size: 18rpx;
+  color: #8E24AA;
+  background: rgba(186, 104, 200, 0.12);
+  padding: 2rpx 14rpx;
+  border-radius: 20rpx;
+}
+
+/* 菜单列表 */
+.sidebar-menus {
+  flex: 1;
+  padding: 16rpx 0;
+}
+
+.menu-item {
+  padding: 20rpx 18rpx;
+  display: flex;
+  align-items: center;
+  color: #37474F;
+  transition: background-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease, transform 0.12s ease;
+  margin: 4rpx 12rpx;
+  border-radius: 16rpx;
+}
+
+.menu-item.menu-hover {
+  transform: scale(0.94);
+  background: rgba(186, 104, 200, 0.15);
+}
+
+.menu-active {
+  background: linear-gradient(135deg, #CE93D8 0%, #BA68C8 100%);
+  color: #fff;
+  box-shadow: 0 4rpx 14rpx rgba(186, 104, 200, 0.35);
+  transform: translateX(4rpx);
+}
+
+.menu-emoji {
+  font-size: 30rpx;
+  margin-right: 12rpx;
+}
+
+.menu-label {
+  font-size: 24rpx;
+  font-weight: 500;
+}
+
+/* 底部切换用户 */
+.sidebar-bottom {
+  padding: 20rpx 16rpx 36rpx;
+  border-top: 1rpx dashed rgba(206, 147, 216, 0.5);
+}
+
+.current-role {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14rpx;
+}
+
+.role-avatar {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 50%;
+  margin-right: 8rpx;
+  border: 2rpx solid #CE93D8;
+}
+
+.role-text {
+  font-size: 22rpx;
+  color: #8D9AA8;
+}
+
+.switch-user-btn {
+  background: rgba(255, 255, 255, 0.85);
+  color: #BA68C8;
+  border: 2rpx solid #CE93D8;
+  border-radius: 40rpx;
+  padding: 14rpx 0;
+  text-align: center;
+  font-size: 22rpx;
+  font-weight: 500;
+}

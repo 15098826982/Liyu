@@ -1,0 +1,68 @@
+<page-bg />
+<view class="agree-page">
+  <nav-bar title="隐私政策" showBack="{{true}}" />
+
+  <scroll-view class="agree-scroll" scroll-y>
+    <view class="agree-card">
+      <view class="doc-title">隐私政策</view>
+      <view class="doc-meta">
+        <text>更新日期：2026年9月20日</text>
+        <text class="meta-line">生效日期：2026年9月20日</text>
+      </view>
+
+      <view class="doc-para">情侣小窝（以下简称"我们"）非常重视用户的隐私和个人信息保护。我们将按照法律法规的要求，采取相应的安全保护措施，尽力保护您的个人信息安全可控。</view>
+
+      <view class="sec-title">一、我们收集的信息</view>
+      <view class="doc-para">在您使用我们的服务时，我们可能会收集以下信息：</view>
+      <view class="doc-para">1. 微信授权信息：当您使用微信登录时，我们会获取您的微信昵称、头像、openid，用于创建您的账号和识别您的身份。</view>
+      <view class="doc-para">2. 您主动提供的信息：</view>
+      <view class="doc-para">　- 家庭信息：您创建或加入家庭时提供的家庭名称、邀请码等</view>
+      <view class="doc-para">　- 菜品信息：您添加的菜品名称、分类、图片等</view>
+      <view class="doc-para">　- 心愿信息：您添加的心愿名称、描述、预算、图片等</view>
+      <view class="doc-para">　- 打卡信息：您创建的打卡目标、打卡记录等</view>
+      <view class="doc-para">　- 心情记录：您记录的心情、备注、图片等</view>
+      <view class="doc-para">　- 经期记录：您记录的经期日期、经量、痛经程度、心情、症状、备注等</view>
+      <view class="doc-para">　- 备忘录信息：您添加的备忘录内容、分类等</view>
+      <view class="doc-para">3. 您上传的图片：当您上传头像、菜品图片、心情图片等时，我们会存储您上传的图片，用于在小程序中展示。</view>
+      <view class="doc-para">4. 设备信息和日志信息：为了保障服务的正常运行，我们可能会收集您的设备型号、操作系统版本、微信版本、网络状态等信息，以及服务日志。</view>
+
+      <view class="sec-title">二、我们如何使用信息</view>
+      <view class="doc-para">我们收集的信息将用于以下目的：</view>
+      <view class="doc-para">1. 提供、维护和改进我们的服务</view>
+      <view class="doc-para">2. 进行身份验证，保护您的账号安全</view>
+      <view class="doc-para">3. 存储和展示您创建和上传的内容</view>
+      <view class="doc-para">4. 向您发送服务通知</view>
+      <view class="doc-para">5. 排查和解决服务故障，保障服务稳定运行</view>
+      <view class="doc-para">6. 遵守法律法规的要求</view>
+
+      <view class="sec-title">三、信息的存储和保护</view>
+      <view class="doc-para">1. 存储地点：您的个人信息存储在微信云开发的服务器上，位于中国境内。</view>
+      <view class="doc-para">2. 存储期限：我们会在为您提供服务所需的期限内保留您的个人信息。当您注销账号或删除相关内容时，我们会删除或匿名化处理您的个人信息。</view>
+      <view class="doc-para">3. 安全措施：我们采取了合理的技术手段和管理措施来保护您的个人信息安全，包括数据加密、访问控制、安全审计等。</view>
+
+      <view class="sec-title">四、信息的共享和披露</view>
+      <view class="doc-para">我们不会向任何第三方共享、出售或出租您的个人信息，除非：</view>
+      <view class="doc-para">1. 事先获得您的明确同意</view>
+      <view class="doc-para">2. 为了完成您要求的服务而必要的第三方服务提供商（如微信云开发服务）</view>
+      <view class="doc-para">3. 遵守法律法规的要求，或响应政府主管部门的合法要求</view>
+      <view class="doc-para">4. 在紧急情况下，为了保护您或其他用户的人身和财产安全</view>
+
+      <view class="sec-title">五、您的权利</view>
+      <view class="doc-para">您对您的个人信息享有以下权利：</view>
+      <view class="doc-para">1. 访问和更正：您可以在小程序中访问和更正您的个人信息。</view>
+      <view class="doc-para">2. 删除：您可以删除您创建的内容。如果您需要删除您的全部个人信息，可以联系我们。</view>
+      <view class="doc-para">3. 注销账号：如果您需要注销账号，可以联系我们，我们会在核实您的身份后删除您的个人信息。</view>
+      <view class="doc-para">4. 撤回同意：您可以通过微信设置撤回对我们获取您信息的授权。</view>
+
+      <view class="sec-title">六、未成年人保护</view>
+      <view class="doc-para">我们非常重视未成年人的个人信息保护。如果您是未成年人，请在监护人的指导下使用我们的服务。</view>
+
+      <view class="sec-title">七、隐私政策的更新</view>
+      <view class="doc-para">我们可能会适时更新本隐私政策。当隐私政策发生重大变更时，我们会通过小程序内通知或其他适当方式告知您。</view>
+
+      <view class="sec-title">八、联系我们</view>
+      <view class="doc-para">如果您对本隐私政策有任何疑问、意见或建议，可以通过以下方式联系我们：</view>
+      <view class="doc-para">- 邮箱：15098826982@163.com</view>
+    </view>
+  </scroll-view>
+</view>

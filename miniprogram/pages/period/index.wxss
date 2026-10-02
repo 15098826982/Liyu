@@ -1,0 +1,413 @@
+/* pages/period/index.wxss  蓝粉浪漫梦幻风 - 经期管理 */
+
+/* 沉浸式蓝粉渐变 + 网格纸 */
+.notebook-bg {
+  min-height: 100vh;
+}
+
+.page {
+  position: relative;
+  overflow: hidden;
+  font-family: "Comic Sans MS", "Marker Felt", "STKaiti", "KaiTi", "PingFang SC", sans-serif;
+}
+
+.content {
+  position: relative;
+  z-index: 5;
+  padding: 0 24rpx 200rpx;
+}
+
+/* ============ 漂浮装饰 ============ */
+.deco { position: absolute; z-index: 0; pointer-events: none; }
+.deco-heart1 { top: 14%; right: 8%; font-size: 22px; animation: floatY 3s ease-in-out infinite; }
+.deco-star1 { top: 20%; left: 10%; font-size: 16px; animation: twinkle 2s ease-in-out infinite; }
+.deco-cloud1 { top: 12%; left: 30%; font-size: 26px; opacity: 0.7; animation: cloudMove 5s ease-in-out infinite; }
+@keyframes floatY { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@keyframes twinkle { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.8); } }
+@keyframes cloudMove { 0%,100% { transform: translateX(0); } 50% { transform: translateX(10px); } }
+
+/* 顶部 */
+.nb-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16rpx 10rpx 4rpx;
+}
+
+.nb-date {
+  text-align: center;
+  flex: 1;
+}
+
+.nb-month {
+  font-size: 48rpx;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 2rpx;
+  transform: rotate(-1deg);
+  text-shadow: 0 2rpx 8rpx rgba(186, 104, 200, 0.45);
+}
+
+.nb-year {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: 4rpx;
+}
+
+.nb-cal-icon {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  font-size: 36rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.15s ease;
+}
+.nb-cal-icon:active { transform: scale(0.9); }
+
+/* 老公提示 */
+.nb-tip {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  margin: 20rpx 0 10rpx;
+  padding: 20rpx 24rpx;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  border-radius: 24rpx;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+.nb-tip-icon { font-size: 36rpx; flex-shrink: 0; }
+.nb-tip-text { font-size: 26rpx; color: #8D9AA8; line-height: 1.5; flex: 1; }
+
+/* 日历卡片 */
+.nb-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 40rpx;
+  padding: 24rpx 20rpx 20rpx;
+  box-shadow: 0 8rpx 30rpx rgba(186, 104, 200, 0.15);
+  margin-top: 16rpx;
+}
+
+/* 月份切换 */
+.nb-month-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20rpx 16rpx;
+  border-bottom: 1px dashed rgba(186, 104, 200, 0.2);
+  margin-bottom: 12rpx;
+}
+.nb-month-title {
+  font-size: 30rpx;
+  color: #37474F;
+  font-weight: 600;
+  letter-spacing: 2rpx;
+}
+.nb-nav-btn {
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(186, 104, 200, 0.3);
+  color: #BA68C8;
+  font-size: 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 星期标题 */
+.nb-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  padding-bottom: 10rpx;
+  margin-bottom: 8rpx;
+}
+.nb-wd {
+  text-align: center;
+  font-size: 24rpx;
+  color: #37474F;
+  font-weight: 600;
+}
+
+/* 日期格 */
+.nb-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4rpx;
+}
+.nb-cell {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rpx;
+  box-sizing: border-box;
+}
+.nb-cell.nb-empty { visibility: hidden; }
+
+.nb-day-wrap {
+  position: relative;
+  width: 64rpx;
+  height: 64rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.nb-day {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24rpx;
+  position: relative;
+  overflow: hidden;
+}
+.nb-day-text {
+  position: relative;
+  z-index: 2;
+  font-weight: 600;
+}
+.nb-day-plain {
+  font-size: 24rpx;
+  color: #999;
+  font-weight: 500;
+}
+
+/* 经期：粉色实心 */
+.nb-day.nb-period {
+  background: #F06292;
+  color: #fff;
+}
+
+/* 预测经期：粉色斜纹 */
+.nb-day.nb-predicted_period {
+  background: #F8BBD0 repeating-linear-gradient(45deg, rgba(240, 98, 146, 0.5) 0 4rpx, transparent 4rpx 8rpx);
+  color: #C2185B;
+}
+
+/* 排卵期：蓝色斜纹 */
+.nb-day.nb-ovulation {
+  background: #B3E5FC repeating-linear-gradient(45deg, rgba(41, 182, 246, 0.5) 0 4rpx, transparent 4rpx 8rpx);
+  color: #0288D1;
+}
+
+/* 排卵日：紫色斜纹 */
+.nb-day.nb-ovulation_day {
+  background: #E1BEE7 repeating-linear-gradient(45deg, rgba(186, 104, 200, 0.5) 0 4rpx, transparent 4rpx 8rpx);
+  color: #8E24AA;
+}
+
+/* 今天的圆圈 */
+.nb-today-circle {
+  position: absolute;
+  inset: -6rpx;
+  border: 3rpx solid #F06292;
+  border-radius: 50%;
+  z-index: 3;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+.nb-today-text {
+  position: absolute;
+  top: -14rpx;
+  font-size: 18rpx;
+  color: #F06292;
+  background: #fff;
+  padding: 0 6rpx;
+  border-radius: 6rpx;
+  line-height: 1.4;
+}
+
+/* 图例 */
+.nb-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16rpx;
+  margin-top: 20rpx;
+  padding-top: 16rpx;
+  border-top: 1px dashed rgba(186, 104, 200, 0.2);
+}
+.nb-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+}
+.nb-legend-dot {
+  width: 28rpx;
+  height: 28rpx;
+  border-radius: 50%;
+}
+.nb-legend-dot.nb-period { background: #F06292; }
+.nb-legend-dot.nb-predicted_period {
+  background: #F8BBD0 repeating-linear-gradient(45deg, rgba(240, 98, 146, 0.5) 0 4rpx, transparent 4rpx 8rpx);
+}
+.nb-legend-dot.nb-ovulation {
+  background: #B3E5FC repeating-linear-gradient(45deg, rgba(41, 182, 246, 0.5) 0 4rpx, transparent 4rpx 8rpx);
+}
+.nb-legend-dot.nb-ovulation_day {
+  background: #E1BEE7 repeating-linear-gradient(45deg, rgba(186, 104, 200, 0.5) 0 4rpx, transparent 4rpx 8rpx);
+}
+.nb-legend-text {
+  font-size: 22rpx;
+  color: #37474F;
+}
+.nb-legend-help {
+  margin-left: auto;
+  width: 36rpx;
+  height: 36rpx;
+  border-radius: 50%;
+  border: 1px solid rgba(186, 104, 200, 0.3);
+  color: #8D9AA8;
+  font-size: 24rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nb-empty-tip {
+  margin-top: 16rpx;
+  text-align: center;
+  font-size: 24rpx;
+  color: #8D9AA8;
+}
+
+/* 记录按钮 */
+.nb-record {
+  margin-top: 28rpx;
+  padding: 28rpx 32rpx;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 40rpx;
+  box-shadow: 0 8rpx 30rpx rgba(186, 104, 200, 0.15);
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+}
+.nb-record-icon {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  background: #F8BBD0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40rpx;
+  flex-shrink: 0;
+}
+.nb-record-text {
+  flex: 1;
+  font-size: 32rpx;
+  color: #37474F;
+  font-weight: 600;
+}
+.nb-record-arrow {
+  font-size: 40rpx;
+  color: #8D9AA8;
+}
+.nb-record-disabled .nb-record-text {
+  color: #B0BEC5;
+  font-weight: 500;
+  font-size: 28rpx;
+}
+
+/* 记录弹窗 */
+.nb-form {
+  padding: 28rpx 32rpx 32rpx;
+}
+.nb-form-title {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #37474F;
+  text-align: center;
+  margin-bottom: 20rpx;
+}
+.nb-form-scroll {
+  max-height: 60vh;
+}
+.nb-form-row {
+  margin-bottom: 20rpx;
+}
+.nb-form-label {
+  font-size: 26rpx;
+  color: #37474F;
+  font-weight: 600;
+  margin-bottom: 10rpx;
+  display: block;
+}
+.nb-form-value {
+  padding: 16rpx 24rpx;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 16rpx;
+  border: 1px solid rgba(186, 104, 200, 0.25);
+  font-size: 26rpx;
+  color: #37474F;
+}
+.nb-opt-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+}
+.nb-opt {
+  padding: 12rpx 28rpx;
+  border-radius: 30rpx;
+  background: rgba(255, 255, 255, 0.85);
+  font-size: 26rpx;
+  color: #37474F;
+  border: 1px solid rgba(186, 104, 200, 0.25);
+  transition: all 0.15s;
+}
+.nb-opt.nb-opt-on {
+  background: #FCE4EC;
+  color: #BA68C8;
+  border-color: #F06292;
+}
+.nb-form-textarea {
+  width: 100%;
+  min-height: 120rpx;
+  padding: 16rpx 20rpx;
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 16rpx;
+  border: 1px solid rgba(186, 104, 200, 0.25);
+  font-size: 26rpx;
+  color: #37474F;
+}
+.nb-form-actions {
+  display: flex;
+  gap: 20rpx;
+  margin-top: 28rpx;
+}
+.nb-btn {
+  flex: 1;
+  padding: 22rpx 0;
+  text-align: center;
+  border-radius: 40rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+}
+.nb-btn-ghost {
+  background: rgba(255, 255, 255, 0.85);
+  color: #37474F;
+  border: 1px solid rgba(186, 104, 200, 0.4);
+}
+.nb-btn-primary {
+  background: linear-gradient(135deg, #CE93D8 0%, #BA68C8 100%);
+  color: #fff;
+  box-shadow: 0 6rpx 20rpx rgba(186, 104, 200, 0.35);
+}
+.nb-btn-loading {
+  opacity: 0.7;
+}

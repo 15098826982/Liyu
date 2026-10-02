@@ -1,0 +1,9 @@
+{
+  "name": "dedupeOrders",
+  "version": "1.0.0",
+  "description": "临时：查找并清理 orders 重复记录",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

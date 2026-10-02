@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "温馨小窝",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "page-bg": "/components/page-bg/index",
+    "sidebar": "/components/sidebar/index",
+    "top-bar": "/components/top-bar/index"
+  }
+}

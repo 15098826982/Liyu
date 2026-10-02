@@ -1,0 +1,44 @@
+<page-bg />
+<view class="login-page">
+  <!-- 漂浮装饰（z-index 0，不遮挡内容，不影响点击） -->
+  <view class="deco deco-heart1">💕</view>
+  <view class="deco deco-star1">✨</view>
+  <view class="deco deco-cloud1">☁️</view>
+
+  <!-- 内容区 -->
+  <view class="login-content">
+    <!-- 顶部插画 -->
+    <view class="login-illu">
+      <image class="illu-img" src="/images/login-illustration.webp" mode="widthFix" />
+    </view>
+
+    <!-- 标题 -->
+    <view class="login-title">
+      <text class="title-main">情侣小窝</text>
+      <text class="title-heart">💕</text>
+    </view>
+    <view class="login-subtitle">和TA一起，记录每一个甜蜜瞬间</view>
+
+    <!-- 登录按钮（bindtap 直绑 onLogin，最标准写法） -->
+    <button
+      class="login-btn {{shakeBtn ? 'shake-on' : ''}}"
+      hover-class="btn-active"
+      bindtap="onLogin"
+    >
+      <text class="btn-text">💬 微信一键登录</text>
+    </button>
+
+    <!-- 协议（整行 bindtap 可点） -->
+    <view class="login-agree {{shakeAgree ? 'shake-on' : ''}}" bindtap="onToggleAgree">
+      <view class="agree-check {{agreed ? 'agree-checked' : ''}}">
+        <text class="agree-tick" wx:if="{{agreed}}">✓</text>
+      </view>
+      <view class="agree-text">
+        <text>我已阅读并同意</text>
+        <text class="agree-link" catchtap="onShowAgreement">《用户协议》</text>
+        <text>和</text>
+        <text class="agree-link" catchtap="onShowPrivacy">《隐私政策》</text>
+      </view>
+    </view>
+  </view>
+</view>

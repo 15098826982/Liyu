@@ -1,0 +1,27 @@
+# 依赖
+node_modules/
+cloudfunctions/**/node_modules/
+miniprogram/node_modules/
+miniprogram/miniprogram_npm/
+
+# 微信小程序私有/本地配置
+project.private.config.json
+
+# IDE / 工具
+.idea/
+.trae/
+.vscode/
+
+# 日志
+*.log
+logs/
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 个人/内部打磨文档（开源时默认不公开，如需公开可删除对应行）
+师徒进度.md
+项目打磨清单.md
+老婆点菜_开发说明书_云开发版.md
+design.md

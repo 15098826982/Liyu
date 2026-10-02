@@ -1,0 +1,6 @@
+<view class="page-bg {{bgUrl ? 'has-image' : ''}}">
+  <view wx:if="{{bgUrl}}" class="bg-img" style="background-image: url({{bgUrl}});"></view>
+  <view wx:if="{{bgUrl}}" class="bg-mask"></view>
+  <!-- 探针：只用于探测背景图 URL 是否失效（与背景同一 URL，走 HTTP 缓存） -->
+  <image wx:if="{{bgUrl}}" class="bg-probe" src="{{bgUrl}}" binderror="onBgError" />
+</view>

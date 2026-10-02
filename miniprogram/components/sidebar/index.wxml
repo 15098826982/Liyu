@@ -1,0 +1,35 @@
+<view class="sidebar">
+  <!-- 顶部：用户头像 + 昵称 -->
+  <view class="sidebar-top">
+    <view class="user-avatar-wrap">
+      <image class="user-avatar"
+             src="{{avatarUrl || (user.role === 'manager' ? '/images/default-avatar-husband.jpg' : '/images/default-avatar-wife.jpg')}}"
+             mode="aspectFill" />
+    </view>
+    <view class="user-name">{{user.nickname || (user.role === 'boss' ? '老婆' : '老公')}}</view>
+    <view class="user-role-tag">{{user.role === 'boss' ? '一家之主' : '管家'}}</view>
+  </view>
+
+  <!-- 中间：菜单列表 -->
+  <scroll-view class="sidebar-menus" scroll-y="{{true}}">
+    <view class="menu-item {{current === item.key ? 'menu-active' : ''}}"
+          wx:for="{{menus}}" wx:key="key"
+          hover-class="menu-hover"
+          data-path="{{item.path}}" data-key="{{item.key}}"
+          bindtap="onSwitch">
+      <text class="menu-emoji">{{item.emoji}}</text>
+      <text class="menu-label">{{item.label}}</text>
+    </view>
+  </scroll-view>
+
+  <!-- 底部：切换用户 -->
+  <view class="sidebar-bottom">
+    <view class="current-role" wx:if="{{user}}">
+      <image class="role-avatar"
+             src="{{avatarUrl || (user.role === 'manager' ? '/images/default-avatar-husband.jpg' : '/images/default-avatar-wife.jpg')}}"
+             mode="aspectFill" />
+      <text class="role-text">{{user.nickname || (user.role === 'boss' ? '老婆' : '老公')}}</text>
+    </view>
+    <view class="switch-user-btn tap-feedback" hover-class="tap-active" bindtap="onSwitchUser">切换身份</view>
+  </view>
+</view>

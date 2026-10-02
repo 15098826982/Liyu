@@ -1,0 +1,230 @@
+<page-bg />
+<view class="meal-page">
+  <!-- 漂浮装饰（z-index 低于内容） -->
+  <image class="deco deco-heart" src="/images/漂浮爱心_透明背景.webp" mode="aspectFit" />
+  <image class="deco deco-star" src="/images/漂浮星星_透明背景.webp" mode="aspectFit" />
+  <image class="deco deco-cloud" src="/images/小云朵_透明背景.webp" mode="aspectFit" />
+
+  <!-- 顶部导航 -->
+  <view class="top-nav" style="padding-top: {{statusBarHeight}}px;">
+    <view class="nav-back" hover-class="nav-back-active" bindtap="goBack">
+      <text class="nav-back-arrow">←</text>
+    </view>
+    <view class="nav-title">🍚 干饭</view>
+    <view class="nav-spacer"></view>
+  </view>
+
+  <!-- 搜索栏 -->
+  <view class="search-bar">
+    <view class="search-box {{searchFocus ? 'search-focus' : ''}}">
+      <text class="search-icon">🔍</text>
+      <input
+        class="search-input"
+        placeholder="搜索菜品..."
+        placeholder-class="search-ph"
+        value="{{searchKeyword}}"
+        confirm-type="search"
+        bindinput="onSearch"
+        bindfocus="onSearchFocus"
+        bindblur="onSearchBlur"
+      />
+    </view>
+  </view>
+
+  <!-- 主体：左分类 + 右列表 -->
+  <view class="meal-layout" style="height: calc(100vh - {{statusBarHeight}}px - 108px);">
+    <!-- 左侧分类导航 -->
+    <scroll-view class="cat-nav" scroll-y="{{true}}">
+      <view class="cat-item {{activeCategory === '' ? 'cat-active' : ''}}"
+            hover-class="cat-item-active"
+            data-cat="" bindtap="switchCategory">
+        <text class="cat-emoji">🍽️</text>
+        <text class="cat-name">全部</text>
+      </view>
+      <view class="cat-item {{activeCategory === item ? 'cat-active' : ''}}"
+            hover-class="cat-item-active"
+            wx:for="{{categories}}" wx:key="*this"
+            data-cat="{{item}}" bindtap="switchCategory">
+        <text class="cat-emoji">{{catIcons[item] || '🍽️'}}</text>
+        <text class="cat-name">{{item}}</text>
+      </view>
+      <view class="cat-item cat-add" hover-class="cat-item-active" bindtap="onShowManageCategory">
+        <text class="cat-emoji">⚙️</text>
+        <text class="cat-name">调整分类</text>
+      </view>
+    </scroll-view>
+
+    <!-- 右侧菜品区 -->
+    <view class="dish-area">
+      <view class="dish-area-header">
+        <text class="dish-area-title">📋 {{activeCategory || '全部菜品'}}</text>
+        <view class="dish-count">共 {{filteredDishes.length}} 道</view>
+      </view>
+
+      <scroll-view class="dish-list" scroll-y="{{true}}">
+        <!-- 空状态 -->
+        <view wx:if="{{filteredDishes.length === 0}}" class="empty-box">
+          <text class="empty-icon">🍽️</text>
+          <text class="empty-text">{{searchKeyword ? '没有找到相关菜品' : '还没有菜品哦，点击右下角＋添加吧'}}</text>
+        </view>
+
+        <!-- 菜品卡片 -->
+        <view class="dish-card" hover-class="card-press"
+              wx:for="{{filteredDishes}}" wx:key="_id"
+              style="animation-delay: {{index * 50}}ms">
+          <view class="dish-thumb">
+            <image wx:if="{{item.image}}" class="thumb-img" src="{{item.imageThumb || item.image}}" mode="aspectFill" lazy-load />
+            <image wx:else class="thumb-img" src="/images/default-dish.jpg" mode="aspectFill" lazy-load />
+          </view>
+          <view class="dish-info">
+            <text class="dish-name">{{item.name}}</text>
+            <text class="dish-desc" wx:if="{{item.desc}}">{{item.desc}}</text>
+            <view class="dish-tags" wx:if="{{item.isHot || item.isNew}}">
+              <text class="tag tag-hot" wx:if="{{item.isHot}}">🔥 热门</text>
+              <text class="tag tag-new" wx:if="{{item.isNew}}">✨ 新品</text>
+            </view>
+          </view>
+          <!-- boss: 加入今日菜单 -->
+          <view wx:if="{{user.role === 'boss'}}"
+                class="dish-plus {{todayOrderedIds.indexOf(item._id) > -1 ? 'plus-done' : (cartIds.indexOf(item._id) > -1 ? 'plus-incart' : '')}}"
+                hover-class="plus-bounce"
+                data-id="{{item._id}}" bindtap="toggleCart">
+            <text wx:if="{{todayOrderedIds.indexOf(item._id) > -1 || cartIds.indexOf(item._id) > -1}}">✓</text>
+            <text wx:else>+</text>
+          </view>
+          <!-- manager: 改/删 -->
+          <view wx:else class="dish-actions">
+            <view class="mini-btn mini-edit" hover-class="mini-active" data-id="{{item._id}}" bindtap="onEdit">改</view>
+            <view class="mini-btn mini-del" hover-class="mini-active" data-id="{{item._id}}" data-name="{{item.name}}" bindtap="onDelete">删</view>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+
+  <!-- 右下角悬浮添加按钮 -->
+  <view class="fab-add" hover-class="fab-active" bindtap="toggleAdd">
+    <text class="fab-plus">＋</text>
+  </view>
+
+  <!-- 购物车栏 -->
+  <view class="cart-bar" wx:if="{{user.role === 'boss' && cart.length > 0}}" bindtap="onShowCart">
+    <view class="cart-badge">{{cart.length}}</view>
+    <text class="cart-text">查看清单</text>
+    <view class="cart-go">确认下单</view>
+  </view>
+
+  <!-- 购物车清单 popup -->
+  <van-popup show="{{showCart}}" position="bottom" round bind:close="onHideCart">
+    <view class="sheet">
+      <view class="sheet-title">今日清单</view>
+      <van-empty wx:if="{{cart.length === 0}}" description="还没选菜" />
+      <view class="cart-item" wx:for="{{cart}}" wx:key="_id">
+        <image class="cart-item-img" src="{{item.imageThumb || item.image || '/images/default-dish.jpg'}}" mode="aspectFill" lazy-load />
+        <view class="cart-item-info">
+          <text class="dish-name">{{item.name}}</text>
+          <text class="cart-cat">{{item.category}}</text>
+        </view>
+        <van-button type="danger" size="mini" plain round data-id="{{item._id}}" bind:click="onRemoveFromCart">移除</van-button>
+      </view>
+      <van-button type="primary" block round loading="{{submitting}}" custom-class="btn-glow confirm-btn" wx:if="{{cart.length > 0}}" bind:click="onConfirmOrder">确认下单</van-button>
+    </view>
+  </van-popup>
+
+  <!-- 分类管理 popup -->
+  <van-popup show="{{showManageCategory}}" position="bottom" round bind:close="onHideManageCategory">
+    <view class="sheet">
+      <view class="sheet-title">调整分类</view>
+
+      <!-- 已有分类列表 -->
+      <view class="mgr-list">
+        <view class="mgr-item" wx:for="{{categories}}" wx:key="*this">
+          <text class="mgr-name">{{item}}</text>
+          <view class="mgr-actions">
+            <view class="mgr-btn mgr-edit" data-name="{{item}}" bindtap="onRenameCategory">重命名</view>
+            <view class="mgr-btn mgr-del" data-name="{{item}}" bindtap="onDeleteCategory">删除</view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 添加新分类 -->
+      <view class="mgr-add-row">
+        <van-field value="{{newCategoryName}}" placeholder="{{ph.newCategoryName}}" border="{{ true }}" bind:change="onNewCatInput" bind:focus="onFieldFocus" bind:blur="onFieldBlur" data-ph="newCategoryName" />
+        <van-button type="primary" round bind:click="onAddCategory">添加</van-button>
+      </view>
+    </view>
+  </van-popup>
+
+  <!-- 重命名分类 popup -->
+  <van-popup show="{{showRename}}" position="bottom" round bind:close="onHideRename">
+    <view class="sheet">
+      <view class="sheet-title">重命名分类</view>
+      <view class="rename-old">原分类：{{renameOld}}</view>
+      <van-field value="{{renameNew}}" placeholder="{{ph.renameNew}}" border="{{ true }}" bind:change="onRenameInput" bind:focus="onFieldFocus" bind:blur="onFieldBlur" data-ph="renameNew" />
+      <view class="edit-btns">
+        <van-button type="default" block round bind:click="onHideRename">取消</van-button>
+        <van-button type="primary" block round bind:click="onConfirmRename">确定</van-button>
+      </view>
+    </view>
+  </van-popup>
+
+  <!-- 添加菜品 popup -->
+  <van-popup show="{{showAdd}}" position="bottom" round bind:close="toggleAdd">
+    <view class="sheet">
+      <view class="sheet-title">添加菜品</view>
+      <view class="img-picker" bindtap="onChooseDishImage">
+        <image wx:if="{{addForm.image}}" class="picker-preview" src="{{addForm.image}}" mode="aspectFill" />
+        <view wx:else class="picker-placeholder">
+          <text class="picker-emoji">📷</text>
+          <text class="picker-text">添加图片</text>
+        </view>
+        <view class="picker-clear" wx:if="{{addForm.image}}" catchtap="onClearDishImage">✕</view>
+      </view>
+      <view class="picker-tip">不上传将使用默认美食图</view>
+      <van-field value="{{addForm.name}}" placeholder="{{ph.addName}}" border="{{ true }}" bind:change="onAddName" bind:focus="onFieldFocus" bind:blur="onFieldBlur" data-ph="addName" />
+      <view class="cat-picker-label">选择分类</view>
+      <view class="cat-chips">
+        <view class="cat-chip {{addForm.category === item ? 'chip-active' : ''}}"
+              wx:for="{{categories}}" wx:key="*this"
+              data-cat="{{item}}" bindtap="onPickCategory">{{item}}</view>
+      </view>
+      <view class="edit-btns">
+        <van-button type="default" block round bind:click="toggleAdd">取消</van-button>
+        <van-button type="primary" block round bind:click="onAddDish">添加</van-button>
+      </view>
+    </view>
+  </van-popup>
+
+  <!-- 编辑菜品 popup -->
+  <van-popup show="{{showEdit}}" position="bottom" round bind:close="onHideEdit">
+    <view class="sheet">
+      <view class="sheet-title">编辑菜品</view>
+      <view class="img-picker" bindtap="onChooseEditImage">
+        <image wx:if="{{editForm.image}}" class="picker-preview" src="{{editForm.image}}" mode="aspectFill" />
+        <view wx:else class="picker-placeholder">
+          <text class="picker-emoji">📷</text>
+          <text class="picker-text">修改图片</text>
+        </view>
+        <view class="picker-clear" wx:if="{{editForm.image}}" catchtap="onClearEditImage">✕</view>
+      </view>
+      <van-field value="{{editForm.name}}" placeholder="{{ph.editName}}" border="{{ true }}" bind:change="onEditName" bind:focus="onFieldFocus" bind:blur="onFieldBlur" data-ph="editName" />
+      <view class="cat-picker-label">选择分类</view>
+      <view class="cat-chips">
+        <view class="cat-chip {{editForm.category === item ? 'chip-active' : ''}}"
+              wx:for="{{categories}}" wx:key="*this"
+              data-cat="{{item}}" bindtap="onPickEditCategory">{{item}}</view>
+      </view>
+      <view class="edit-btns">
+        <van-button type="default" block round bind:click="onHideEdit">取消</van-button>
+        <van-button type="primary" block round bind:click="onConfirmEdit">保存</van-button>
+      </view>
+    </view>
+  </van-popup>
+
+  <!-- 删除确认 dialog -->
+  <van-dialog use-slot show="{{showDelDialog}}" title="删除菜品"
+    show-cancel-button confirm-button-text="删除" confirm-button-color="#ff4d4f"
+    bind:confirm="confirmDelete" bind:cancel="onCancelDelete">
+    <view class="dialog-content">确认删除"{{deleteTarget.name}}"？</view>
+  </van-dialog>
+</view>

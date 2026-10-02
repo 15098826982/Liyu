@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "历史",
+  "navigationBarBackgroundColor": "#81D4FA",
+  "navigationBarTextStyle": "white",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "page-bg": "/components/page-bg/index"
+  }
+}

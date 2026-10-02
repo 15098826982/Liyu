@@ -1,0 +1,450 @@
+/* pages/memo/index.wxss  便签墙蓝粉浪漫风 */
+
+/* 蓝粉渐变背景 */
+.notebook-bg {
+  min-height: 100vh;
+}
+
+.page {
+  position: relative;
+  overflow: hidden;
+  font-family: "Comic Sans MS", "Marker Felt", "STKaiti", "KaiTi", "PingFang SC", sans-serif;
+}
+
+.content {
+  position: relative;
+  z-index: 5;
+  padding: 0 32rpx 80rpx;
+}
+
+/* ============ 漂浮装饰 ============ */
+.deco { position: absolute; z-index: 0; pointer-events: none; }
+.deco-heart1 { top: 14%; right: 8%; font-size: 22px; animation: floatY 3s ease-in-out infinite; }
+.deco-star1 { top: 20%; left: 10%; font-size: 16px; animation: twinkle 2s ease-in-out infinite; }
+.deco-cloud1 { top: 12%; left: 30%; font-size: 26px; opacity: 0.7; animation: cloudMove 5s ease-in-out infinite; }
+@keyframes floatY { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@keyframes twinkle { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.8); } }
+@keyframes cloudMove { 0%,100% { transform: translateX(0); } 50% { transform: translateX(10px); } }
+
+/* ============ 右下角悬浮添加按钮 ============ */
+.mm-fab {
+  position: fixed;
+  right: 50rpx;
+  bottom: 70rpx;
+  width: 110rpx;
+  height: 110rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #CE93D8 0%, #BA68C8 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 4rpx 0 #8E24AA,
+    0 8rpx 20rpx rgba(186, 104, 200, 0.5);
+  border: 3rpx solid rgba(255, 255, 255, 0.6);
+  z-index: 60;
+  transition: transform 0.15s ease;
+}
+.mm-fab.tap-active {
+  transform: scale(0.9) translateY(2rpx);
+  box-shadow:
+    0 2rpx 0 #8E24AA,
+    0 4rpx 12rpx rgba(186, 104, 200, 0.4);
+}
+.mm-fab-icon {
+  font-size: 60rpx;
+  color: #fff;
+  font-weight: 300;
+  line-height: 1;
+}
+
+/* ============ 标题区 ============ */
+.mm-title {
+  text-align: center;
+  padding: 20rpx 0 24rpx;
+  transform: rotate(-0.5deg);
+}
+.mm-title-main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12rpx;
+}
+.mm-title-icon {
+  font-size: 44rpx;
+}
+.mm-title-text {
+  font-size: 44rpx;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 2rpx;
+  text-shadow: 0 2rpx 8rpx rgba(186, 104, 200, 0.45);
+}
+.mm-title-sub {
+  font-size: 26rpx;
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: 8rpx;
+  letter-spacing: 2rpx;
+}
+
+/* ============ 分类标签 ============ */
+.mm-tabs {
+  display: flex;
+  white-space: nowrap;
+  padding: 8rpx 0 28rpx;
+}
+.mm-tab {
+  display: inline-block;
+  padding: 10rpx 28rpx;
+  margin-right: 16rpx;
+  font-size: 26rpx;
+  color: #37474F;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 28rpx;
+  transition: all 0.15s ease;
+}
+.mm-tab-active {
+  background: #FF80AB;
+  border-color: #FF80AB;
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 2rpx 10rpx rgba(255, 128, 171, 0.35);
+}
+
+/* ============ 便签墙 双列 ============ */
+.mm-wall {
+  display: flex;
+  gap: 24rpx;
+}
+.mm-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+  min-width: 0;
+}
+
+/* 便签卡（保持彩色属性，颜色由内联 style 控制） */
+.mm-note {
+  position: relative;
+  border-radius: 16rpx;
+  padding: 28rpx 70rpx 24rpx 22rpx;
+  box-shadow: 0 8rpx 30rpx rgba(186, 104, 200, 0.18);
+  transition: filter 0.15s ease, box-shadow 0.15s ease;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-sizing: border-box;
+}
+/* hover 用 filter 避免覆盖 inline transform */
+.mm-note.tap-active {
+  filter: brightness(0.96);
+  box-shadow: 0 2rpx 6rpx rgba(186, 104, 200, 0.25);
+}
+
+/* 图钉 */
+.mm-pin {
+  position: absolute;
+  top: -12rpx;
+  left: 16rpx;
+  font-size: 30rpx;
+  transform: rotate(-15deg);
+  filter: drop-shadow(0 2rpx 2rpx rgba(0, 0, 0, 0.2));
+  z-index: 2;
+}
+/* 胶带 */
+.mm-tape {
+  position: absolute;
+  top: -8rpx;
+  left: 50%;
+  transform: translateX(-50%) rotate(-3deg);
+  width: 80rpx;
+  height: 24rpx;
+  background: rgba(255, 255, 255, 0.8);
+  border: 1rpx solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+
+/* 便签内容 */
+.mm-note-title {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #37474F;
+  margin-bottom: 10rpx;
+  line-height: 1.4;
+  word-break: break-all;
+}
+.mm-note-content {
+  font-size: 24rpx;
+  color: #37474F;
+  line-height: 1.55;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+  overflow: hidden;
+  word-break: break-all;
+  margin-bottom: 18rpx;
+}
+.mm-note-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 12rpx;
+  border-top: 1rpx dashed rgba(255, 255, 255, 0.6);
+}
+.mm-creator {
+  display: flex;
+  align-items: center;
+  gap: 6rpx;
+  min-width: 0;
+}
+.mm-creator-avatar {
+  font-size: 24rpx;
+  line-height: 1;
+}
+.mm-creator-name {
+  font-size: 20rpx;
+  color: #8D9AA8;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.mm-date-corner {
+  position: absolute;
+  top: 12rpx;
+  right: 14rpx;
+  font-size: 20rpx;
+  color: #8D9AA8;
+  z-index: 1;
+}
+
+/* 完成圆圈 右下 */
+.mm-check {
+  position: absolute;
+  right: 16rpx;
+  bottom: 16rpx;
+  width: 44rpx;
+  height: 44rpx;
+  border-radius: 50%;
+  border: 3rpx solid #F06292;
+  background: rgba(255, 255, 255, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+}
+.mm-check-icon {
+  font-size: 26rpx;
+  color: #F06292;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* 完成态 */
+.mm-note-done {
+  opacity: 0.6;
+}
+.mm-note-done .mm-note-content {
+  text-decoration: line-through;
+  color: #8D9AA8;
+}
+.mm-note-done .mm-note-title {
+  text-decoration: line-through;
+}
+.mm-note-done .mm-check {
+  background: #F06292;
+}
+
+/* ============ 空状态 ============ */
+.mm-empty {
+  text-align: center;
+  padding: 100rpx 40rpx;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 32rpx;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  margin-top: 20rpx;
+}
+.mm-empty-emoji {
+  font-size: 96rpx;
+  margin-bottom: 20rpx;
+}
+.mm-empty-title {
+  font-size: 32rpx;
+  color: #37474F;
+  font-weight: 600;
+  margin-bottom: 12rpx;
+}
+.mm-empty-sub {
+  font-size: 26rpx;
+  color: #8D9AA8;
+}
+
+/* ============ 弹窗表单 ============ */
+.mm-form {
+  padding: 56rpx 36rpx 60rpx;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 40rpx 40rpx 0 0;
+}
+.mm-form-title {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #37474F;
+  text-align: center;
+  margin-bottom: 40rpx;
+  letter-spacing: 2rpx;
+}
+.mm-form-row {
+  margin-bottom: 32rpx;
+}
+.mm-form-label {
+  font-size: 26rpx;
+  color: #8D9AA8;
+  margin-bottom: 16rpx;
+  font-weight: 500;
+  line-height: 1.4;
+}
+.mm-form-input {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(186, 104, 200, 0.25);
+  border-radius: 16rpx;
+  padding: 20rpx 24rpx;
+  font-size: 28rpx;
+  line-height: 1.5;
+  height: 80rpx;
+  color: #37474F;
+  box-sizing: border-box;
+}
+.mm-form-textarea {
+  width: 100%;
+  min-height: 140rpx;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(186, 104, 200, 0.25);
+  border-radius: 16rpx;
+  padding: 20rpx 24rpx;
+  font-size: 28rpx;
+  line-height: 1.5;
+  color: #37474F;
+  box-sizing: border-box;
+}
+.mm-ph {
+  color: #B0BEC5;
+  line-height: 1.5;
+}
+
+/* 颜色选择 */
+.mm-color-row {
+  display: flex;
+  gap: 16rpx;
+}
+.mm-color-item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80rpx;
+  border-radius: 12rpx;
+  border: 3rpx solid rgba(255, 255, 255, 0.5);
+  transition: all 0.15s ease;
+}
+.mm-color-active {
+  border-color: #F06292;
+  box-shadow: 0 2rpx 10rpx rgba(240, 98, 146, 0.35);
+  transform: scale(1.04);
+}
+.mm-color-label {
+  font-size: 24rpx;
+  color: #37474F;
+  font-weight: 600;
+}
+
+/* chips */
+.mm-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14rpx;
+}
+.mm-chip {
+  padding: 12rpx 28rpx;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(186, 104, 200, 0.25);
+  border-radius: 28rpx;
+  font-size: 26rpx;
+  color: #8D9AA8;
+  transition: all 0.15s ease;
+}
+.mm-chip-active {
+  background: #FF80AB;
+  border-color: #FF80AB;
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 2rpx 10rpx rgba(255, 128, 171, 0.35);
+}
+
+/* 待办开关行 */
+.mm-todo-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.mm-todo-label {
+  margin-bottom: 0;
+}
+
+/* 按钮组 */
+.mm-form-btns {
+  display: flex;
+  gap: 20rpx;
+  margin-top: 16rpx;
+}
+.mm-form-submit {
+  flex: 1;
+  height: 88rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #CE93D8 0%, #BA68C8 100%);
+  color: #fff;
+  border-radius: 40rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+  padding: 0;
+  border: none;
+  letter-spacing: 2rpx;
+  box-shadow: 0 6rpx 20rpx rgba(186, 104, 200, 0.35);
+}
+.mm-form-submit::after {
+  border: none;
+}
+.mm-form-submit[disabled] {
+  background: #E1BEE7;
+  color: #fff;
+}
+.mm-form-del {
+  width: 180rpx;
+  height: 88rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.85);
+  color: #F06292;
+  border: 1px solid #F06292;
+  border-radius: 40rpx;
+  font-size: 28rpx;
+  padding: 0;
+}
+.mm-form-del::after {
+  border: none;
+}
+
+/* ============ 交互动画 ============ */
+.tap-feedback.tap-active,
+.tap-feedback:active {
+  background-color: rgba(186, 104, 200, 0.08) !important;
+}
+.mm-note.list-enter {
+  animation: mmFadeIn 0.3s ease-out both;
+}
+@keyframes mmFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}

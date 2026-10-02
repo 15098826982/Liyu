@@ -1,0 +1,68 @@
+<page-bg />
+<view class="create-page">
+  <!-- 漂浮装饰（少量，z-index 低于内容） -->
+  <view class="deco deco-heart">💕</view>
+  <view class="deco deco-star">✨</view>
+  <view class="deco deco-cloud">☁️</view>
+
+  <!-- 顶部导航 -->
+  <view class="top-nav" style="padding-top: {{statusBarHeight}}px;">
+    <view class="nav-back" hover-class="nav-back-active" bindtap="goBack">
+      <text class="nav-back-arrow">←</text>
+    </view>
+    <view class="nav-title">创建家庭</view>
+    <view class="nav-right"></view>
+  </view>
+
+  <!-- 主插画（高级版） -->
+  <view class="hero">
+    <image class="hero-img" src="/images/create-family-illustration.webp" mode="aspectFit" />
+  </view>
+
+  <!-- 标题 -->
+  <view class="title-area">
+    <view class="main-title">
+      <text class="title-icon">🏡</text>
+      <text class="title-text">创建我们的小窝</text>
+      <text class="title-icon">💕</text>
+    </view>
+    <view class="sub-title">创建后会得到一个6位邀请码，分享给TA，一起加入温馨小窝</view>
+  </view>
+
+  <!-- 表单 -->
+  <view class="form-area">
+    <view class="form-label">给小窝起个名字</view>
+    <input
+      class="form-input {{inputFocus ? 'input-focus' : ''}}"
+      placeholder="{{ph.name}}"
+      placeholder-class="input-ph"
+      value="{{name}}"
+      bindinput="onInput"
+      maxlength="20"
+      bindfocus="onInputFocus"
+      bindblur="onInputBlur"
+      data-ph="name"
+    />
+    <button class="create-btn {{creating ? 'btn-loading' : ''}}" hover-class="btn-active" bindtap="onCreate">
+      <text class="btn-emoji">💫</text>
+      <text>{{creating ? '创建中...' : '创建我们的小窝'}}</text>
+    </button>
+    <view class="join-link" hover-class="join-link-active" bindtap="goJoin">已有邀请码？去加入家庭 →</view>
+  </view>
+
+  <!-- 邀请码展示弹窗 -->
+  <view class="code-mask" wx:if="{{created}}">
+    <view class="code-card">
+      <view class="code-emoji">🎉</view>
+      <view class="code-title">{{codeTitle}}</view>
+      <view class="code-sub">{{familyName}}</view>
+      <view class="code-label">家庭邀请码</view>
+      <view class="code-box tap-feedback" hover-class="tap-active" bindtap="onCopyCode">
+        <text class="code-text">{{familyCode}}</text>
+        <text class="code-copy">点击复制</text>
+      </view>
+      <view class="code-tip">把这串邀请码发给另一半，对方在"加入家庭"里输入即可</view>
+      <button class="code-next btn-glow" hover-class="btn-active" bindtap="onGoNext">下一步，选择身份</button>
+    </view>
+  </view>
+</view>

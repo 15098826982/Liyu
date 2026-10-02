@@ -1,0 +1,530 @@
+/* pages/checkin/index.wxss  蓝粉浪漫梦幻风 */
+
+/* 蓝粉渐变背景 */
+.notebook-bg {
+  min-height: 100vh;
+}
+
+.page {
+  position: relative;
+  overflow: hidden;
+  font-family: "Comic Sans MS", "Marker Felt", "STKaiti", "KaiTi", "PingFang SC", sans-serif;
+}
+
+.content {
+  position: relative;
+  z-index: 5;
+  padding: 0 32rpx 80rpx;
+}
+
+/* ============ 漂浮装饰 ============ */
+.deco { position: absolute; z-index: 0; pointer-events: none; }
+.deco-heart1 { top: 14%; right: 8%; font-size: 22px; animation: floatY 3s ease-in-out infinite; }
+.deco-star1 { top: 20%; left: 10%; font-size: 16px; animation: twinkle 2s ease-in-out infinite; }
+.deco-cloud1 { top: 12%; left: 30%; font-size: 26px; opacity: 0.7; animation: cloudMove 5s ease-in-out infinite; }
+@keyframes floatY { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@keyframes twinkle { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.8); } }
+@keyframes cloudMove { 0%,100% { transform: translateX(0); } 50% { transform: translateX(10px); } }
+
+/* ============ 右下角悬浮添加按钮 ============ */
+.nb-fab {
+  position: fixed;
+  right: 50rpx;
+  bottom: 70rpx;
+  width: 110rpx;
+  height: 110rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #CE93D8 0%, #BA68C8 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 4rpx 0 #8E24AA,
+    0 8rpx 20rpx rgba(186, 104, 200, 0.5);
+  border: 3rpx solid rgba(255, 255, 255, 0.6);
+  z-index: 60;
+  transition: transform 0.15s ease;
+}
+.nb-fab.tap-active {
+  transform: scale(0.9) translateY(2rpx);
+  box-shadow:
+    0 2rpx 0 #8E24AA,
+    0 4rpx 12rpx rgba(186, 104, 200, 0.4);
+}
+.nb-fab-icon {
+  font-size: 60rpx;
+  color: #fff;
+  font-weight: 300;
+  line-height: 1;
+}
+
+/* ============ 标题区 ============ */
+.nb-title {
+  text-align: center;
+  padding: 20rpx 0 28rpx;
+  transform: rotate(-0.5deg);
+}
+.nb-title-main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12rpx;
+}
+.nb-title-icon {
+  font-size: 44rpx;
+}
+.nb-title-text {
+  font-size: 44rpx;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 2rpx;
+  text-shadow: 0 2rpx 8rpx rgba(186, 104, 200, 0.45);
+}
+.nb-title-sub {
+  font-size: 26rpx;
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: 8rpx;
+  letter-spacing: 2rpx;
+}
+
+/* ============ 两列网格 ============ */
+.nb-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24rpx;
+}
+
+/* ============ 目标卡片 ============ */
+.nb-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 32rpx;
+  padding: 24rpx 22rpx 22rpx;
+  box-shadow: 0 8rpx 30rpx rgba(186, 104, 200, 0.15);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.nb-card-checked {
+  border-color: rgba(255, 128, 171, 0.8);
+  background: rgba(255, 255, 255, 0.92);
+}
+.nb-card-done {
+  border-color: #FF80AB;
+  border-width: 2rpx;
+  background: rgba(255, 240, 246, 0.92);
+  box-shadow: 0 8rpx 30rpx rgba(240, 98, 146, 0.3);
+}
+.nb-card-done .nb-card-title {
+  color: #8D9AA8;
+}
+/* 愿望型：淡紫色调，区别于打卡型粉色 */
+.nb-card-wish {
+  border-color: rgba(186, 104, 200, 0.35);
+  background: rgba(255, 255, 255, 0.88);
+}
+.nb-card-wish.nb-card-done {
+  border-color: #FF80AB;
+  border-width: 2rpx;
+  background: rgba(255, 240, 246, 0.92);
+  box-shadow: 0 8rpx 30rpx rgba(240, 98, 146, 0.3);
+}
+/* 愿望标签 */
+.nb-mode-tag {
+  font-size: 18rpx;
+  color: #8E24AA;
+  background: #E1BEE7;
+  padding: 2rpx 10rpx;
+  border-radius: 10rpx;
+  margin-left: 6rpx;
+  flex-shrink: 0;
+}
+
+/* 图标 + 标题 */
+.nb-card-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 8rpx;
+  margin-bottom: 8rpx;
+  min-height: 44rpx;
+  padding-right: 36rpx;
+}
+
+/* 卡片删除按钮（右上角） */
+.nb-card-del {
+  position: absolute;
+  top: 10rpx;
+  right: 12rpx;
+  width: 36rpx;
+  height: 36rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.6);
+  color: #8D9AA8;
+  font-size: 28rpx;
+  line-height: 32rpx;
+  text-align: center;
+  z-index: 5;
+  font-weight: 400;
+}
+.nb-card-del.tap-active {
+  background: rgba(240, 98, 146, 0.2);
+  color: #F06292;
+}
+.nb-card-icon {
+  font-size: 36rpx;
+  line-height: 1.2;
+  flex-shrink: 0;
+}
+.nb-card-title {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #37474F;
+  flex: 1;
+  line-height: 1.3;
+  word-break: break-all;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+/* 描述 */
+.nb-card-desc {
+  font-size: 24rpx;
+  color: #8D9AA8;
+  margin-bottom: 16rpx;
+  line-height: 1.5;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.nb-card-desc-empty {
+  color: #B0BEC5;
+}
+
+/* 进度条 */
+.nb-progress {
+  height: 12rpx;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 6rpx;
+  overflow: hidden;
+  margin-bottom: 12rpx;
+}
+.nb-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #FF80AB, #F06292);
+  border-radius: 6rpx;
+  transition: width 0.4s ease-out;
+}
+
+/* 百分比 + 状态 + 日期 */
+.nb-card-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8rpx;
+  margin-bottom: 14rpx;
+}
+.nb-percent {
+  font-size: 24rpx;
+  color: #37474F;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+.nb-status {
+  font-size: 22rpx;
+  padding: 2rpx 14rpx;
+  border-radius: 16rpx;
+  flex-shrink: 0;
+}
+.nb-status-ongoing {
+  background: #FCE4EC;
+  color: #F06292;
+  font-weight: 600;
+}
+.nb-status-completed {
+  background: linear-gradient(135deg, #FF80AB 0%, #F06292 100%);
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 4rpx 12rpx rgba(240, 98, 146, 0.35);
+}
+.nb-status-pending {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(141, 154, 168, 0.35);
+  color: #8D9AA8;
+}
+.nb-date {
+  display: flex;
+  align-items: center;
+  gap: 4rpx;
+  flex-shrink: 0;
+}
+.nb-date-icon {
+  font-size: 20rpx;
+}
+.nb-date-text {
+  font-size: 22rpx;
+  color: #8D9AA8;
+}
+
+/* 步骤勾选 */
+.nb-stages {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rpx 16rpx;
+  padding-top: 10rpx;
+  border-top: 1px dashed rgba(186, 104, 200, 0.2);
+}
+.nb-stage {
+  display: flex;
+  align-items: center;
+  gap: 4rpx;
+}
+.nb-stage-mark {
+  font-size: 22rpx;
+  color: #B0BEC5;
+  line-height: 1;
+}
+.nb-stage-name {
+  font-size: 20rpx;
+  color: #B0BEC5;
+}
+.nb-stage-done .nb-stage-mark {
+  color: #F06292;
+  font-weight: 700;
+}
+.nb-stage-done .nb-stage-name {
+  color: #37474F;
+}
+
+/* 愿望型步骤可点击 */
+.nb-stage-tap {
+  padding: 6rpx 14rpx;
+  border: 1px dashed rgba(186, 104, 200, 0.35);
+  border-radius: 20rpx;
+  background: rgba(255, 255, 255, 0.6);
+  transition: transform 0.12s ease-out, background-color 0.12s ease-out, border-color 0.12s ease-out;
+}
+.nb-stage-tap:active {
+  transform: scale(0.92);
+  background: #FCE4EC;
+  border-color: #F06292;
+}
+.nb-stage-tap.nb-stage-done {
+  border-color: #F06292;
+  background: #FCE4EC;
+}
+
+/* 今日已打卡角标 */
+.nb-today-badge {
+  position: absolute;
+  top: 14rpx;
+  right: -28rpx;
+  background: #FF80AB;
+  color: #fff;
+  font-size: 18rpx;
+  padding: 4rpx 32rpx;
+  transform: rotate(35deg);
+  font-weight: 600;
+  letter-spacing: 1rpx;
+  box-shadow: 0 2rpx 8rpx rgba(240, 98, 146, 0.4);
+}
+
+/* ============ 空状态 ============ */
+.nb-empty {
+  text-align: center;
+  padding: 100rpx 40rpx;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 32rpx;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  margin-top: 40rpx;
+}
+.nb-empty-emoji {
+  font-size: 96rpx;
+  margin-bottom: 20rpx;
+}
+.nb-empty-title {
+  font-size: 32rpx;
+  color: #37474F;
+  font-weight: 600;
+  margin-bottom: 12rpx;
+}
+.nb-empty-sub {
+  font-size: 26rpx;
+  color: #8D9AA8;
+  line-height: 1.8;
+}
+
+/* ============ 添加弹窗表单 ============ */
+.nb-form {
+  padding: 40rpx 36rpx 60rpx;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 40rpx 40rpx 0 0;
+}
+.nb-form-title {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #37474F;
+  text-align: center;
+  margin-bottom: 32rpx;
+  letter-spacing: 2rpx;
+}
+.nb-form-row {
+  margin-bottom: 28rpx;
+}
+.nb-form-label {
+  font-size: 26rpx;
+  color: #8D9AA8;
+  margin-bottom: 14rpx;
+  font-weight: 500;
+}
+.nb-form-input {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(186, 104, 200, 0.25);
+  border-radius: 16rpx;
+  padding: 18rpx 24rpx;
+  font-size: 28rpx;
+  color: #37474F;
+  box-sizing: border-box;
+}
+.nb-ph {
+  color: #B0BEC5;
+}
+.nb-form-picker {
+  line-height: 1.4;
+}
+
+/* 图标网格 */
+.nb-icon-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14rpx;
+}
+.nb-icon-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 14rpx 4rpx;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(186, 104, 200, 0.2);
+  border-radius: 16rpx;
+  transition: all 0.15s ease;
+}
+.nb-icon-emoji {
+  font-size: 40rpx;
+  line-height: 1;
+}
+.nb-icon-label {
+  font-size: 20rpx;
+  color: #8D9AA8;
+  margin-top: 6rpx;
+}
+.nb-icon-active {
+  background: #FCE4EC;
+  border-color: #F06292;
+  box-shadow: 0 2rpx 10rpx rgba(240, 98, 146, 0.25);
+}
+.nb-icon-active .nb-icon-label {
+  color: #F06292;
+  font-weight: 600;
+}
+
+/* 选项 chips */
+.nb-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14rpx;
+}
+.nb-chip {
+  padding: 12rpx 28rpx;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(186, 104, 200, 0.25);
+  border-radius: 28rpx;
+  font-size: 26rpx;
+  color: #8D9AA8;
+  transition: all 0.15s ease;
+}
+.nb-chip-active {
+  background: #FF80AB;
+  border-color: #FF80AB;
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 2rpx 10rpx rgba(255, 128, 171, 0.35);
+}
+
+/* 提交按钮 */
+.nb-form-submit {
+  margin-top: 16rpx;
+  width: 100%;
+  height: 88rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #CE93D8 0%, #BA68C8 100%);
+  color: #fff;
+  border-radius: 40rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+  padding: 0;
+  border: none;
+  letter-spacing: 2rpx;
+  box-shadow: 0 6rpx 20rpx rgba(186, 104, 200, 0.35);
+}
+.nb-form-submit::after {
+  border: none;
+}
+.nb-form-submit[disabled] {
+  background: #E1BEE7;
+  color: #fff;
+}
+
+/* ============================================================
+   交互动画
+   ============================================================ */
+
+/* 1. 点击反馈覆盖：缩小95% + 浅紫背景 */
+.tap-feedback.tap-active,
+.tap-feedback:active {
+  transform: scale(0.95) !important;
+  background-color: rgba(186, 104, 200, 0.08) !important;
+  box-shadow: 0 1rpx 6rpx rgba(186, 104, 200, 0.15) !important;
+}
+
+/* 2. 卡片依次淡入（配合内联 animation-delay） */
+.nb-card.list-enter {
+  animation: cardFadeIn 0.3s ease-out both;
+}
+@keyframes cardFadeIn {
+  from { opacity: 0; transform: translateY(10rpx); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* 3. 进度条从0增长 */
+.nb-progress-bar {
+  animation: progressGrow 0.5s ease-out;
+}
+@keyframes progressGrow {
+  from { width: 0 !important; }
+}
+
+/* 4. 打卡成功浮层（对勾/爱心 弹出+淡出） */
+.nb-pop {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  font-size: 140rpx;
+  z-index: 999;
+  pointer-events: none;
+  animation: popCheckin 0.6s ease-out forwards;
+}
+@keyframes popCheckin {
+  0%   { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+  40%  { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+  70%  { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+}

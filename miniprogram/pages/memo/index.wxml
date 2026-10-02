@@ -1,0 +1,140 @@
+<page-bg />
+<view class="page page-enter notebook-bg">
+  <nav-bar title="" transparent></nav-bar>
+
+  <!-- 漂浮装饰 -->
+  <view class="deco deco-heart1">💕</view>
+  <view class="deco deco-star1">✨</view>
+  <view class="deco deco-cloud1">☁️</view>
+
+  <view class="content">
+    <!-- 标题区 -->
+    <view class="mm-title">
+      <view class="mm-title-main">
+        <text class="mm-title-icon">📝</text>
+        <text class="mm-title-text">共同备忘录</text>
+      </view>
+      <view class="mm-title-sub">贴在墙上的小纸条</view>
+    </view>
+
+    <!-- 分类标签 -->
+    <scroll-view class="mm-tabs" scroll-x scroll-with-animation>
+      <view class="mm-tab {{activeTab === item ? 'mm-tab-active' : ''}}"
+            wx:for="{{tabs}}" wx:key="*this"
+            data-key="{{item}}"
+            bindtap="onTabChange">{{item}}</view>
+    </scroll-view>
+
+    <!-- 便签墙 双列 -->
+    <view class="mm-wall" wx:if="{{leftList.length || rightList.length}}">
+      <view class="mm-col">
+        <view class="mm-note tap-feedback list-enter {{item.isCompleted ? 'mm-note-done' : ''}}"
+              hover-class="tap-active"
+              style="background:{{item.color === 'green' ? '#E1BEE7' : item.color === 'yellow' ? '#FFF3E0' : item.color === 'blue' ? '#E1F5FE' : '#FCE4EC'}};transform:rotate({{item.rotate}}deg);animation-delay:{{index*80}}ms"
+              wx:for="{{leftList}}" wx:key="_id"
+              data-id="{{item._id}}" bindtap="onEdit">
+          <view class="mm-pin">📌</view>
+          <text class="mm-date-corner">{{item.dateText}}</text>
+          <view class="mm-note-title" wx:if="{{item.title}}">{{item.title}}</view>
+          <view class="mm-note-content">{{item.content}}</view>
+          <view class="mm-note-foot">
+            <view class="mm-creator">
+              <text class="mm-creator-avatar">{{item.creatorEmoji}}</text>
+              <text class="mm-creator-name">{{item.creatorName}}</text>
+            </view>
+          </view>
+          <!-- 完成圆圈 -->
+          <view class="mm-check tap-feedback" hover-class="tap-active"
+                wx:if="{{item.isTodo}}"
+                catchtap="onToggleComplete" data-id="{{item._id}}" data-istodo="{{item.isTodo}}">
+            <text class="mm-check-icon">{{item.isCompleted ? '✓' : ''}}</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="mm-col">
+        <view class="mm-note tap-feedback list-enter {{item.isCompleted ? 'mm-note-done' : ''}}"
+              hover-class="tap-active"
+              style="background:{{item.color === 'green' ? '#E1BEE7' : item.color === 'yellow' ? '#FFF3E0' : item.color === 'blue' ? '#E1F5FE' : '#FCE4EC'}};transform:rotate({{item.rotate}}deg);animation-delay:{{index*80}}ms"
+              wx:for="{{rightList}}" wx:key="_id"
+              data-id="{{item._id}}" bindtap="onEdit">
+          <view class="mm-tape"></view>
+          <text class="mm-date-corner">{{item.dateText}}</text>
+          <view class="mm-note-title" wx:if="{{item.title}}">{{item.title}}</view>
+          <view class="mm-note-content">{{item.content}}</view>
+          <view class="mm-note-foot">
+            <view class="mm-creator">
+              <text class="mm-creator-avatar">{{item.creatorEmoji}}</text>
+              <text class="mm-creator-name">{{item.creatorName}}</text>
+            </view>
+          </view>
+          <view class="mm-check tap-feedback" hover-class="tap-active"
+                wx:if="{{item.isTodo}}"
+                catchtap="onToggleComplete" data-id="{{item._id}}" data-istodo="{{item.isTodo}}">
+            <text class="mm-check-icon">{{item.isCompleted ? '✓' : ''}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 空状态 -->
+    <view class="mm-empty" wx:else>
+      <view class="mm-empty-emoji">📝</view>
+      <view class="mm-empty-title">还没有便签</view>
+      <view class="mm-empty-sub">点击右下角"+"贴一张小纸条</view>
+    </view>
+  </view>
+
+  <!-- 添加/编辑弹窗 -->
+  <van-popup show="{{showForm}}" position="bottom" round bind:close="onCloseForm" custom-style="max-height: 88vh;">
+    <view class="mm-form">
+      <view class="mm-form-title">{{isEdit ? '编辑便签' : '写张便签'}}</view>
+
+      <view class="mm-form-row">
+        <view class="mm-form-label">标题（选填）</view>
+        <input class="mm-form-input" placeholder="{{ph.title}}" placeholder-class="mm-ph" value="{{form.title}}" bindinput="onTitleInput" bindfocus="onFieldFocus" bindblur="onFieldBlur" data-ph="title" maxlength="20" />
+      </view>
+
+      <view class="mm-form-row">
+        <view class="mm-form-label">内容</view>
+        <textarea class="mm-form-textarea" placeholder="{{ph.content}}" placeholder-class="mm-ph" value="{{form.content}}" bindinput="onContentInput" bindfocus="onFieldFocus" bindblur="onFieldBlur" data-ph="content" maxlength="200" auto-height></textarea>
+      </view>
+
+      <view class="mm-form-row">
+        <view class="mm-form-label">便签颜色</view>
+        <view class="mm-color-row">
+          <view class="mm-color-item {{form.color === item.key ? 'mm-color-active' : ''}}"
+                wx:for="{{colorOptions}}" wx:key="key"
+                style="background:{{item.key === 'yellow' ? '#FFF3E0' : item.key === 'pink' ? '#FCE4EC' : item.key === 'blue' ? '#E1F5FE' : '#E1BEE7'}}"
+                data-key="{{item.key}}" bindtap="onPickColor">
+            <text class="mm-color-label">{{item.label}}</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="mm-form-row">
+        <view class="mm-form-label">分类</view>
+        <view class="mm-chips">
+          <view class="mm-chip {{form.category === item ? 'mm-chip-active' : ''}}"
+                wx:for="{{categoryOptions}}" wx:key="*this"
+                data-value="{{item}}" bindtap="onPickCategory">{{item}}</view>
+        </view>
+      </view>
+
+      <view class="mm-form-row mm-todo-row">
+        <view class="mm-form-label mm-todo-label">设为待办事项</view>
+        <van-switch checked="{{form.isTodo}}" bind:change="onToggleTodo" size="40rpx" active-color="#BA68C8" />
+      </view>
+
+      <view class="mm-form-btns">
+        <button class="mm-form-del" wx:if="{{isEdit}}" bindtap="onDelete" data-id="{{editingId}}">删除</button>
+        <button class="mm-form-submit btn-glow" bindtap="onSubmit" loading="{{submitting}}" disabled="{{submitting}}">{{isEdit ? '保存' : '贴上'}}</button>
+      </view>
+    </view>
+  </van-popup>
+
+  <!-- 右下角添加按钮 -->
+  <view class="mm-fab tap-feedback" hover-class="tap-active" bindtap="onOpenAdd">
+    <text class="mm-fab-icon">+</text>
+  </view>
+</view>

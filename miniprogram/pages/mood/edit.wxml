@@ -1,0 +1,62 @@
+<page-bg />
+<view class="page page-enter notebook-bg">
+  <nav-bar title="" transparent />
+
+  <!-- 漂浮装饰 -->
+  <view class="deco deco-heart1">💕</view>
+  <view class="deco deco-star1">✨</view>
+  <view class="deco deco-cloud1">☁️</view>
+
+  <view class="content">
+    <!-- 日期 -->
+    <view class="edit-date">{{todayStr}}</view>
+
+    <!-- 今日两人心情 -->
+    <view class="nb-today">
+      <view class="nb-today-title">今日心情</view>
+      <view class="nb-today-row">
+        <view class="nb-today-item">
+          <view class="nb-avatar nb-avatar-wife">
+            <image wx:if="{{wifeMood.mood}}" class="nb-avatar-emoji" src="{{wifeMood.moodImg}}" mode="aspectFit" style="width:100%;height:100%;display:block;" />
+            <text wx:else class="nb-avatar-emoji">👩</text>
+          </view>
+          <view class="nb-today-name">老婆</view>
+          <view class="nb-today-mood" wx:if="{{wifeMood.mood}}">{{wifeMood.mood}}</view>
+          <view class="nb-today-empty" wx:else>未打卡</view>
+        </view>
+
+        <view class="nb-heart">💕</view>
+
+        <view class="nb-today-item">
+          <view class="nb-avatar nb-avatar-husband">
+            <image wx:if="{{husbandMood.mood}}" class="nb-avatar-emoji" src="{{husbandMood.moodImg}}" mode="aspectFit" style="width:100%;height:100%;display:block;" />
+            <text wx:else class="nb-avatar-emoji">👨</text>
+          </view>
+          <view class="nb-today-name">老公</view>
+          <view class="nb-today-mood" wx:if="{{husbandMood.mood}}">{{husbandMood.mood}}</view>
+          <view class="nb-today-empty" wx:else>未打卡</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 选择心情 -->
+    <view class="nb-select">
+      <view class="nb-select-title">记录我的心情</view>
+      <view class="nb-mood-grid">
+        <view class="nb-mood-opt {{selectedMood === item.value ? 'nb-mood-opt-selected' : ''}}"
+              wx:for="{{moodList}}" wx:key="value"
+              data-value="{{item.value}}" bindtap="onSelectMood">
+          <view class="nb-mood-emoji">
+            <image src="{{item.img}}" mode="aspectFit" style="width:100%;height:100%;display:block;" />
+          </view>
+          <text class="nb-mood-label">{{item.label}}</text>
+        </view>
+      </view>
+
+      <view class="nb-save-btn {{submitting ? 'nb-btn-loading' : ''}}" bindtap="onSave">
+        <text wx:if="{{!submitting}}">{{myMood ? '更新心情' : '打卡'}}</text>
+        <text wx:else>打卡中...</text>
+      </view>
+    </view>
+  </view>
+</view>

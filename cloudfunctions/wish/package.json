@@ -1,0 +1,9 @@
+{
+  "name": "wish",
+  "version": "1.0.0",
+  "description": "心愿清单",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "latest"
+  }
+}

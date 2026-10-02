@@ -1,0 +1,74 @@
+/* components/nav-bar/index.wxss - 蓝粉浪漫风 */
+.nav-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+  box-sizing: border-box;
+}
+
+.nav-bar.nav-transparent {
+  background: transparent;
+  border-bottom: none;
+}
+
+.nav-bar.nav-transparent .back-icon {
+  color: #fff;
+  text-shadow: 0 1px 6px rgba(186, 104, 200, 0.5);
+}
+
+.nav-bar.nav-transparent .nav-title {
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(186, 104, 200, 0.45);
+}
+
+.nav-bar-inner {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 0 20rpx;
+}
+
+.nav-left {
+  width: 120rpx;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.nav-left-placeholder {
+  visibility: hidden;
+}
+
+.back-icon {
+  font-size: 56rpx;
+  color: #37474F;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.nav-title {
+  flex: 1;
+  text-align: center;
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #37474F;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.nav-right {
+  width: 120rpx;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.nav-bar-placeholder {
+  width: 100%;
+}

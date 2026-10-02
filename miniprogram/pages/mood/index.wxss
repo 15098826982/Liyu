@@ -1,0 +1,297 @@
+/* pages/mood/index.wxss  蓝粉浪漫风 - 心情日历 */
+
+.page {
+  font-family: "Comic Sans MS", "Marker Felt", "STKaiti", "KaiTi", "PingFang SC", sans-serif;
+  position: relative;
+}
+
+/* 整页背景统一走 page-bg 组件（无图时兜底蓝粉渐变） */
+.notebook-bg {
+  min-height: 100vh;
+}
+
+.content {
+  padding: 0 24rpx 160rpx;
+  position: relative;
+  z-index: 5;
+}
+
+/* 顶部日期 + 切换 */
+.nb-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16rpx 10rpx 4rpx;
+}
+
+.nb-date {
+  text-align: center;
+  flex: 1;
+}
+
+.nb-month {
+  font-size: 44rpx;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 2rpx;
+  transform: rotate(-1deg);
+  text-shadow: 0 2rpx 8rpx rgba(186, 104, 200, 0.45);
+}
+
+.nb-year {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: 4rpx;
+}
+
+.nb-nav-btn {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.6);
+  border: 2rpx solid rgba(255, 255, 255, 0.8);
+  color: #8D9AA8;
+  font-size: 44rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease;
+  flex-shrink: 0;
+}
+
+.nb-nav-btn:active {
+  transform: scale(0.85);
+}
+
+/* 说明文字 */
+.nb-note {
+  text-align: center;
+  font-size: 30rpx;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 12rpx 0 8rpx;
+  letter-spacing: 4rpx;
+  font-weight: 500;
+  transform: rotate(-0.5deg);
+}
+
+/* 日历 */
+.nb-calendar {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  border-radius: 24rpx;
+  padding: 16rpx 12rpx 20rpx;
+  border: 2rpx dashed rgba(255, 255, 255, 0.6);
+  box-shadow: 0 8rpx 30rpx rgba(186, 104, 200, 0.15);
+  display: block;
+}
+
+.nb-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 8rpx;
+}
+
+.nb-wd {
+  text-align: center;
+  font-size: 24rpx;
+  color: #8D9AA8;
+  padding: 6rpx 0;
+  font-weight: 500;
+}
+
+.nb-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4rpx;
+}
+
+/* 单元格 3:5.5 比例与槽位结构不变 */
+.nb-cell {
+  aspect-ratio: 3 / 5.5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4rpx 2rpx;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.nb-cell.nb-empty {
+  visibility: hidden;
+}
+
+.nb-date-row {
+  display: flex;
+  align-items: center;
+  gap: 4rpx;
+  margin-bottom: 2rpx;
+}
+
+.nb-date {
+  font-size: 20rpx;
+  color: #8D9AA8;
+  font-weight: 500;
+}
+
+.nb-today-tag {
+  font-size: 16rpx;
+  color: #F06292;
+  font-weight: 700;
+  transform: rotate(-3deg);
+}
+
+.nb-moods {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6rpx;
+  width: 100%;
+  min-height: 0;
+}
+
+.nb-mood {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+/* 老公：方形 */
+.nb-mood-husband {
+  width: 80%;
+  aspect-ratio: 1;
+  border-radius: 10rpx;
+  font-size: 34rpx;
+}
+
+/* 老婆：圆形 */
+.nb-mood-wife {
+  width: 70%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  font-size: 30rpx;
+}
+
+/* 今日心情 */
+.nb-today {
+  margin-top: 36rpx;
+  padding: 24rpx 20rpx;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  border-radius: 24rpx;
+  border: 2rpx dashed rgba(255, 255, 255, 0.6);
+  box-shadow: 0 8rpx 30rpx rgba(186, 104, 200, 0.15);
+  display: block;
+}
+
+.nb-today-title {
+  text-align: center;
+  font-size: 28rpx;
+  color: #8D9AA8;
+  margin-bottom: 20rpx;
+  letter-spacing: 4rpx;
+}
+
+.nb-today-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.nb-today-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.nb-avatar {
+  width: 110rpx;
+  height: 110rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10rpx;
+}
+
+/* 老婆圆形头像 */
+.nb-avatar-wife {
+  border-radius: 50%;
+  background: rgba(255, 182, 193, 0.5);
+  border: 3rpx solid rgba(232, 93, 162, 0.3);
+}
+
+/* 老公方形头像（绿改蓝） */
+.nb-avatar-husband {
+  border-radius: 20rpx;
+  background: rgba(179, 229, 252, 0.5);
+  border: 3rpx solid rgba(79, 195, 247, 0.4);
+}
+
+.nb-avatar-emoji {
+  font-size: 52rpx;
+}
+
+.nb-today-name {
+  font-size: 26rpx;
+  color: #37474F;
+  margin-bottom: 6rpx;
+  font-weight: 500;
+}
+
+.nb-today-mood {
+  font-size: 24rpx;
+  color: #F06292;
+  font-weight: 600;
+}
+
+.nb-today-empty {
+  font-size: 22rpx;
+  color: #8D9AA8;
+}
+
+.nb-heart {
+  font-size: 32rpx;
+}
+
+/* 手绘铅笔按钮（橙改粉紫渐变） */
+.nb-fab {
+  position: fixed;
+  right: 50rpx;
+  bottom: 70rpx;
+  width: 110rpx;
+  height: 110rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #CE93D8 0%, #BA68C8 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6rpx 20rpx rgba(186, 104, 200, 0.35);
+  border: 3rpx solid rgba(255, 255, 255, 0.5);
+  z-index: 60;
+  transition: transform 0.15s ease;
+}
+
+.nb-fab:active {
+  transform: scale(0.9) translateY(2rpx);
+  box-shadow: 0 4rpx 12rpx rgba(186, 104, 200, 0.25);
+}
+
+.nb-fab-icon {
+  font-size: 50rpx;
+}
+
+/* 漂浮装饰 */
+.deco {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+}
+.deco-heart1 { top: 14%; right: 8%; font-size: 22px; animation: floatY 3s ease-in-out infinite; }
+.deco-star1 { top: 20%; left: 10%; font-size: 16px; animation: twinkle 2s ease-in-out infinite; }
+.deco-cloud1 { top: 12%; left: 30%; font-size: 26px; opacity: 0.7; animation: cloudMove 5s ease-in-out infinite; }
+@keyframes floatY { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@keyframes twinkle { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.8); } }
+@keyframes cloudMove { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(10px); } }

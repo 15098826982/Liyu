@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "加入家庭",
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "page-bg": "/components/page-bg/index"
+  }
+}

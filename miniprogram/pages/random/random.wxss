@@ -1,0 +1,51 @@
+/* pages/random/random.wxss  随机推荐（蓝粉浪漫风） */
+.page {
+  position: relative;
+}
+
+.container {
+  position: relative;
+  z-index: 5;
+}
+
+.hero {
+  text-align: center; padding: 60rpx 30rpx;
+  margin-bottom: 30rpx;
+}
+.hero-title {
+  font-size: 44rpx; font-weight: bold; color: #BA68C8;
+  margin-bottom: 16rpx;
+}
+.hero-tip { font-size: 26rpx; color: #8D9AA8; margin-bottom: 40rpx; }
+.btn-pick { width: 100%; }
+
+.result-list { margin-top: 10rpx; }
+.result-item {
+  display: flex; align-items: center; justify-content: space-between;
+}
+.dish-info { display: flex; align-items: center; gap: 12rpx; }
+.dish-name { font-size: 30rpx; }
+.btn-mini {
+  background: linear-gradient(135deg, #CE93D8 0%, #BA68C8 100%);
+  color: #fff;
+  font-size: 24rpx; padding: 8rpx 24rpx;
+  border-radius: 30rpx; line-height: 1.6; min-width: 140rpx;
+  border: none;
+  box-shadow: 0 4rpx 12rpx rgba(186, 104, 200, 0.3);
+}
+.btn-mini::after { border: none; }
+.btn-mini[disabled] { background: #E1BEE7; color: rgba(255, 255, 255, 0.9); box-shadow: none; }
+.btn-done { background: #FF80AB !important; box-shadow: 0 4rpx 12rpx rgba(255, 128, 171, 0.3) !important; }
+
+/* 漂浮装饰 */
+.deco {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+}
+.deco-heart1 { top: 14%; right: 8%; font-size: 22px; animation: floatY 3s ease-in-out infinite; }
+.deco-star1 { top: 20%; left: 10%; font-size: 16px; animation: twinkle 2s ease-in-out infinite; }
+.deco-cloud1 { top: 12%; left: 30%; font-size: 26px; opacity: 0.7; animation: cloudMove 5s ease-in-out infinite; }
+@keyframes floatY { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@keyframes twinkle { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.8); } }
+@keyframes cloudMove { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(10px); } }

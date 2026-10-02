@@ -1,0 +1,8 @@
+{
+  "name": "goodhusband-miniprogram",
+  "version": "1.0.0",
+  "description": "情侣综合空间小程序",
+  "dependencies": {
+    "@vant/weapp": "^1.11.7"
+  }
+}

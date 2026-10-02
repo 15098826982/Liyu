@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "随机推荐",
+  "navigationStyle": "custom",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "page-bg": "/components/page-bg/index",
+    "nav-bar": "/components/nav-bar/index"
+  }
+}

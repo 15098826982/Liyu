@@ -1,0 +1,174 @@
+<page-bg />
+<view class="page page-enter notebook-bg">
+  <nav-bar title="" transparent></nav-bar>
+
+  <!-- 漂浮装饰 -->
+  <view class="deco deco-heart1">💕</view>
+  <view class="deco deco-star1">✨</view>
+  <view class="deco deco-cloud1">☁️</view>
+
+  <view class="content">
+    <!-- 标题区 -->
+    <view class="wl-title">
+      <view class="wl-title-main">
+        <text class="wl-title-icon">🎁</text>
+        <text class="wl-title-text">心愿清单</text>
+      </view>
+      <view class="wl-title-sub">想一起实现的小心愿</view>
+    </view>
+
+    <!-- 分类Tab -->
+    <scroll-view class="wl-tabs" scroll-x scroll-with-animation>
+      <view class="wl-tab {{activeTab === item.key ? 'wl-tab-active' : ''}}"
+            wx:for="{{tabs}}" wx:key="key"
+            data-key="{{item.key}}"
+            bindtap="onTabChange">{{item.label}}</view>
+    </scroll-view>
+
+    <!-- 心愿列表 -->
+    <view class="wl-list" wx:if="{{filteredWishes.length}}">
+      <view class="wl-card tap-feedback card-hover list-enter {{item.status === '已收到' ? 'wl-card-done' : ''}}"
+            hover-class="tap-active"
+            style="animation-delay: {{index * 100}}ms"
+            wx:for="{{filteredWishes}}" wx:key="_id">
+        <!-- 第一行：图片 + 标题/谁的心愿 + 状态 -->
+        <view class="wl-row1">
+          <view class="wl-thumb">
+            <image wx:if="{{item.isFileImg}}" class="wl-thumb-img" src="{{item.imageThumb || item.image}}" mode="aspectFill" lazy-load binderror="onThumbErr" data-id="{{item._id}}" />
+            <text wx:else class="wl-thumb-emoji">{{item.image}}</text>
+          </view>
+          <view class="wl-info">
+            <text class="wl-card-title">{{item.title}}</text>
+            <view class="wl-creator">
+              <text class="wl-creator-avatar">{{item.creatorEmoji}}</text>
+              <text class="wl-creator-text">{{item.creatorName}}的心愿 · {{item.type}}</text>
+            </view>
+          </view>
+          <view class="wl-status wl-status-{{item.statusKey}}">
+            <text class="wl-status-icon">{{item.statusEmoji}}</text>
+            <text class="wl-status-text">{{item.status}}</text>
+          </view>
+        </view>
+
+        <!-- 第二行：预算 -->
+        <view class="wl-budget" wx:if="{{item.budget > 0}}">
+          <text class="wl-budget-icon">💰</text>
+          <text class="wl-budget-text">预算 ¥{{item.budget}}</text>
+        </view>
+
+        <!-- 第三行：描述 -->
+        <view class="wl-desc" wx:if="{{item.description}}">{{item.description}}</view>
+
+        <!-- 去购买：有链接才显示 -->
+        <view class="wl-link-btn tap-feedback" hover-class="tap-active" wx:if="{{item.link}}" catchtap="onCopyLink" data-link="{{item.link}}">
+          <text class="wl-link-icon">🔗</text>
+          <text class="wl-link-text">去购买</text>
+        </view>
+
+        <!-- 第四行：操作 -->
+        <view class="wl-actions">
+          <picker class="wl-status-picker" mode="selector" range="{{statusOptions}}" data-id="{{item._id}}" bindchange="onStatusChange">
+            <view class="wl-picker-inner">
+              <text>{{item.status}}</text>
+              <text class="wl-picker-arrow">▾</text>
+            </view>
+          </picker>
+          <view class="wl-act-btn tap-feedback" hover-class="tap-active" catchtap="onEdit" data-id="{{item._id}}">✏️</view>
+          <view class="wl-act-btn tap-feedback" hover-class="tap-active" catchtap="onDelete" data-id="{{item._id}}">🗑</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 空状态 -->
+    <view class="wl-empty" wx:else>
+      <view class="wl-empty-emoji">🎁</view>
+      <view class="wl-empty-title">{{activeTab === '全部' ? '还没有心愿' : '这里还没有心愿'}}</view>
+      <view class="wl-empty-sub">点击右上角"添加心愿"许个愿吧</view>
+    </view>
+  </view>
+
+  <!-- 添加/编辑弹窗 -->
+  <van-popup show="{{showForm}}" position="bottom" round bind:close="onCloseForm" custom-style="max-height: 85vh;">
+    <view class="wl-form">
+      <view class="wl-form-title">{{isEdit ? '编辑心愿' : '许个心愿'}}</view>
+
+      <view class="wl-form-row">
+        <view class="wl-form-label">心愿名称</view>
+        <input class="wl-form-input" placeholder="{{ph.title}}" placeholder-class="wl-ph" value="{{form.title}}" bindinput="onTitleInput" bindfocus="onFieldFocus" bindblur="onFieldBlur" data-ph="title" maxlength="20" />
+      </view>
+
+      <view class="wl-form-row">
+        <view class="wl-form-label">描述（选填）</view>
+        <input class="wl-form-input" placeholder="{{ph.description}}" placeholder-class="wl-ph" value="{{form.description}}" bindinput="onDescInput" bindfocus="onFieldFocus" bindblur="onFieldBlur" data-ph="description" maxlength="50" />
+      </view>
+
+      <view class="wl-form-row">
+        <view class="wl-form-label">预算（选填）</view>
+        <input class="wl-form-input" type="digit" placeholder="{{ph.budget}}" placeholder-class="wl-ph" value="{{form.budget}}" bindinput="onBudgetInput" bindfocus="onFieldFocus" bindblur="onFieldBlur" data-ph="budget" />
+      </view>
+
+      <view class="wl-form-row">
+        <view class="wl-form-label">商品链接（选填）</view>
+        <input class="wl-form-input" placeholder="{{ph.link}}" placeholder-class="wl-ph" value="{{form.link}}" bindinput="onLinkInput" bindfocus="onFieldFocus" bindblur="onFieldBlur" data-ph="link" maxlength="500" />
+      </view>
+
+      <view class="wl-form-row">
+        <view class="wl-form-label">礼物图片</view>
+        <!-- 已上传照片：预览 + 更换/清除 -->
+        <view wx:if="{{form.isFileImg}}" class="wl-photo-preview">
+          <image class="wl-photo-img" src="{{form.image}}" mode="aspectFill" />
+          <view class="wl-photo-actions">
+            <view class="wl-photo-btn tap-feedback" hover-class="tap-active" bindtap="onUploadImage">更换照片</view>
+            <view class="wl-photo-btn wl-photo-clear tap-feedback" hover-class="tap-active" bindtap="onClearImage">改用图标</view>
+          </view>
+        </view>
+        <!-- 未上传：上传按钮 + 图标选择 -->
+        <view wx:else>
+          <view class="wl-upload-btn tap-feedback" hover-class="tap-active" bindtap="onUploadImage">
+            <text class="wl-upload-icon">📷</text>
+            <text class="wl-upload-text">上传照片（可选）</text>
+          </view>
+          <view class="wl-icon-grid">
+            <view class="wl-icon-item {{form.image === item.icon ? 'wl-icon-active' : ''}}"
+                  wx:for="{{iconOptions}}" wx:key="icon"
+                  data-icon="{{item.icon}}"
+                  bindtap="onPickIcon">
+              <text class="wl-icon-emoji">{{item.icon}}</text>
+              <text class="wl-icon-label">{{item.label}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <view class="wl-form-row">
+        <view class="wl-form-label">心愿类型</view>
+        <view class="wl-chips">
+          <view class="wl-chip {{form.type === item ? 'wl-chip-active' : ''}}"
+                wx:for="{{typeOptions}}" wx:key="*this"
+                data-value="{{item}}"
+                bindtap="onPickType">{{item}}</view>
+        </view>
+      </view>
+
+      <view class="wl-form-row">
+        <view class="wl-form-label">状态</view>
+        <view class="wl-chips">
+          <view class="wl-chip {{form.status === item ? 'wl-chip-active' : ''}}"
+                wx:for="{{statusOptions}}" wx:key="*this"
+                data-value="{{item}}"
+                bindtap="onPickStatus">{{item}}</view>
+        </view>
+      </view>
+
+      <button class="wl-form-submit btn-glow" bindtap="onSubmit" loading="{{submitting}}" disabled="{{submitting}}">{{isEdit ? '保存修改' : '许愿'}}</button>
+    </view>
+  </van-popup>
+
+  <!-- 庆祝浮层 -->
+  <view class="wl-pop" wx:if="{{showPop}}">{{popEmoji}}</view>
+
+  <!-- 右下角添加按钮 -->
+  <view class="wl-fab tap-feedback" hover-class="tap-active" bindtap="onOpenAdd">
+    <text class="wl-fab-icon">+</text>
+  </view>
+</view>
