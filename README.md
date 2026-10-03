@@ -1,102 +1,118 @@
-# 老婆点菜 微信小程序（v1.0 云开发版）
+# 情侣小窝 ovo · 微信小程序（云开发）
 
-家庭互动小程序：老婆（一家之主）点菜、老公（管家）做饭。
-后端用微信云开发，免备案 / 免 HTTPS / 免运维。
+> 面向情侣双人场景、以「家庭」为核心的互动小程序：把两个人的点菜、心愿礼物、心情、打卡、经期记录整合在一个小窝里，双方数据实时共享。
+> 后端基于**微信云开发**（云函数 Node.js + 云数据库 + 云存储），免备案、免 HTTPS、免运维。已独立完成设计、开发、提审并通过微信审核上架。
+
+---
+
+## 功能一览
+
+| 模块 | 说明 |
+| --- | --- |
+| 家庭体系 | 创建小窝 / 邀请码加入、两人绑定、身份（老公 / 老婆）、退出家庭 |
+| 点菜 | 家庭菜单、点菜、今日菜单、随机抽菜（选择困难救星）、历史记录、标记完成 |
+| 心愿礼物清单 | 记录想要的礼物、对方可见，附购买链接 / 口令，避免"不知道送什么" |
+| 心情记录 | 记录每日心情，双方可见 |
+| 打卡 | 设定共同目标、每日打卡、连续打卡统计 |
+| 经期记录 | 记录经期、备注，仅家庭内可见 |
+| 相册 | 头像 / 背景 / 照片上传，自动压缩、内容安全校验、上传限流 |
+
+---
+
+## 技术栈
+
+- 微信小程序原生（WXML / WXSS / JS）、Vant Weapp 组件库
+- 微信云开发：云函数（Node.js）、云数据库（文档型）、云存储
+- 云存储数据万象 **imageMogr2**：按场景动态生成 webp 缩略图
+- 微信 **内容安全 API**（`imgSecCheck` / `msgSecCheck`）：图片 / 文字违规检测
+- `wx.cloud` SDK、Git Credential Manager
+
+---
 
 ## 项目结构
 
 ```
-wife-order/
-├── cloudfunctions/              # 云函数（4 个，v1.0）
-│   ├── user/      index.js + package.json   login/getInfo/updateProfile/setRole
-│   ├── family/    index.js + package.json   create/join/getInfo/leave
-│   ├── dish/      index.js + package.json   list/add/update/delete
-│   └── order/     index.js + package.json   add/today/history/random/markDone
-├── miniprogram/                 # 前端
-│   ├── pages/
-│   │   ├── home/index           # tabBar 首页（按 role 分支：boss 看今日菜单+去点菜；manager 看今日菜单+标记完成）
-│   │   ├── dish/index           # tabBar 菜库（boss 点菜 / manager 增删）
-│   │   ├── history/index        # tabBar 历史（分页 + 按日期分组）
-│   │   ├── profile/index        # tabBar 我的（家庭信息 + 邀请码 + 退出家庭）
-│   │   ├── login/login          # 登录
-│   │   ├── family/create        # 创建家庭
-│   │   ├── family/join          # 加入家庭
-│   │   ├── role/select          # 选择身份
-│   │   └── random/random        # 随机推荐（boss 从首页进入，非 tabBar）
-│   ├── utils/
-│   │   ├── request.js           # 封装 wx.cloud.callFunction，统一 loading + 错误 toast
-│   │   └── auth.js              # 极简登录态（user 缓存 storage，onShow 校验未就绪 reLaunch）
-│   ├── app.js / app.json / app.wxss / sitemap.json
+Liyu/
+├── cloudfunctions/                 # 云函数（按模块聚合，event.action 分发）
+│   ├── user/          登录 / 资料 / 角色 / 同步伴侣信息
+│   ├── family/        创建 / 加入 / 详情 / 退出（幂等）
+│   ├── dish/          菜品 增删改查
+│   ├── order/         点菜 / 今日 / 历史 / 随机 / 完成
+│   ├── checkin/       目标打卡
+│   ├── memo/          备忘 / 公共记录
+│   ├── mood/          心情记录
+│   ├── period/        经期记录
+│   ├── wish/          心愿礼物清单
+│   ├── upload/        图片上传限流与记录
+│   ├── imgSecCheck/   图片内容安全
+│   ├── msgSecCheck/   文字内容安全
+│   └── dedupeOrders/  历史订单去重
+├── miniprogram/
+│   ├── components/    nav-bar / page-bg / sidebar / top-bar
+│   ├── pages/         home / meal / history / family / role / login / random
+│   │                  checkin / memo / mood / period / wishlist / settings / agreement ...
+│   ├── utils/         request / auth / cache(SWR) / img(缩略图) / upload / security ...
+│   ├── images/        默认图、心情情绪图（webp）
+│   └── app.js / app.json / app.wxss / sitemap.json
+├── moodimage/                     # 情绪表情素材
 ├── project.config.json
-├── 老婆点菜_开发说明书_云开发版.md
+├── LICENSE
 └── README.md
 ```
 
-## 上线前必做步骤（按顺序）
+> 说明：云函数内通用 `authGuard.js`（登录与家庭归属校验）、部分模块含 `rateLimit.js`（限流）。
 
-### 1. 填占位值（两处）
+---
 
-| 文件 | 字段 | 值 |
+## 快速开始（跑起来）
+
+### 1. 替换为你自己的 AppID 和云环境
+仓库里目前是**作者本人的** AppID / 环境 ID（客户端标识，非密钥），克隆后必须替换：
+
+| 文件 | 字段 | 改成 |
 | --- | --- | --- |
-| `project.config.json` | `appid` | 你的小程序 AppID（微信公众平台 → 设置 → 开发设置） |
-| `miniprogram/app.js` | `wx.cloud.init({ env })` | 把 `REPLACE_WITH_YOUR_ENV_ID` 改成你的云开发环境 ID |
+| `project.config.json` | `appid` | 你自己的小程序 AppID（公众平台 → 设置 → 开发设置） |
+| `miniprogram/app.js` | `wx.cloud.init({ env })` | 你自己的云开发环境 ID |
 
-> 两个值目前都是占位字符串 `REPLACE_WITH_YOUR_*`，直接搜索就能找到。
+### 2. 开通云开发
+微信开发者工具打开项目 → 工具栏「云开发」→ 开通并创建环境，记下环境 ID 回填到 `app.js`。
 
-### 2. 开通云开发 + 部署 4 个云函数
+### 3. 构建 npm（Vant 组件）
+项目前端依赖 Vant Weapp：开发者工具菜单「工具 → 构建 npm」。（`miniprogram_npm` 构建产物不入库。）
 
-1. 微信开发者工具打开本项目 → 点工具栏「云开发」→ 开通并创建环境，记下环境 ID（回填到 `app.js`）。
-2. 左侧目录树 `cloudfunctions/` 下有 `user / family / dish / order` 四个文件夹。
-3. 每个文件夹右键 → 「上传并部署：云端安装依赖」。（首次会有冷启动延迟，正常）
+### 4. 部署全部云函数
+`cloudfunctions/` 下**每一个**文件夹右键 → 「上传并部署：云端安装依赖」。改动云函数后需重新部署，云函数不随代码版本自动上传。
 
-### 3. 云数据库建集合 + 索引
+### 5. 创建数据库集合与索引
+按各云函数中 `db.collection('xxx')` 用到的名字创建集合，主要包括：
+`users`、`families`、`dishes`、`orders`、`checkins`、`wishes`、`periods`、`error_logs`、`upload_logs` 等。
 
-云开发控制台 → 数据库，新建以下 4 个集合（名字完全小写）：
+关键索引（控制台 → 集合 → 索引管理）：
 
-- `users`
-- `families`
-- `dishes`
-- `orders`
-
-给每个集合加索引（控制台 → 集合 → 索引管理）：
-
-| 集合 | 索引字段 | 是否唯一 |
+| 集合 | 索引字段 | 唯一 |
 | --- | --- | --- |
-| `users` | `openid` | 唯一 |
-| `families` | `familyCode` | 唯一 |
-| `dishes` | `{familyId:1, name:1}` 复合 | 唯一 |
-| `orders` | `{familyId:1, orderDate:-1}` 复合 | 否 |
-| `orders` | `{familyId:1, orderDate:1, dishId:1}` 复合 | 唯一 |
+| `users` | `openid` | 是 |
+| `families` | `familyCode` | 是 |
+| `dishes` | `familyId + name` | 是 |
+| `orders` | `familyId + orderDate + dishId` | 是 |
 
-> 唯一索引不是强制的——云函数里都做了查重兜底。但建了能防止并发漏判，建议都建。
+### 6. 配置隐私协议
+公众平台 → 设置 → 用户隐私保护指引，声明 openid / 昵称 / 头像 / 相册 的用途，否则提审可能被打回。
 
-### 4. 隐私协议填写
+### 7. 联调与提审
+真机走一遍「创建 / 加入家庭 → 点菜 → 心愿 / 打卡 / 心情」完整流程 → 开发者工具「上传」填版本号 → 公众平台版本管理 → 真机回归该开发版本 → 提交审核 → 发布。
 
-微信公众平台 → 设置 → 用户隐私保护指引，声明收集 openid / 昵称 / 头像 的用途（用于登录和家庭内互动）。
+---
 
-### 5. 联调测试（开发者工具里走一遍完整流程）
+## 工程设计要点
 
-1. 用 A 账号登录 → 创建家庭 → 选「管家」身份 → 菜库 tab 添加几道荤菜和素菜
-2. 用 B 账号登录 → 加入家庭（输入 A 的邀请码）→ 选「一家之主」身份 → 菜库 tab 点菜 / 随机推荐
-3. A 账号首页 → 今日菜单 → 标记完成
-4. 历史 tab 看记录是否按日期分组展示
+- **并发安全与接口幂等**：点菜采用「归属校验 + 当日查重」，并对 `orders` 的 `familyId + orderDate + dishId` 建**联合唯一索引**兜底，捕获 Duplicate Key（`errCode -50202`）返回「今日已点过」友好提示——查重负责体验、索引负责正确性；家庭 `create / join` 接口幂等，重复调用或超时重进返回现有家庭，避免重复创建与前端状态错乱。
+- **数据一致性与可观测性**：订单以 `dishId` 引用菜品而非冗余菜名，改名后云函数用 `_.in()` **批量 join**（非 N+1）实时查询，避免更新扩散；量级增长后可演进为「快照 + 对账」。结构化 `error_logs`（模块 / 动作 / 堆栈 / 上下文）支持按模块过滤，曾据此定位修复云函数 **UTC 时区跨天**问题。
+- **首屏与图片性能**：真机首次进入约 2~3s，通过小程序 Network 面板（callFunction ≈ 2s）对比云函数日志（`Duration` 仅一百多 ms），定位主因为**云函数冷启动**叠加无缓存、图片偏大；随后做 **SWR 缓存优先 + 后台静默更新**、imageMogr2 按场景出 webp 缩略图 + 懒加载，整页图片体积显著下降；预热 / 预置并发需持续计费故不采用，首次冷启动以 loading 兜底。
+- **上传治理**：图片上传前做限流（每日上限）、端上压缩，再经内容安全 API 检测，防止违规内容与账单被刷爆。
 
-### 6. 提交审核
+---
 
-代码写完、测试通过后，开发者工具点「上传」→ 微信公众平台 → 版本管理 → 提交审核（1~3 天）。
+## License
 
-## 设计要点（给后面接手的人）
-
-- **tabBar 不能按角色动态切换**（微信限制），所以 4 个 tab（首页/菜库/历史/我的）两个角色共用，页内 `wx:if` 按 `user.role` 分支显示。
-- **鉴权**：云函数内 `cloud.getWXContext().OPENID` 自动取身份，前端无 token；`utils/auth.js` 只缓存 user 对象，onShow 校验 familyId/role 是否完整，缺失就 reLaunch 到对应流程页。
-- **云函数按模块聚合**：每个云函数用 `event.action` 分发，统一返回 `{code:0, msg, data}`，`code!==0` 时 `request.js` 已自动弹 toast。
-- **日期**：云函数运行时区是 UTC，`order/index.js` 的 `todayStr()` 统一用 UTC+8 当天。
-- **防重**：云数据库无联合唯一约束，所有查重在云函数里做（同家庭菜名、同家庭同天同菜）。
-- **颜色**：主色 `#ff6b6b`，荤菜标签红底、素菜标签绿底，不使用 emoji。
-
-## v2.0 节点提醒（后续再加）
-
-- 愿望池（wishes 集合）
-- 月经记录（periods 集合，`note` 字段加密存储）
-- 纪念日（anniversaries 集合）
-- 社区论坛（posts 集合）—— **必须先升级企业主体 + UGC 内容审核**（`security.msgSecCheck` 文字 / `security.imgSecCheck` 图片）
+[MIT](./LICENSE)
