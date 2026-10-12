@@ -190,7 +190,7 @@
       </view>
       <view class="edit-btns">
         <van-button type="default" block round bind:click="toggleAdd">取消</van-button>
-        <van-button type="primary" block round bind:click="onAddDish">添加</van-button>
+        <van-button type="primary" block round loading="{{addingDish}}" disabled="{{addingDish}}" bind:click="onAddDish">{{addingDish ? '添加中...' : '添加'}}</van-button>
       </view>
     </view>
   </van-popup>

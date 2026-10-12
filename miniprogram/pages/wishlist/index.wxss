@@ -195,10 +195,6 @@
   gap: 8rpx;
   margin-top: 10rpx;
 }
-.wl-creator-avatar {
-  font-size: 30rpx;
-  line-height: 1;
-}
 .wl-creator-text {
   font-size: 24rpx;
   color: #8D9AA8;

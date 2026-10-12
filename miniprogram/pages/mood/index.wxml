@@ -58,8 +58,7 @@
       <view class="nb-today-row">
         <view class="nb-today-item">
           <view class="nb-avatar nb-avatar-wife">
-            <image wx:if="{{wifeMood.mood}}" class="nb-avatar-emoji" src="{{wifeMood.moodImg}}" mode="aspectFit" style="width:100%;height:100%;display:block;" />
-            <text wx:else class="nb-avatar-emoji">👩</text>
+            <image class="nb-avatar-img" src="/images/role-wife.webp" mode="aspectFill" />
           </view>
           <view class="nb-today-name">老婆</view>
           <view class="nb-today-mood" wx:if="{{wifeMood.mood}}">{{wifeMood.mood}}</view>
@@ -70,8 +69,7 @@
 
         <view class="nb-today-item">
           <view class="nb-avatar nb-avatar-husband">
-            <image wx:if="{{husbandMood.mood}}" class="nb-avatar-emoji" src="{{husbandMood.moodImg}}" mode="aspectFit" style="width:100%;height:100%;display:block;" />
-            <text wx:else class="nb-avatar-emoji">👨</text>
+            <image class="nb-avatar-img" src="/images/role-husband.webp" mode="aspectFill" />
           </view>
           <view class="nb-today-name">老公</view>
           <view class="nb-today-mood" wx:if="{{husbandMood.mood}}">{{husbandMood.mood}}</view>

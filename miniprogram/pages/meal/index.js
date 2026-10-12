@@ -30,6 +30,7 @@ Page({
     renameNew: '',
     newCategoryName: '',
     submitting: false,
+    addingDish: false,
     addForm: { name: '', category: '', image: '' },
     showEdit: false,
     editForm: { id: '', name: '', category: '', image: '' },
@@ -341,6 +342,7 @@ Page({
     this.setData({ 'addForm.image': '' });
   },
   async onAddDish() {
+    if (this.data.addingDish) return;
     const { name, category, image } = this.data.addForm;
     if (!name.trim()) {
       wx.showToast({ title: '请输入菜名', icon: 'none' });
@@ -355,12 +357,14 @@ Page({
       wx.showToast({ title: '内容包含违规文字', icon: 'none' });
       return;
     }
+    this.setData({ addingDish: true });
     try {
       await api('dish', 'add', { name: name.trim(), category, image });
       wx.showToast({ title: '已添加', icon: 'success' });
       this.toggleAdd();
       this.loadDishes();
     } catch (e) {}
+    this.setData({ addingDish: false });
   },
 
   // ===== 编辑菜品 =====

@@ -214,6 +214,7 @@
   align-items: center;
   justify-content: center;
   margin-bottom: 10rpx;
+  overflow: hidden;
 }
 
 /* 老婆圆形头像 */
@@ -230,8 +231,10 @@
   border: 3rpx solid rgba(79, 195, 247, 0.4);
 }
 
-.nb-avatar-emoji {
-  font-size: 52rpx;
+.nb-avatar-img {
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
 .nb-today-name {

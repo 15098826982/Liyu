@@ -1,14 +1,13 @@
-// utils/upload.js  图片选择 + 压缩 + 上传云存储（带限流校验）
-const { checkImage } = require('./security');
+// utils/upload.js  图片选择 + 压缩 + 上传到自己的后端
+const { baseURL } = require('./request');
 
 /**
- * 选择图片并上传到云存储
- * @param {object} opts { type: 'avatar'|'dish', sourceType }
- * @returns {Promise<string|null>} fileID；用户取消或审核不通过返回 null
+ * 选择图片并上传到后端
+ * @param {object} opts { type: 'avatar'|'family'|'dish'|'wish'|'common', sourceType }
+ * @returns {Promise<string|null>} 图片 url；用户取消或上传失败返回 null
  */
 function chooseAndUpload(opts = {}) {
   const type = opts.type || 'common';
-  const showLoading = opts.showLoading !== false;
   return new Promise((resolve) => {
     wx.chooseMedia({
       count: 1,
@@ -17,46 +16,14 @@ function chooseAndUpload(opts = {}) {
       sizeType: ['compressed'],
       success: async (res) => {
         const tempFilePath = res.tempFiles[0].tempFilePath;
-        const fileSize = res.tempFiles[0].size || 0;
-        if (showLoading) wx.showLoading({ title: '上传中', mask: true });
+        wx.showLoading({ title: '上传中', mask: true });
         try {
-          // 1. 先过服务端限流校验
-          const checkRes = await wx.cloud.callFunction({
-            name: 'upload',
-            data: { action: 'check', type, fileSize }
-          });
-          if (checkRes.result && checkRes.result.code !== 0) {
-            if (showLoading) wx.hideLoading();
-            wx.showToast({ title: checkRes.result.msg || '上传失败', icon: 'none' });
-            resolve(null);
-            return;
-          }
-
-          // 2. 压缩
           const compressed = await compressImage(tempFilePath);
-
-          // 3. 上传云存储
-          const fileID = await uploadFile(compressed || tempFilePath, type);
-          if (showLoading) wx.hideLoading();
-
-          // 4. 内容安全审核
-          const pass = await checkImage(fileID);
-          if (!pass) {
-            wx.cloud.deleteFile({ fileList: [fileID] }).catch(() => {});
-            wx.showToast({ title: '图片包含违规内容，已拦截', icon: 'none' });
-            resolve(null);
-            return;
-          }
-
-          // 5. 记录上传日志
-          wx.cloud.callFunction({
-            name: 'upload',
-            data: { action: 'record', type, cloudPath: fileID }
-          }).catch(() => {});
-
-          resolve(fileID);
+          const url = await uploadFile(compressed || tempFilePath, type);
+          wx.hideLoading();
+          resolve(url);
         } catch (e) {
-          if (showLoading) wx.hideLoading();
+          wx.hideLoading();
           console.error('[upload] 上传失败:', e);
           wx.showToast({ title: '上传失败', icon: 'none' });
           resolve(null);
@@ -79,17 +46,29 @@ function compressImage(filePath) {
   });
 }
 
-// 上传到云存储，按 type 分目录
+// 上传到后端 POST /upload，type 决定服务端存放目录
 function uploadFile(filePath, type = 'common') {
-  const m = filePath.match(/\.(jpg|jpeg|png|webp)$/i);
-  const ext = m ? m[1].toLowerCase() : 'png';
-  const cloudPath = `${type}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+  const token = wx.getStorageSync('token') || '';
   return new Promise((resolve, reject) => {
-    wx.cloud.uploadFile({
-      cloudPath,
+    wx.uploadFile({
+      url: `${baseURL}/upload`,
       filePath,
-      success: (res) => resolve(res.fileID),
-      fail: (err) => reject(err)
+      name: 'file',
+      formData: { type },
+      header: { 'Authorization': 'Bearer ' + token },
+      success: (res) => {
+        try {
+          const data = JSON.parse(res.data);
+          if (data.code === 0 && data.data && data.data.url) {
+            resolve(data.data.url);
+          } else {
+            reject(new Error(data.msg || '上传失败'));
+          }
+        } catch (e) {
+          reject(e);
+        }
+      },
+      fail: reject
     });
   });
 }

@@ -1,0 +1,1122 @@
+{
+  "code": 0,
+  "msg": "success",
+  "data": {
+    "collections": {
+      "users": [
+        {
+          "_id": "4266e1b86ac905c30001a68e39c7da02",
+          "openid": "oJkJ83WfgKJymU18VOB2SS9zna5c",
+          "nickname": "",
+          "avatar": "",
+          "familyId": null,
+          "role": null,
+          "createdAt": "2026-10-09T15:18:26.990Z"
+        },
+        {
+          "_id": "4266e1b86ac908d70001bd925184b4d8",
+          "openid": "oJkJ83XXXYA7I-B2GTeDTcfib-Yc",
+          "nickname": "",
+          "avatar": "",
+          "familyId": "d9c900946ac908e5000095804a9d1e8d",
+          "role": null,
+          "createdAt": "2026-10-09T15:31:35.041Z"
+        },
+        {
+          "_id": "560e7cf56abfb6ae007df2866c2d9600",
+          "openid": "oJkJ83VyJ_vu1kY9SCjudPBpDlVI",
+          "nickname": "",
+          "avatar": "",
+          "familyId": null,
+          "role": "manager",
+          "createdAt": "2026-10-02T13:50:38.616Z"
+        },
+        {
+          "_id": "560e7cf56ac0709a008c40134c498ebc",
+          "openid": "oJkJ83ebH0HYZ6DEWifojo5YwiAg",
+          "nickname": "",
+          "avatar": "",
+          "familyId": "5ff1e8726ac070a40077f3fc7c01abf1",
+          "role": "boss",
+          "createdAt": "2026-10-03T03:03:54.438Z"
+        },
+        {
+          "_id": "560e7cf56ac08a59008e5e5e6d950294",
+          "openid": "oJkJ83d7CqEylisLPd5WqP3TG0ks",
+          "nickname": "",
+          "avatar": "",
+          "familyId": "8e888ff96ac08a6b01aa9f735f353ab5",
+          "role": "manager",
+          "createdAt": "2026-10-03T04:53:45.490Z"
+        },
+        {
+          "_id": "560e7cf56ac0c74a009402ac7c14e5db",
+          "openid": "oJkJ83ZWARHgzh6PZncE-Wrjiybg",
+          "nickname": "",
+          "avatar": "",
+          "familyId": "560e7cf56ac0c7540094034177e9f59a",
+          "role": null,
+          "createdAt": "2026-10-03T09:13:46.564Z"
+        },
+        {
+          "_id": "560e7cf56ac12090009d7c9508993688",
+          "openid": "oJkJ83Tyx2mFTMRNr72WKdOkpBv0",
+          "nickname": "",
+          "avatar": "",
+          "familyId": null,
+          "role": null,
+          "createdAt": "2026-10-03T15:34:40.693Z"
+        },
+        {
+          "_id": "560e7cf56ac139e6009f88883a0a2d52",
+          "openid": "oJkJ83VTmLy1Zu7GcmCywdIw8U2o",
+          "nickname": "",
+          "avatar": "",
+          "familyId": "560e7cf56ac13a04009f893d56c418e4",
+          "role": null,
+          "createdAt": "2026-10-03T17:22:46.186Z"
+        },
+        {
+          "_id": "560e7cf56ac19f8500a68cfe4acc49d0",
+          "openid": "oJkJ83Wp5RxwC3IaMM0244Afq4Fs",
+          "nickname": "",
+          "avatar": "",
+          "familyId": null,
+          "role": null,
+          "createdAt": "2026-10-04T00:36:21.171Z"
+        },
+        {
+          "_id": "560e7cf56ac51a8401035c3c5e871903",
+          "openid": "oJkJ83UPww_eSTv0udHsFQ1lUY9w",
+          "nickname": "",
+          "avatar": "",
+          "familyId": null,
+          "role": null,
+          "createdAt": "2026-10-06T15:57:56.837Z"
+        },
+        {
+          "_id": "560e7cf56ac6b980012f46990b3560e6",
+          "openid": "oJkJ83ZGPhne9y1_oNA749t-uEOk",
+          "nickname": "",
+          "avatar": "",
+          "familyId": "5ff1e8726ac6b9920102019125f9dc6b",
+          "role": "manager",
+          "createdAt": "2026-10-07T21:28:32.143Z"
+        },
+        {
+          "_id": "560e7cf56ac754d101487b6d0f9dc868",
+          "openid": "oJkJ83Z0NlxOx4-f1Vv7RdXuF6_o",
+          "nickname": "",
+          "avatar": "",
+          "familyId": null,
+          "role": null,
+          "createdAt": "2026-10-08T08:31:13.274Z"
+        },
+        {
+          "_id": "560e7cf56ac7b420015644633e3b9d70",
+          "openid": "oJkJ83afD_ksRxbXl-5Hb3ml1Waw",
+          "nickname": "",
+          "avatar": "",
+          "familyId": "5ff1e8726ac7b43f011d70fa3de8c237",
+          "role": "manager",
+          "createdAt": "2026-10-08T15:17:52.718Z"
+        },
+        {
+          "_id": "560e7cf56ac7d0050158c5144986e71b",
+          "openid": "oJkJ83ZlYOlTWzVZTq5gFxYpoEpY",
+          "nickname": "",
+          "avatar": "",
+          "familyId": null,
+          "role": null,
+          "createdAt": "2026-10-08T17:16:53.909Z"
+        },
+        {
+          "_id": "5ff1e8726abfe6ea00672e742ccf6463",
+          "openid": "oJkJ83UyVGPeFsHezLmnrOqu7WAA",
+          "nickname": "",
+          "avatar": "",
+          "familyId": "8e888ff96abfe63c017390844433468e",
+          "role": "manager",
+          "createdAt": "2026-10-02T17:16:26.654Z"
+        },
+        {
+          "_id": "5ff1e8726ac09000007c41a75085ed94",
+          "openid": "oJkJ83Vg_f9COA4R2NgvZVo0gHls",
+          "nickname": "",
+          "avatar": "",
+          "familyId": "f84116646ac0901a0199f76b2b3cac55",
+          "role": "boss",
+          "createdAt": "2026-10-03T05:17:52.300Z"
+        },
+        {
+          "_id": "5ff1e8726ac0c130008326bc4e119f73",
+          "openid": "oJkJ83TudmglfpTo8rPju-Zfjk68",
+          "nickname": "",
+          "avatar": "",
+          "familyId": null,
+          "role": null,
+          "createdAt": "2026-10-03T08:47:44.538Z"
+        },
+        {
+          "_id": "5ff1e8726ac2576c00a3a6b86323c6dd",
+          "openid": "oJkJ83XS0EVHWRU_c1WtsQgfyzKU",
+          "nickname": "",
+          "avatar": "",
+          "familyId": "8e888ff96ac2578402372a0564541835",
+          "role": "boss",
+          "createdAt": "2026-10-04T13:41:00.332Z"
+        },
+        {
+          "_id": "5ff1e8726ac2862d00a7ccd50ed68c84",
+          "openid": "oJkJ83YnOb_J19tirysVnDj0Lc5w",
+          "nickname": "",
+          "avatar": "",
+          "familyId": "8e888ff96ac2863802444c2251224be7",
+          "role": "manager",
+          "createdAt": "2026-10-04T17:00:29.582Z"
+        },
+        {
+          "_id": "5ff1e8726ac65c2d00fb21ee69c4628e",
+          "openid": "oJkJ83WmvUieBG-98bzLVSd3EuPI",
+          "nickname": "",
+          "avatar": "",
+          "familyId": "5ff1e8726ac65c3600fb223a190b78d1",
+          "role": null,
+          "createdAt": "2026-10-07T14:50:21.358Z"
+        },
+        {
+          "_id": "5ff1e8726ac7bd71011dd81c2ce0d39e",
+          "openid": "oJkJ83bnYtnbUd5QF2nTXhYbHJKE",
+          "nickname": "",
+          "avatar": "",
+          "familyId": "8e888ff96ac7bc5f03c143da6f6e7273",
+          "role": "manager",
+          "createdAt": "2026-10-08T15:57:37.557Z"
+        },
+        {
+          "_id": "6d00d0e56aad57cd0058f21f548266a2",
+          "openid": "oJkJ83QFBweeOgON9If7gUgIotM4",
+          "nickname": "小鲤鱼",
+          "avatar": "cloud://cloud1-d5gqz2wlx6b4c8c65.636c-cloud1-d5gqz2wlx6b4c8c65-1491275420/avatar/1790842026992-ypjb54.jpg",
+          "familyId": "6d00d0e56ab931d801671e3653ae2424",
+          "role": "manager",
+          "createdAt": "2026-09-18T15:25:01.643Z"
+        },
+        {
+          "_id": "8e888ff96abde25b00d81bcb7568ecb7",
+          "openid": "oJkJ83T33kCRbEAuMyauqq48kde8",
+          "nickname": "",
+          "avatar": "",
+          "familyId": null,
+          "role": null,
+          "createdAt": "2026-10-01T04:32:27.696Z"
+        },
+        {
+          "_id": "8e888ff96abdee3100dbf89838754cea",
+          "openid": "oJkJ83RdlV30AJBu3oFHDk8NUppI",
+          "nickname": "",
+          "avatar": "",
+          "familyId": null,
+          "role": null,
+          "createdAt": "2026-10-01T05:22:56.970Z"
+        },
+        {
+          "_id": "8e888ff96abe145f00e76101562563e4",
+          "openid": "oJkJ83WaQ_qsPdqGRSYOVjoC8fHk",
+          "nickname": "",
+          "avatar": "",
+          "familyId": "6d00d0e56ab931d801671e3653ae2424",
+          "role": "boss",
+          "createdAt": "2026-10-01T08:05:51.686Z"
+        },
+        {
+          "_id": "8e888ff96abf98f6015b71267216f554",
+          "openid": "oJkJ83dev7S0FjrVnyovv-WZ_Qzg",
+          "nickname": "",
+          "avatar": "",
+          "familyId": "f84116646abf993001494a1d486dd083",
+          "role": "manager",
+          "createdAt": "2026-10-02T11:43:50.710Z"
+        },
+        {
+          "_id": "8e888ff96abfe53b01734e9576b9c9d9",
+          "openid": "oJkJ83adcKOfujC4zvudiDrVDC98",
+          "nickname": "",
+          "avatar": "",
+          "familyId": "8e888ff96abfe63c017390844433468e",
+          "role": "boss",
+          "createdAt": "2026-10-02T17:09:15.474Z"
+        },
+        {
+          "_id": "8e888ff96ac1041301d530805857c9eb",
+          "openid": "oJkJ83TQurOnxDNm63koOB_IQEf0",
+          "nickname": "",
+          "avatar": "",
+          "familyId": null,
+          "role": null,
+          "createdAt": "2026-10-03T13:33:07.404Z"
+        },
+        {
+          "_id": "8e888ff96ac228410229b8c96d236b37",
+          "openid": "oJkJ83fSf8S_E6Bux0wqDzhhyOQI",
+          "nickname": "",
+          "avatar": "",
+          "familyId": null,
+          "role": null,
+          "createdAt": "2026-10-04T10:19:45.660Z"
+        },
+        {
+          "_id": "8e888ff96ac280580242a3f13b313327",
+          "openid": "oJkJ83W3InAHa_E6N0eeUZ9KBhsM",
+          "nickname": "",
+          "avatar": "",
+          "familyId": "5ff1e8726ac2806200a790763b4e3e67",
+          "role": null,
+          "createdAt": "2026-10-04T16:35:36.492Z"
+        },
+        {
+          "_id": "8e888ff96ac590c0031f67033fa5870f",
+          "openid": "oJkJ83aVa7EnNaKuVe0NjszDwDfA",
+          "nickname": "",
+          "avatar": "",
+          "familyId": "8e888ff96ac590c4031f67286d6a1ca6",
+          "role": null,
+          "createdAt": "2026-10-07T00:22:24.272Z"
+        },
+        {
+          "_id": "8e888ff96ac673950361c68c3aed312a",
+          "openid": "oJkJ83SYSpOWwl2kZh7vIB5s6C5c",
+          "nickname": "小周",
+          "avatar": "",
+          "familyId": null,
+          "role": null,
+          "createdAt": "2026-10-07T16:30:13.353Z"
+        },
+        {
+          "_id": "8e888ff96ac67bdd0363a8ac481e61b8",
+          "openid": "oJkJ83UK7GX3rIST1KTV0nUP7kqc",
+          "nickname": "",
+          "avatar": "",
+          "familyId": "8e888ff96ac67beb0363b20a4727ba43",
+          "role": "manager",
+          "createdAt": "2026-10-07T17:05:33.906Z"
+        },
+        {
+          "_id": "8e888ff96ac7c62303c42e29389c22f4",
+          "openid": "oJkJ83XSxxtvyiIWPwl5rokT7G-Y",
+          "nickname": "",
+          "avatar": "",
+          "familyId": null,
+          "role": null,
+          "createdAt": "2026-10-08T16:34:43.089Z"
+        },
+        {
+          "_id": "8e888ff96ac7ec2903cf0d094b4376b7",
+          "openid": "oJkJ83aT-M1DNs00i7WlydFclk5E",
+          "nickname": "",
+          "avatar": "",
+          "familyId": "560e7cf56ac7ec3d015a4ae07666b8a1",
+          "role": "boss",
+          "createdAt": "2026-10-08T19:16:57.361Z"
+        },
+        {
+          "_id": "d7580c016aaf67af01e8cb7804821a6e",
+          "openid": "test-manager",
+          "nickname": "测试老公",
+          "avatar": "",
+          "familyId": "92994ce06aad57f10090fdfb202ec46f",
+          "role": "manager",
+          "createdAt": "2026-09-20T04:57:19.693Z",
+          "updatedAt": "2026-09-20T04:57:25.405Z"
+        },
+        {
+          "_id": "f84116646abd432900a1d3ab2c5025f1",
+          "openid": "oJkJ83acbZ_zxcLr0bG9yl2wtbSM",
+          "nickname": "",
+          "avatar": "",
+          "familyId": null,
+          "role": null,
+          "createdAt": "2026-09-30T17:13:13.416Z"
+        },
+        {
+          "_id": "f84116646abf837e0143cb511ed82480",
+          "openid": "oJkJ83RDOmTwmGXGsdGA99Snj0LA",
+          "nickname": "",
+          "avatar": "",
+          "familyId": null,
+          "role": null,
+          "createdAt": "2026-10-02T10:12:14.183Z"
+        },
+        {
+          "_id": "f84116646abf999c014977151f7f697c",
+          "openid": "oJkJ83QHqtOT6N8zgeYc_9FVN2Co",
+          "nickname": "",
+          "avatar": "",
+          "familyId": "f84116646abf99a10149775073d333f1",
+          "role": "manager",
+          "createdAt": "2026-10-02T11:46:36.202Z"
+        },
+        {
+          "_id": "f84116646abfb6a60153f33655d2e627",
+          "openid": "oJkJ83VwLFBf47y-LECmfjEn7qFs",
+          "nickname": "",
+          "avatar": "",
+          "familyId": null,
+          "role": "manager",
+          "createdAt": "2026-10-02T13:50:30.439Z"
+        },
+        {
+          "_id": "f84116646abfb6ae0153f3a1627f340d",
+          "openid": "oJkJ83WJCBP3ncM_JM-Kmnmr0fXk",
+          "nickname": "",
+          "avatar": "",
+          "familyId": null,
+          "role": "manager",
+          "createdAt": "2026-10-02T13:50:38.092Z"
+        },
+        {
+          "_id": "f84116646abfeeb6016510366fead67f",
+          "openid": "oJkJ83YBTip7vfnKAIcb51ym3spA",
+          "nickname": "",
+          "avatar": "",
+          "familyId": null,
+          "role": null,
+          "createdAt": "2026-10-02T17:49:42.099Z"
+        },
+        {
+          "_id": "f84116646ac1295701c96db7274bda44",
+          "openid": "oJkJ83bODCCPVQxGq9vrNR-zNuTY",
+          "nickname": "",
+          "avatar": "",
+          "familyId": null,
+          "role": null,
+          "createdAt": "2026-10-03T16:12:07.560Z"
+        },
+        {
+          "_id": "f84116646ac4be3202ca880a2446d925",
+          "openid": "oJkJ83Ya2PIm1hpaVPsh3xPFriNg",
+          "nickname": "",
+          "avatar": "",
+          "familyId": null,
+          "role": null,
+          "createdAt": "2026-10-06T09:24:01.973Z"
+        },
+        {
+          "_id": "f84116646ac7bc4e03b7a3e846c135cc",
+          "openid": "oJkJ83ZkMSPW9ylRScc2mXVOizaY",
+          "nickname": "",
+          "avatar": "",
+          "familyId": "8e888ff96ac7bc5f03c143da6f6e7273",
+          "role": "boss",
+          "createdAt": "2026-10-08T15:52:46.386Z"
+        },
+        {
+          "_id": "f84116646ac89f1803c59bd074efafcf",
+          "openid": "oJkJ83cyiTvNOcWYRLceUNiNBTSY",
+          "nickname": "",
+          "avatar": "",
+          "familyId": null,
+          "role": null,
+          "createdAt": "2026-10-09T08:00:24.318Z"
+        }
+      ],
+      "families": [
+        {
+          "_id": "22dda3756aaea4c001a726461456748f",
+          "familyCode": "169576",
+          "name": "1",
+          "createdAt": "2026-09-19T15:05:36.939Z"
+        },
+        {
+          "_id": "560e7cf56ac0c7540094034177e9f59a",
+          "familyCode": "621723",
+          "name": "猪猪小窝",
+          "createdAt": "2026-10-03T09:13:56.027Z"
+        },
+        {
+          "_id": "560e7cf56ac13a04009f893d56c418e4",
+          "familyCode": "112398",
+          "name": "小猪猪",
+          "createdAt": "2026-10-03T17:23:16.044Z"
+        },
+        {
+          "_id": "560e7cf56ac67479012ae1de4530771d",
+          "familyCode": "922495",
+          "name": "小周恋爱日记",
+          "createdAt": "2026-10-07T16:34:01.302Z"
+        },
+        {
+          "_id": "560e7cf56ac7ec3d015a4ae07666b8a1",
+          "familyCode": "628433",
+          "name": "和祺祺的家",
+          "createdAt": "2026-10-08T19:17:17.387Z"
+        },
+        {
+          "_id": "5ff1e8726ac070a40077f3fc7c01abf1",
+          "familyCode": "415601",
+          "name": "嘉嘉",
+          "createdAt": "2026-10-03T03:04:04.008Z"
+        },
+        {
+          "_id": "5ff1e8726ac2806200a790763b4e3e67",
+          "familyCode": "642005",
+          "name": "嗯嗯我",
+          "createdAt": "2026-10-04T16:35:46.814Z"
+        },
+        {
+          "_id": "5ff1e8726ac65c3600fb223a190b78d1",
+          "familyCode": "457667",
+          "name": "茜茜茜",
+          "createdAt": "2026-10-07T14:50:30.364Z"
+        },
+        {
+          "_id": "5ff1e8726ac6b9920102019125f9dc6b",
+          "familyCode": "791301",
+          "name": "小玉",
+          "createdAt": "2026-10-07T21:28:50.597Z"
+        },
+        {
+          "_id": "5ff1e8726ac7b43f011d70fa3de8c237",
+          "familyCode": "673905",
+          "name": "我们兄弟",
+          "createdAt": "2026-10-08T15:18:23.932Z"
+        },
+        {
+          "_id": "6d00d0e56aae6639006a558247454bd6",
+          "familyCode": "536699",
+          "name": "予予子",
+          "createdAt": "2026-09-19T10:38:49.376Z"
+        },
+        {
+          "_id": "6d00d0e56aae821e006c6fc42e4fc8f0",
+          "familyCode": "536005",
+          "name": "a",
+          "createdAt": "2026-09-19T12:37:50.459Z"
+        },
+        {
+          "_id": "6d00d0e56aaea8df006f8e4c5aa1ccc3",
+          "familyCode": "518561",
+          "name": "665518",
+          "createdAt": "2026-09-19T15:23:11.345Z"
+        },
+        {
+          "_id": "6d00d0e56ab931d801671e3653ae2424",
+          "familyCode": "409649",
+          "name": "小舒咪与小鲤鱼",
+          "createdAt": "2026-09-27T15:10:16.448Z",
+          "anniversaryDate": "2024-02-11",
+          "coverImage": "cloud://cloud1-d5gqz2wlx6b4c8c65.636c-cloud1-d5gqz2wlx6b4c8c65-1491275420/family/1790522130461-toz4ro.jpg",
+          "loveStartDate": "2024-02-11",
+          "pageBg": "cloud://cloud1-d5gqz2wlx6b4c8c65.636c-cloud1-d5gqz2wlx6b4c8c65-1491275420/family/1790522120299-audoia.jpg"
+        },
+        {
+          "_id": "8e888ff96abf990b015b7b2d37a07630",
+          "familyCode": "889364",
+          "name": "abc",
+          "createdAt": "2026-10-02T11:44:11.676Z"
+        },
+        {
+          "_id": "8e888ff96abfa456015f3c1920ef07b0",
+          "familyCode": "874382",
+          "name": "123",
+          "createdAt": "2026-10-02T12:32:22.059Z"
+        },
+        {
+          "_id": "8e888ff96abfe63c017390844433468e",
+          "familyCode": "444706",
+          "name": "恒恒的老婆是英英",
+          "createdAt": "2026-10-02T17:13:32.238Z"
+        },
+        {
+          "_id": "8e888ff96ac08a6b01aa9f735f353ab5",
+          "familyCode": "612357",
+          "name": "卡了爆猪刚塞",
+          "createdAt": "2026-10-03T04:54:03.048Z"
+        },
+        {
+          "_id": "8e888ff96ac2578402372a0564541835",
+          "familyCode": "736700",
+          "name": "www",
+          "createdAt": "2026-10-04T13:41:24.941Z"
+        },
+        {
+          "_id": "8e888ff96ac2863802444c2251224be7",
+          "familyCode": "530962",
+          "name": "我们的家",
+          "createdAt": "2026-10-04T17:00:40.402Z"
+        },
+        {
+          "_id": "8e888ff96ac590c4031f67286d6a1ca6",
+          "familyCode": "811245",
+          "name": "哦哦哦哦",
+          "createdAt": "2026-10-07T00:22:28.333Z"
+        },
+        {
+          "_id": "8e888ff96ac67beb0363b20a4727ba43",
+          "familyCode": "845201",
+          "name": "心窝",
+          "createdAt": "2026-10-07T17:05:46.991Z"
+        },
+        {
+          "_id": "8e888ff96ac7bc5f03c143da6f6e7273",
+          "familyCode": "450001",
+          "name": "豆芽和脆皮",
+          "createdAt": "2026-10-08T15:53:03.765Z"
+        },
+        {
+          "_id": "92994ce06aad57f10090fdfb202ec46f",
+          "familyCode": "665518",
+          "name": "予予子",
+          "createdAt": "2026-09-18T15:25:37.400Z",
+          "categories": [
+            "荤菜",
+            "素菜",
+            "汤类",
+            "小吃"
+          ],
+          "anniversaryDate": "2026-10-19",
+          "coverImage": "cloud://cloud1-d5gqz2wlx6b4c8c65.636c-cloud1-d5gqz2wlx6b4c8c65-1491275420/family/1789799233774-yfv0mq.jpg",
+          "loveStartDate": "2024-02-11",
+          "sidebarBg": "cloud://cloud1-d5gqz2wlx6b4c8c65.636c-cloud1-d5gqz2wlx6b4c8c65-1491275420/family/1789799649610-gzeot0.jpg",
+          "pageBg": "cloud://cloud1-d5gqz2wlx6b4c8c65.636c-cloud1-d5gqz2wlx6b4c8c65-1491275420/family/1789874603767-xbyn0l.jpg"
+        },
+        {
+          "_id": "d7580c016aae682e01a1516424831d37",
+          "familyCode": "148262",
+          "name": "予予子",
+          "createdAt": "2026-09-19T10:47:10.386Z"
+        },
+        {
+          "_id": "d9c900946ac908e5000095804a9d1e8d",
+          "familyCode": "686773",
+          "name": "我们的",
+          "createdAt": "2026-10-09T15:31:49.226Z"
+        },
+        {
+          "_id": "f84116646abf993001494a1d486dd083",
+          "familyCode": "790679",
+          "name": "abc",
+          "createdAt": "2026-10-02T11:44:48.702Z"
+        },
+        {
+          "_id": "f84116646abf99a10149775073d333f1",
+          "familyCode": "656112",
+          "name": "qwe",
+          "createdAt": "2026-10-02T11:46:41.773Z"
+        },
+        {
+          "_id": "f84116646ac0901a0199f76b2b3cac55",
+          "familyCode": "589961",
+          "name": "L之家",
+          "createdAt": "2026-10-03T05:18:18.194Z"
+        },
+        {
+          "_id": "f84116646ac675430352cf0a1e9478ce",
+          "familyCode": "651774",
+          "name": "小周恋爱日记",
+          "createdAt": "2026-10-07T16:37:23.402Z",
+          "anniversaryDate": "2021-01-24",
+          "coverImage": "",
+          "loveStartDate": "2021-01-24",
+          "pageBg": ""
+        }
+      ],
+      "dishes": [
+        {
+          "_id": "22dda3756aad59480143692b6bd5cdf4",
+          "familyId": "92994ce06aad57f10090fdfb202ec46f",
+          "name": "娃娃菜",
+          "category": "素菜",
+          "createdAt": "2026-09-18T15:31:20.115Z",
+          "image": "cloud://cloud1-d5gqz2wlx6b4c8c65.636c-cloud1-d5gqz2wlx6b4c8c65-1491275420/dish/1789874504787-dyheq0.jpg"
+        },
+        {
+          "_id": "560e7cf56abe5839005f440659dda3f7",
+          "familyId": "6d00d0e56ab931d801671e3653ae2424",
+          "name": "炸鸡",
+          "category": "荤菜",
+          "image": "",
+          "createdAt": "2026-10-01T12:55:21.161Z"
+        },
+        {
+          "_id": "6d00d0e56aad580c0058f4b775525654",
+          "familyId": "92994ce06aad57f10090fdfb202ec46f",
+          "name": "红烧肉",
+          "category": "荤菜",
+          "createdAt": "2026-09-18T15:26:04.177Z",
+          "image": "cloud://cloud1-d5gqz2wlx6b4c8c65.636c-cloud1-d5gqz2wlx6b4c8c65-1491275420/dish/1789874457651-zm8xv2.jpg"
+        },
+        {
+          "_id": "6d00d0e56aae27a000651a2378a5bedb",
+          "familyId": "92994ce06aad57f10090fdfb202ec46f",
+          "name": "小炒黄牛肉",
+          "category": "荤菜",
+          "image": "cloud://cloud1-d5gqz2wlx6b4c8c65.636c-cloud1-d5gqz2wlx6b4c8c65-1491275420/dish/1789874411631-qidy1c.jpg",
+          "createdAt": "2026-09-19T06:11:44.385Z"
+        },
+        {
+          "_id": "6d00d0e56aaf50c50079d77319a68f1d",
+          "familyId": "92994ce06aad57f10090fdfb202ec46f",
+          "name": "炸鸡腿",
+          "category": "小吃",
+          "image": "cloud://cloud1-d5gqz2wlx6b4c8c65.636c-cloud1-d5gqz2wlx6b4c8c65-1491275420/dish/1789874360600-064uit.jpg",
+          "createdAt": "2026-09-20T03:19:33.049Z"
+        },
+        {
+          "_id": "6d00d0e56aaf73ac007d1cf2779e94d5",
+          "familyId": "92994ce06aad57f10090fdfb202ec46f",
+          "name": "牛角包",
+          "category": "小吃",
+          "image": "cloud://cloud1-d5gqz2wlx6b4c8c65.636c-cloud1-d5gqz2wlx6b4c8c65-1491275420/dish/1789883296657-10t50u.jpg",
+          "createdAt": "2026-09-20T05:48:28.196Z"
+        },
+        {
+          "_id": "8e888ff96abe219e00eb8388419c4c30",
+          "familyId": "6d00d0e56ab931d801671e3653ae2424",
+          "name": "薯条",
+          "category": "荤菜",
+          "image": "",
+          "createdAt": "2026-10-01T09:02:21.962Z"
+        },
+        {
+          "_id": "92994ce06aad5b1100913b364739eddb",
+          "familyId": "92994ce06aad57f10090fdfb202ec46f",
+          "name": "红烧鱼",
+          "category": "荤菜",
+          "createdAt": "2026-09-18T15:38:57.658Z",
+          "image": "cloud://cloud1-d5gqz2wlx6b4c8c65.636c-cloud1-d5gqz2wlx6b4c8c65-1491275420/dish/1789874537797-3n6tyv.jpg"
+        },
+        {
+          "_id": "f84116646ac7be2203b7b9de113d727a",
+          "familyId": "8e888ff96ac7bc5f03c143da6f6e7273",
+          "name": "红烧肉！！！！！！！",
+          "category": "荤菜",
+          "image": "",
+          "createdAt": "2026-10-08T16:00:34.449Z"
+        }
+      ],
+      "orders": [
+        {
+          "_id": "22dda3756aae770e0198d4fb4461637c",
+          "familyId": "92994ce06aad57f10090fdfb202ec46f",
+          "dishId": "22dda3756aad59480143692b6bd5cdf4",
+          "userId": "6d00d0e56aad57cd0058f21f548266a2",
+          "orderDate": "2026-09-19",
+          "status": "done",
+          "createdAt": "2026-09-19T11:50:38.568Z"
+        },
+        {
+          "_id": "22dda3756aaf61f301e079ca13b0ab2d",
+          "familyId": "92994ce06aad57f10090fdfb202ec46f",
+          "dishId": "6d00d0e56aae27a000651a2378a5bedb",
+          "userId": "6d00d0e56aad57cd0058f21f548266a2",
+          "orderDate": "2026-09-20",
+          "status": "done",
+          "createdAt": "2026-09-20T04:32:51.138Z"
+        },
+        {
+          "_id": "22dda3756aafaf9d01f7ef8725232e15",
+          "familyId": "92994ce06aad57f10090fdfb202ec46f",
+          "dishId": "92994ce06aad5b1100913b364739eddb",
+          "userId": "6d00d0e56aad57cd0058f21f548266a2",
+          "orderDate": "2026-09-20",
+          "status": "done",
+          "createdAt": "2026-09-20T10:04:13.562Z"
+        },
+        {
+          "_id": "560e7cf56abe583e005f44526e89289b",
+          "familyId": "6d00d0e56ab931d801671e3653ae2424",
+          "dishId": "560e7cf56abe5839005f440659dda3f7",
+          "userId": "6d00d0e56aad57cd0058f21f548266a2",
+          "orderDate": "2026-10-01",
+          "status": "pending",
+          "createdAt": "2026-10-01T12:55:25.962Z"
+        },
+        {
+          "_id": "92994ce06aad58f600910dde3c5be030",
+          "familyId": "92994ce06aad57f10090fdfb202ec46f",
+          "dishId": "6d00d0e56aad580c0058f4b775525654",
+          "userId": "6d00d0e56aad57cd0058f21f548266a2",
+          "orderDate": "2026-09-18",
+          "status": "done",
+          "createdAt": "2026-09-18T15:29:58.228Z"
+        },
+        {
+          "_id": "92994ce06aad595c00911ae31ab201b7",
+          "familyId": "92994ce06aad57f10090fdfb202ec46f",
+          "dishId": "22dda3756aad59480143692b6bd5cdf4",
+          "userId": "6d00d0e56aad57cd0058f21f548266a2",
+          "orderDate": "2026-09-18",
+          "status": "done",
+          "createdAt": "2026-09-18T15:31:40.903Z"
+        },
+        {
+          "_id": "92994ce06aae4d7c00a5eb413041345d",
+          "familyId": "92994ce06aad57f10090fdfb202ec46f",
+          "dishId": "92994ce06aad5b1100913b364739eddb",
+          "userId": "6d00d0e56aad57cd0058f21f548266a2",
+          "orderDate": "2026-09-19",
+          "status": "pending",
+          "createdAt": "2026-09-19T08:53:16.876Z"
+        },
+        {
+          "_id": "92994ce06aaf61e500c165f06005316d",
+          "familyId": "92994ce06aad57f10090fdfb202ec46f",
+          "dishId": "6d00d0e56aaf50c50079d77319a68f1d",
+          "userId": "6d00d0e56aad57cd0058f21f548266a2",
+          "orderDate": "2026-09-20",
+          "status": "done",
+          "createdAt": "2026-09-20T04:32:37.503Z"
+        },
+        {
+          "_id": "d7580c016aafaec101ff471130e089eb",
+          "familyId": "92994ce06aad57f10090fdfb202ec46f",
+          "dishId": "6d00d0e56aaf73ac007d1cf2779e94d5",
+          "userId": "6d00d0e56aad57cd0058f21f548266a2",
+          "orderDate": "2026-09-20",
+          "status": "done",
+          "createdAt": "2026-09-20T10:00:33.448Z"
+        },
+        {
+          "_id": "d7580c016aafafa801ff7f0652223087",
+          "familyId": "92994ce06aad57f10090fdfb202ec46f",
+          "dishId": "22dda3756aad59480143692b6bd5cdf4",
+          "userId": "6d00d0e56aad57cd0058f21f548266a2",
+          "orderDate": "2026-09-20",
+          "status": "done",
+          "createdAt": "2026-09-20T10:04:24.866Z"
+        },
+        {
+          "_id": "f84116646abe21a600dff6906f4e5953",
+          "familyId": "6d00d0e56ab931d801671e3653ae2424",
+          "dishId": "8e888ff96abe219e00eb8388419c4c30",
+          "userId": "6d00d0e56aad57cd0058f21f548266a2",
+          "orderDate": "2026-10-01",
+          "status": "pending",
+          "createdAt": "2026-10-01T09:02:30.771Z"
+        }
+      ],
+      "wishes": [
+        {
+          "_id": "5ff1e8726abe8f0f0049dfc1309ad95e",
+          "familyId": "6d00d0e56ab931d801671e3653ae2424",
+          "openid": "oJkJ83QFBweeOgON9If7gUgIotM4",
+          "creatorRole": "boss",
+          "creatorName": "小鲤鱼",
+          "title": "首饰盒",
+          "description": "",
+          "budget": 0,
+          "image": "cloud://cloud1-d5gqz2wlx6b4c8c65.636c-cloud1-d5gqz2wlx6b4c8c65-1491275420/wish/1790873341693-15bvge.jpg",
+          "status": "已收到",
+          "type": "老婆的",
+          "link": "【得物】请求取消早自习发现一件好物， 3 CA1201 å7XqejJWå  https://dw4.co/t/A/Hn1fGRw7h 美世达 联名款 耳钉手链收纳盒高档精致项链戒指耳饰饰品大容量防氧化 首饰盒, 点击链接直接打开",
+          "createdAt": "2026-10-01T16:49:19.261Z",
+          "updatedAt": "2026-10-01T16:49:19.261Z"
+        },
+        {
+          "_id": "8e888ff96abe8cb2010b205e500bfd35",
+          "familyId": "6d00d0e56ab931d801671e3653ae2424",
+          "openid": "oJkJ83QFBweeOgON9If7gUgIotM4",
+          "creatorRole": "boss",
+          "creatorName": "小鲤鱼",
+          "title": "电脑包",
+          "description": "",
+          "budget": 0,
+          "image": "👜",
+          "status": "已收到",
+          "type": "老婆的",
+          "link": "【得物】请求取消早自习发现一件好物， 1 CZ0001 åVwkq4LQå  https://dw4.co/t/A/Hn1eSYkwf MUYKUY PU 电脑包 平板笔记本包适用于华为小米联想苹果matebook, 点击链接直接打开",
+          "createdAt": "2026-10-01T16:39:14.795Z",
+          "updatedAt": "2026-10-01T16:39:14.795Z"
+        },
+        {
+          "_id": "92994ce06aae5df900a7ebe9286a8123",
+          "familyId": "92994ce06aad57f10090fdfb202ec46f",
+          "openid": "oJkJ83QFBweeOgON9If7gUgIotM4",
+          "creatorRole": "boss",
+          "creatorName": "老大",
+          "title": "薯条",
+          "description": "馋的孩子直蹦高",
+          "budget": 199,
+          "image": "cloud://cloud1-d5gqz2wlx6b4c8c65.636c-cloud1-d5gqz2wlx6b4c8c65-1491275420/wish/1789813933319-shfcxo.jpg",
+          "status": "已收到",
+          "type": "老婆的",
+          "createdAt": "2026-09-19T10:03:37.763Z",
+          "updatedAt": "2026-09-20T10:04:40.813Z"
+        },
+        {
+          "_id": "f84116646abe8cf900fe335d0e416734",
+          "familyId": "6d00d0e56ab931d801671e3653ae2424",
+          "openid": "oJkJ83QFBweeOgON9If7gUgIotM4",
+          "creatorRole": "boss",
+          "creatorName": "小鲤鱼",
+          "title": "棒棒糖",
+          "description": "",
+          "budget": 0,
+          "image": "✨",
+          "status": "待实现",
+          "type": "老公的",
+          "link": "【淘宝】7天无理由退货 https://e.tb.cn/h.8xrlHBes1TIOJTe?tk=ggswTo4uDfJ HU071 「阿尔卑斯双享棒混合口味棒棒糖整包48支16g/支 多口味任零食糖果」 点击链接直接打开 或者 淘宝搜索直接打开",
+          "createdAt": "2026-10-01T16:40:25.942Z",
+          "updatedAt": "2026-10-01T16:40:25.942Z"
+        }
+      ],
+      "moods": [
+        {
+          "_id": "22dda3756aaf623101e08fc2776b414f",
+          "familyId": "92994ce06aad57f10090fdfb202ec46f",
+          "openid": "oJkJ83QFBweeOgON9If7gUgIotM4",
+          "role": "boss",
+          "nickname": "老大",
+          "avatar": "cloud://cloud1-d5gqz2wlx6b4c8c65.636c-cloud1-d5gqz2wlx6b4c8c65-1491275420/avatar/1789813479663-8nlgjk.jpg",
+          "mood": "疲惫",
+          "note": "",
+          "date": "2026-09-20",
+          "createdAt": "2026-09-20T10:05:14.825Z"
+        },
+        {
+          "_id": "560e7cf56ac7bca8015714c669159159",
+          "familyId": "8e888ff96ac7bc5f03c143da6f6e7273",
+          "openid": "oJkJ83ZkMSPW9ylRScc2mXVOizaY",
+          "role": "boss",
+          "nickname": "",
+          "avatar": "",
+          "mood": "开心",
+          "note": "",
+          "date": "2026-10-08",
+          "createdAt": "2026-10-08T15:54:16.999Z"
+        },
+        {
+          "_id": "6d00d0e56aae37fd006651d34b143138",
+          "familyId": "92994ce06aad57f10090fdfb202ec46f",
+          "openid": "oJkJ83QFBweeOgON9If7gUgIotM4",
+          "role": "manager",
+          "nickname": "老大",
+          "avatar": "",
+          "mood": "开心",
+          "note": "",
+          "date": "2026-09-19",
+          "createdAt": "2026-09-19T07:32:03.110Z"
+        },
+        {
+          "_id": "6d00d0e56aae3bae0066cea15c418a0f",
+          "familyId": "92994ce06aad57f10090fdfb202ec46f",
+          "openid": "oJkJ83QFBweeOgON9If7gUgIotM4",
+          "role": "boss",
+          "nickname": "老大",
+          "avatar": "cloud://cloud1-d5gqz2wlx6b4c8c65.636c-cloud1-d5gqz2wlx6b4c8c65-1491275420/avatar/1789813479663-8nlgjk.jpg",
+          "mood": "心动",
+          "note": "",
+          "date": "2026-09-19",
+          "createdAt": "2026-09-19T11:52:04.970Z"
+        },
+        {
+          "_id": "d7580c016aaf51c301e272b606ccce86",
+          "familyId": "92994ce06aad57f10090fdfb202ec46f",
+          "openid": "oJkJ83QFBweeOgON9If7gUgIotM4",
+          "role": "manager",
+          "nickname": "老大",
+          "avatar": "cloud://cloud1-d5gqz2wlx6b4c8c65.636c-cloud1-d5gqz2wlx6b4c8c65-1491275420/avatar/1789813479663-8nlgjk.jpg",
+          "mood": "平静",
+          "note": "",
+          "date": "2026-09-20",
+          "createdAt": "2026-09-20T03:23:47.569Z"
+        },
+        {
+          "_id": "f84116646abe169000dcd57938a18d3d",
+          "familyId": "6d00d0e56ab931d801671e3653ae2424",
+          "openid": "oJkJ83QFBweeOgON9If7gUgIotM4",
+          "role": "manager",
+          "nickname": "小鲤鱼",
+          "avatar": "cloud://cloud1-d5gqz2wlx6b4c8c65.636c-cloud1-d5gqz2wlx6b4c8c65-1491275420/avatar/1790842026992-ypjb54.jpg",
+          "mood": "平静",
+          "note": "",
+          "date": "2026-10-01",
+          "createdAt": "2026-10-01T08:15:12.963Z"
+        }
+      ],
+      "memos": [
+        {
+          "_id": "d7580c016aae614e019f8c47716c83db",
+          "familyId": "92994ce06aad57f10090fdfb202ec46f",
+          "openid": "oJkJ83QFBweeOgON9If7gUgIotM4",
+          "creatorRole": "boss",
+          "creatorName": "老大",
+          "title": "周末计划",
+          "content": "吃油炸冰激凌",
+          "color": "pink",
+          "category": "生活",
+          "isTodo": true,
+          "isCompleted": false,
+          "isTop": false,
+          "createdAt": "2026-09-19T10:17:50.307Z",
+          "updatedAt": "2026-09-20T10:05:35.611Z"
+        },
+        {
+          "_id": "d7580c016aae6233019fbc1b79165316",
+          "familyId": "92994ce06aad57f10090fdfb202ec46f",
+          "openid": "oJkJ83QFBweeOgON9If7gUgIotM4",
+          "creatorRole": "boss",
+          "creatorName": "老大",
+          "title": "爬山",
+          "content": "我要一步一步一步登上最高",
+          "color": "yellow",
+          "category": "旅行",
+          "isTodo": true,
+          "isCompleted": false,
+          "isTop": false,
+          "createdAt": "2026-09-19T10:21:39.744Z",
+          "updatedAt": "2026-09-20T10:05:36.892Z"
+        }
+      ],
+      "periods": [
+        {
+          "_id": "d7580c016aae516f019a71ef7702b574",
+          "familyId": "92994ce06aad57f10090fdfb202ec46f",
+          "openid": "oJkJ83QFBweeOgON9If7gUgIotM4",
+          "role": "boss",
+          "startDate": "2026-09-01",
+          "endDate": "2026-09-07",
+          "flow": "",
+          "pain": "",
+          "mood": "",
+          "symptoms": [],
+          "note": "",
+          "createdAt": "2026-09-19T09:10:07.286Z"
+        }
+      ],
+      "checkins": [
+        {
+          "_id": "22dda3756aae564e018edac813794133",
+          "familyId": "92994ce06aad57f10090fdfb202ec46f",
+          "openid": "oJkJ83QFBweeOgON9If7gUgIotM4",
+          "creatorRole": "boss",
+          "creatorName": "老大",
+          "title": "跑步",
+          "description": "跑1小时",
+          "icon": "🏃",
+          "frequency": "每天",
+          "duration": 7,
+          "startDate": "2026-09-19",
+          "endDate": "2026-09-25",
+          "checkinDates": [
+            {
+              "date": "2026-09-19",
+              "openid": "oJkJ83QFBweeOgON9If7gUgIotM4",
+              "role": "manager",
+              "nickname": "老大"
+            },
+            {
+              "date": "2026-09-20",
+              "openid": "oJkJ83QFBweeOgON9If7gUgIotM4",
+              "role": "boss",
+              "nickname": "老大"
+            }
+          ],
+          "stages": [
+            {
+              "name": "完成打卡",
+              "threshold": 7,
+              "completed": false
+            }
+          ],
+          "status": "ongoing",
+          "createdAt": "2026-09-19T09:30:54.923Z"
+        },
+        {
+          "_id": "6d00d0e56aae56990069465f0086f6e3",
+          "familyId": "92994ce06aad57f10090fdfb202ec46f",
+          "openid": "oJkJ83QFBweeOgON9If7gUgIotM4",
+          "creatorRole": "boss",
+          "creatorName": "老大",
+          "title": "旅游",
+          "description": "去上海",
+          "icon": "🎯",
+          "frequency": "每天",
+          "duration": 7,
+          "startDate": "2026-09-19",
+          "endDate": "2026-09-25",
+          "checkinDates": [
+            {
+              "date": "2026-09-19",
+              "openid": "oJkJ83QFBweeOgON9If7gUgIotM4",
+              "role": "boss",
+              "nickname": "老大"
+            },
+            {
+              "date": "2026-09-20",
+              "openid": "oJkJ83QFBweeOgON9If7gUgIotM4",
+              "role": "boss",
+              "nickname": "老大"
+            }
+          ],
+          "stages": [
+            {
+              "name": "完成打卡",
+              "threshold": 7,
+              "completed": false
+            }
+          ],
+          "status": "ongoing",
+          "createdAt": "2026-09-19T09:32:09.615Z"
+        },
+        {
+          "_id": "d7580c016aae709601a39b2d11045043",
+          "familyId": "92994ce06aad57f10090fdfb202ec46f",
+          "openid": "oJkJ83QFBweeOgON9If7gUgIotM4",
+          "creatorRole": "manager",
+          "creatorName": "老大",
+          "title": "去旅行",
+          "description": "",
+          "icon": "🏃",
+          "mode": "wish",
+          "checkinDates": [],
+          "status": "completed",
+          "createdAt": "2026-09-19T11:23:02.095Z",
+          "frequency": "",
+          "duration": 0,
+          "startDate": "2026-09-19",
+          "endDate": "2026-09-19",
+          "stages": [
+            {
+              "name": "有想法",
+              "completed": true
+            },
+            {
+              "name": "定攻略",
+              "completed": true
+            },
+            {
+              "name": "已完成",
+              "completed": true
+            }
+          ]
+        }
+      ],
+      "rate_limit_logs": [
+        {
+          "_id": "f84116646ac7bca803b7a6eb52aaab34",
+          "openid": "oJkJ83ZkMSPW9ylRScc2mXVOizaY",
+          "action": "add",
+          "familyId": "",
+          "createdAt": "2026-10-08T15:54:16.700Z"
+        }
+      ]
+    },
+    "counts": {
+      "users": 46,
+      "families": 30,
+      "dishes": 9,
+      "orders": 11,
+      "wishes": 4,
+      "moods": 6,
+      "memos": 2,
+      "periods": 1,
+      "checkins": 3,
+      "rate_limit_logs": 1
+    },
+    "errors": {
+      "error_logs": "collection.get:fail -502005 database collection not exists. [ResourceNotFound] Db or Table not exist: error_logs. Please check your request, but if the problem cannot be solved, contact us. 更多错误信息请访问：https://docs.cloudbase.net/error-code/basic/DATABASE_COLLECTION_NOT_EXIST"
+    }
+  }
+}

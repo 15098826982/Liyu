@@ -65,7 +65,7 @@ Page({
     if (!order) return;
     const nextStatus = order.status === 'done' ? 'pending' : 'done';
     try {
-      await api('order', 'markDone', { id, status: nextStatus }, { showLoading: false });
+      await api('order', 'markDone', { orderId: id, status: nextStatus }, { showLoading: false });
       // 触发整卡变色动画
       this.setData({ animOrderId: '' }, () => {
         this.setData({ animOrderId: id });

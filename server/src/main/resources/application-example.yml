@@ -1,0 +1,50 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: couple-nest-server
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/couple_nest?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: your-mysql-password
+
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      database: 5
+      password:
+      timeout: 3000ms
+
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+  global-config:
+    db-config:
+      id-type: auto
+
+# 微信小程序：填入你自己的小程序 AppID 和 Secret
+wechat:
+  appid: your-wechat-appid
+  secret: your-wechat-secret
+  mock: true  # 开发阶段用 mock，上线改 false
+
+# JWT 密钥：改成你自己的随机字符串
+jwt:
+  secret: your-jwt-secret-key-change-me
+  expire-days: 7
+
+# 阿里云 OSS：填入你自己的
+oss:
+  endpoint: oss-cn-beijing.aliyuncs.com
+  access-key-id: your-oss-access-key-id
+  access-key-secret: your-oss-access-key-secret
+  bucket-name: your-bucket-name

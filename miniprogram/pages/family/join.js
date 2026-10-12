@@ -61,7 +61,7 @@ Page({
         const app = getApp();
         if (app && app.refreshPageBg) app.refreshPageBg();
       } catch (e) {}
-      setTimeout(() => auth.go(auth.ROUTES.role), 800);
+      setTimeout(() => auth.ensureReady(), 800);
     } catch (e) {
       this.setData({ joining: false });
     }

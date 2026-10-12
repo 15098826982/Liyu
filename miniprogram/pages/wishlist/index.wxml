@@ -39,9 +39,8 @@
           </view>
           <view class="wl-info">
             <text class="wl-card-title">{{item.title}}</text>
-            <view class="wl-creator">
-              <text class="wl-creator-avatar">{{item.creatorEmoji}}</text>
-              <text class="wl-creator-text">{{item.creatorName}}的心愿 · {{item.type}}</text>
+            <view class="wl-creator" wx:if="{{item.typeLabel}}">
+              <text class="wl-creator-text">{{item.typeLabel}}</text>
             </view>
           </view>
           <view class="wl-status wl-status-{{item.statusKey}}">

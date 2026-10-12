@@ -25,3 +25,12 @@ Thumbs.db
 项目打磨清单.md
 老婆点菜_开发说明书_云开发版.md
 design.md
+
+# 其他项目素材（不属于本repo）
+AI技术演进素材/
+
+# 后端：本地配置含 MySQL 密码，禁止提交
+server/src/main/resources/application.yml
+
+# 后端：Maven 构建产物
+server/target/

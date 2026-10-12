@@ -111,7 +111,7 @@ Page({
         const user = await auth.fetchUser();
         if (user && user.familyId) {
           wx.showToast({ title: '家庭已创建成功', icon: 'success' });
-          setTimeout(() => auth.go(auth.ROUTES.role), 700);
+          setTimeout(() => auth.ensureReady(), 700);
           return;
         }
       } catch (e) {}
@@ -163,8 +163,8 @@ Page({
     });
   },
 
-  onGoNext() {
-    auth.go(auth.ROUTES.role);
+  async onGoNext() {
+    await auth.ensureReady();
   },
 
   goJoin() {

@@ -60,7 +60,11 @@ Page({
       return;
     }
     try {
-      const { user } = await api('user', 'login', {}, { loadingText: '登录中' });
+      const code = await new Promise((resolve, reject) => {
+        wx.login({ success: (r) => resolve(r.code), fail: reject });
+      });
+      const { token, user } = await api('auth', 'login', { code }, { loadingText: '登录中' });
+      auth.setToken(token);
       auth.setUser(user);
       auth.go(auth.routeOf(user));
     } catch (e) {

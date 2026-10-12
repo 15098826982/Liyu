@@ -3,6 +3,7 @@
 const { api } = require('./request');
 
 const USER_KEY = 'user_info';
+const TOKEN_KEY = 'token';
 
 // 引导流程各步骤页面
 const ROUTES = {
@@ -23,11 +24,24 @@ function setUser(user) {
 
 function clearUser() {
   wx.removeStorageSync(USER_KEY);
+  wx.removeStorageSync(TOKEN_KEY);
+}
+
+function getToken() {
+  return wx.getStorageSync(TOKEN_KEY) || '';
+}
+
+function setToken(t) {
+  if (t) {
+    wx.setStorageSync(TOKEN_KEY, t);
+  } else {
+    wx.removeStorageSync(TOKEN_KEY);
+  }
 }
 
 // 拉取服务端最新 user 并写入本地缓存（避免本地缓存与服务端不一致）
 async function fetchUser() {
-  const { user } = await api('user', 'login', {}, { showLoading: false });
+  const { user } = await api('user', 'me', {}, { showLoading: false });
   if (user) setUser(user);
   return user || null;
 }
@@ -81,4 +95,4 @@ async function ensureReady(opts = {}) {
   return null;
 }
 
-module.exports = { getUser, setUser, clearUser, fetchUser, routeOf, go, ensureReady, ROUTES };
+module.exports = { getUser, setUser, clearUser, getToken, setToken, fetchUser, routeOf, go, ensureReady, ROUTES };

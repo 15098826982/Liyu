@@ -42,7 +42,7 @@ const TABS = [
 const STATUS_EMOJI = { '待实现': '💭', '已收到': '✅' };
 const STATUS_KEY = { '待实现': 'todo', '已收到': 'done' };
 
-const ROLE_EMOJI = { boss: '👩', manager: '👨' };
+const TYPE_LABEL = { '老婆的': '老婆的心愿', '老公的': '老公的心愿', '共同的': '共同的心愿' };
 
 const MAX_LINK = 500; // 链接最大长度
 
@@ -105,7 +105,7 @@ Page({
         ...w,
         statusEmoji: STATUS_EMOJI[w.status] || '',
         statusKey: STATUS_KEY[w.status] || 'todo',
-        creatorEmoji: ROLE_EMOJI[w.creatorRole] || '👤',
+        typeLabel: TYPE_LABEL[w.type] || '',
         isFileImg: isFileImg(w.image)
       }));
       // 排序：待实现在上、已收到底；同状态内按创建时间倒序
