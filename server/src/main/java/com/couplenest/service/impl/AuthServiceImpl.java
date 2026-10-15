@@ -64,11 +64,17 @@ public class AuthServiceImpl implements AuthService {
         String token = authorizationHeader.substring(BEARER_PREFIX.length()).trim();
         try {
             Claims claims = jwtUtil.parse(token);
+            String jti = claims.getId();
+            if (jti == null || jti.isEmpty()) {
+                // 改造前签发的旧 token 没有 jti，无法拉黑；它们会在 7 天内自然过期
+                log.warn("token 缺少 jti，跳过黑名单写入");
+                return;
+            }
             Date expiration = claims.getExpiration();
             long ttlMillis = expiration.getTime() - System.currentTimeMillis();
             if (ttlMillis > 0) {
                 // 黑名单存活到 token 自然过期即可，之后无需再拦
-                redisTemplate.opsForValue().set(BLACKLIST_PREFIX + token, "1", Duration.ofMillis(ttlMillis));
+                redisTemplate.opsForValue().set(BLACKLIST_PREFIX + jti, "1", Duration.ofMillis(ttlMillis));
             }
         } catch (Exception e) {
             // token 已过期或非法，本身已无法通过校验，无需拉黑

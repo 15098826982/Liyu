@@ -1,0 +1,39 @@
+# ===========================================================================
+# 情侣小窝 —— systemd 单元文件（放到 /etc/systemd/system/couple-nest.service）
+# 生效：systemctl daemon-reload && systemctl enable --now couple-nest
+# ===========================================================================
+[Unit]
+Description=Couple Nest Spring Boot API
+After=network-online.target mysql.service redis-server.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=couplenest
+WorkingDirectory=/opt/couple-nest
+
+# 所有密钥/密码都从这个文件注入（chmod 600，属主 couplenest）。
+# 代码里的 application.yml 只写 ${PLACEHOLDER}，不含任何真实凭证。
+EnvironmentFile=/opt/couple-nest/couple-nest.env
+
+# 2 核 2G 单机同时跑 MySQL/Redis：堆固定 512M，堆外+元空间留够，避免 OOM Killer 杀进程
+ExecStart=/usr/bin/java -Xms256m -Xmx512m -XX:MaxMetaspaceSize=192m \
+          -jar /opt/couple-nest/couple-nest-server.jar
+# Spring Boot 被 SIGTERM 停止时返回 143，视为正常退出，不要触发重启告警
+SuccessExitStatus=143
+Restart=on-failure
+RestartSec=5
+# 优雅停机：给正在处理的请求 20s 收尾（配合 server.shutdown=graceful）
+TimeoutStopSec=25
+
+# 日志交给 journald，避免自建文件轮转：journalctl -u couple-nest -f
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=couple-nest
+
+# 基础加固
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

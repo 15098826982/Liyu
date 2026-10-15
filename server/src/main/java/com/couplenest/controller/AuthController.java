@@ -1,6 +1,8 @@
 package com.couplenest.controller;
 
 import com.couplenest.common.BusinessException;
+import com.couplenest.common.IpUtils;
+import com.couplenest.common.RateLimiter;
 import com.couplenest.common.Result;
 import com.couplenest.dto.LoginRequest;
 import com.couplenest.dto.LoginVO;
@@ -8,7 +10,6 @@ import com.couplenest.service.AuthService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,7 +38,7 @@ public class AuthController {
     private static final Duration IP_WINDOW = Duration.ofSeconds(60);
 
     private final AuthService authService;
-    private final StringRedisTemplate redisTemplate;
+    private final RateLimiter rateLimiter;
 
     @PostMapping("/login")
     public Result<LoginVO> login(@Valid @RequestBody LoginRequest request, HttpServletRequest httpRequest) {
@@ -46,8 +47,8 @@ public class AuthController {
         // 限流 1：同一 code 5 秒内只能请求 1 次（code 为空同样拦，防止空参刷接口）
         limit(RATE_CODE_PREFIX + (code == null ? "" : code), CODE_MAX_PER_WINDOW, CODE_WINDOW);
 
-        // 限流 2：同一 IP 1 分钟内最多 10 次
-        limit(RATE_IP_PREFIX + httpRequest.getRemoteAddr(), IP_MAX_PER_WINDOW, IP_WINDOW);
+        // 限流 2：同一 IP 1 分钟内最多 10 次（走 Nginx 反代时取真实客户端 IP）
+        limit(RATE_IP_PREFIX + IpUtils.getClientIp(httpRequest), IP_MAX_PER_WINDOW, IP_WINDOW);
 
         return Result.ok(authService.login(code));
     }
@@ -58,19 +59,9 @@ public class AuthController {
         return Result.ok(null);
     }
 
-    /**
-     * 计数限流：窗口内请求数超过 max 次则拒绝。
-     * 首次计数时设置 TTL，窗口结束后计数自然归零。
-     */
-    private void limit(String key, int max, Duration ttl) {
-        Long count = redisTemplate.opsForValue().increment(key);
-        if (count == null) {
-            return;
-        }
-        if (count == 1L) {
-            redisTemplate.expire(key, ttl);
-        }
-        if (count > max) {
+    /** 计数限流：窗口内超过 max 次则拒绝（计数与过期时间由 Redis 端 Lua 原子完成） */
+    private void limit(String key, int max, Duration window) {
+        if (!rateLimiter.tryAcquire(key, max, window)) {
             throw new BusinessException(BusinessException.CODE_TOO_MANY_REQUESTS, "操作太频繁，请稍后再试");
         }
     }

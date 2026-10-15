@@ -37,6 +37,8 @@ public class BusinessException extends RuntimeException {
     public static final int CODE_GOAL_NOT_FOUND = 1014;
     /** 操作太频繁（登录限流） */
     public static final int CODE_TOO_MANY_REQUESTS = 1015;
+    /** 该用户已加入某个家庭 */
+    public static final int CODE_ALREADY_IN_FAMILY = 1016;
     /** 订单不存在（沿用通用「资源不存在」码 1007） */
     public static final int CODE_ORDER_NOT_FOUND = 1007;
 

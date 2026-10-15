@@ -149,8 +149,17 @@ public class DishServiceImpl implements DishService {
         }
     }
 
+    /**
+     * 写操作后删除缓存（Cache-Aside）。
+     * 删除失败不能影响主流程：数据库已经写成功，若这里抛异常，用户看到的是 500 而数据其实已变更，
+     * 他会重试并撞上唯一索引。因此降级为「记日志 + 交给 TTL 兜底」，接受最长 TTL 的脏读窗口。
+     */
     private void evictCache(Long familyId) {
-        redisTemplate.delete(cacheKey(familyId));
+        try {
+            redisTemplate.delete(cacheKey(familyId));
+        } catch (Exception e) {
+            log.error("缓存删除失败，等待 TTL 过期兜底: key={}", cacheKey(familyId), e);
+        }
     }
 
     /** 判断 DuplicateKeyException 是否由指定唯一索引触发 */

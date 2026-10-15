@@ -1,117 +1,118 @@
-# 情侣小窝 ovo · 微信小程序（云开发）
+# 情侣小窝 ovo · 微信小程序 + Spring Boot 自建后端
 
-> 面向情侣双人场景、以「家庭」为核心的互动小程序：把两个人的点菜、心愿礼物、心情、打卡、经期记录整合在一个小窝里，双方数据实时共享。
-> 后端基于**微信云开发**（云函数 Node.js + 云数据库 + 云存储），免备案、免 HTTPS、免运维。已独立完成设计、开发、提审并通过微信审核上架。
+![CI](https://github.com/15098826982/Liyu/actions/workflows/ci.yml/badge.svg)
 
----
+> 面向情侣双人场景、以「家庭」为核心的生活记录小程序：点菜 / 今日菜单 / 随机抽菜、心愿礼物、心情、打卡目标、经期记录、备忘录。
+> 双方在同一家庭内共享数据。已真实部署在阿里云轻量服务器（Nginx + systemd 单机），小程序端正在等待域名备案以切换到自建后端。
 
-## 功能一览
+## 项目结构（两套后端，别搞混）
 
-| 模块 | 说明 |
-| --- | --- |
-| 家庭体系 | 创建小窝 / 邀请码加入、两人绑定、身份（老公 / 老婆）、退出家庭 |
-| 点菜 | 家庭菜单、点菜、今日菜单、随机抽菜（选择困难救星）、历史记录、标记完成 |
-| 心愿礼物清单 | 记录想要的礼物、对方可见，附购买链接 / 口令，避免"不知道送什么" |
-| 心情记录 | 记录每日心情，双方可见 |
-| 打卡 | 设定共同目标、每日打卡、连续打卡统计 |
-| 经期记录 | 记录经期、备注，仅家庭内可见 |
-| 相册 | 头像 / 背景 / 照片上传，自动压缩、内容安全校验、上传限流 |
-
----
+| 目录 | 说明 | 状态 |
+| --- | --- | --- |
+| `miniprogram/` | 小程序前端（原生 WXML/WXSS/JS），HTTP 调用自建后端 | 当前主用 |
+| `server/` | Spring Boot 3.3 自建后端（本项目的主体） | 当前主用 |
+| `cloudfunctions/` | 早期微信云开发版后端（云函数 + 云数据库） | 已迁移，仅保留内容安全校验与 `getTempFileURL` |
+| `deploy/` | Nginx / systemd / 环境变量模板与部署手册 | — |
 
 ## 技术栈
 
-- 微信小程序原生（WXML / WXSS / JS）、Vant Weapp 组件库
-- 微信云开发：云函数（Node.js）、云数据库（文档型）、云存储
-- 云存储数据万象 **imageMogr2**：按场景动态生成 webp 缩略图
-- 微信 **内容安全 API**（`imgSecCheck` / `msgSecCheck`）：图片 / 文字违规检测
-- `wx.cloud` SDK、Git Credential Manager
+- 后端：Spring Boot 3.3.5、MyBatis-Plus 3.5.9、MySQL 8、Redis、JJWT 0.12（HS256）、阿里云 OSS SDK
+- 前端：微信小程序原生 + Vant Weapp
+- 部署：阿里云轻量（2C2G）、Nginx 反向代理 + HTTPS、systemd 守护、环境变量注入密钥
 
----
+## 架构与关键链路
 
-## 项目结构
+### 部署架构
 
-```
-Liyu/
-├── cloudfunctions/                 # 云函数（按模块聚合，event.action 分发）
-│   ├── user/          登录 / 资料 / 角色 / 同步伴侣信息
-│   ├── family/        创建 / 加入 / 详情 / 退出（幂等）
-│   ├── dish/          菜品 增删改查
-│   ├── order/         点菜 / 今日 / 历史 / 随机 / 完成
-│   ├── checkin/       目标打卡
-│   ├── memo/          备忘 / 公共记录
-│   ├── mood/          心情记录
-│   ├── period/        经期记录
-│   ├── wish/          心愿礼物清单
-│   ├── upload/        图片上传限流与记录
-│   ├── imgSecCheck/   图片内容安全
-│   ├── msgSecCheck/   文字内容安全
-│   └── dedupeOrders/  历史订单去重
-├── miniprogram/
-│   ├── components/    nav-bar / page-bg / sidebar / top-bar
-│   ├── pages/         home / meal / history / family / role / login / random
-│   │                  checkin / memo / mood / period / wishlist / settings / agreement ...
-│   ├── utils/         request / auth / cache(SWR) / img(缩略图) / upload / security ...
-│   ├── images/        默认图、心情情绪图（webp）
-│   └── app.js / app.json / app.wxss / sitemap.json
-├── moodimage/                     # 情绪表情素材
-├── project.config.json
-├── LICENSE
-└── README.md
+```mermaid
+flowchart LR
+    MP["微信小程序 miniprogram"] -->|HTTPS| NG["Nginx 443<br/>TLS 终止 + X-Forwarded-For 覆盖"]
+    NG -->|"proxy_pass 127.0.0.1:8080"| APP["Spring Boot 8080<br/>systemd 守护 / 优雅停机"]
+    APP --> DB[("MySQL 8")]
+    APP --> RD[("Redis<br/>列表缓存 · 登录限流 · 会话黑名单")]
+    APP -->|"图片上传"| OSS[("阿里云 OSS")]
+    MP -.->|"内容安全校验 / 临时链接"| CLOUD["微信云开发（历史遗留）"]
 ```
 
-> 说明：云函数内通用 `authGuard.js`（登录与家庭归属校验）、部分模块含 `rateLimit.js`（限流）。
+### 点菜链路（并发防重的关键路径）
 
----
+```mermaid
+sequenceDiagram
+    autonumber
+    participant MP as 小程序
+    participant JW as JwtInterceptor
+    participant OS as OrderService
+    participant DB as MySQL
+    participant RD as Redis
 
-## 快速开始（跑起来）
+    MP->>JW: POST /order/add {dishId} + Bearer token
+    JW->>JW: 验签（失败即 401，不查 Redis）+ 按 jti 查黑名单
+    JW->>OS: UserContext 写入 userId
+    OS->>DB: 校验家庭状态 + 菜品是否属于本家庭
+    OS->>DB: INSERT（唯一索引 family_id + order_date + dish_id）
+    alt 并发重复提交
+        DB-->>OS: DuplicateKeyException（1062 / uniq_family_date_dish）
+        OS-->>MP: code=1008 今天这道菜已经点过啦
+    else 正常下单
+        OS->>RD: DEL order:family:{familyId}（Cache-Aside）
+        OS-->>MP: code=0 + 订单快照
+    end
+```
 
-### 1. 替换为你自己的 AppID 和云环境
-仓库里目前是**作者本人的** AppID / 环境 ID（客户端标识，非密钥），克隆后必须替换：
+## 分层
 
-| 文件 | 字段 | 改成 |
+```
+controller/   参数校验（@Valid）+ 统一返回 Result{code,msg,data}
+service/(impl)  业务规则：归属校验、防重、缓存读写
+mapper/       MyBatis-Plus BaseMapper
+entity/ dto/  实体与出入参
+common/       JwtUtil / UserContext(ThreadLocal) / Result / BusinessException / 全局异常 / IpUtils / RateLimiter
+interceptor/  JwtInterceptor（鉴权）、AccessLogInterceptor（访问日志 + 慢请求）
+config/ task/  WebMvcConfig、微信与 OSS 配置、error_logs 定时清理
+```
+
+## 本地启动
+
+1. 初始化数据库：`mysql -u root -p < server/src/main/resources/db/schema.sql`
+2. 配置：`server/src/main/resources/application.yml` 只含占位符，本地覆盖写在 `application-local.yml`（已被 .gitignore 忽略）
+3. 启动（必须激活 local profile，否则环境变量占位符缺失会导致启动失败）：
+
+```bash
+cd server
+mvn spring-boot:run -Dspring-boot.run.profiles=local
+```
+
+### 配置项（全部走环境变量，生产由 systemd EnvironmentFile 注入）
+
+| 变量 | 说明 | 缺失时行为 |
 | --- | --- | --- |
-| `project.config.json` | `appid` | 你自己的小程序 AppID（公众平台 → 设置 → 开发设置） |
-| `miniprogram/app.js` | `wx.cloud.init({ env })` | 你自己的云开发环境 ID |
+| `JWT_SECRET` | JWT 签名密钥，**至少 32 字节** | 启动失败（fail-fast，防止弱密钥上线） |
+| `MYSQL_PASSWORD` | 数据库密码 | 启动失败 |
+| `WECHAT_APPID` / `WECHAT_SECRET` | 小程序凭证 | 可空，但 mock=false 时登录会失败 |
+| `WECHAT_MOCK` | true=本地不真调微信接口 | 默认 false |
+| `OSS_*` | 阿里云 OSS AK/SK/Bucket | 可空，仅图片上传功能不可用 |
 
-### 2. 开通云开发
-微信开发者工具打开项目 → 工具栏「云开发」→ 开通并创建环境，记下环境 ID 回填到 `app.js`。
+## 部署
 
-### 3. 构建 npm（Vant 组件）
-项目前端依赖 Vant Weapp：开发者工具菜单「工具 → 构建 npm」。（`miniprogram_npm` 构建产物不入库。）
-
-### 4. 部署全部云函数
-`cloudfunctions/` 下**每一个**文件夹右键 → 「上传并部署：云端安装依赖」。改动云函数后需重新部署，云函数不随代码版本自动上传。
-
-### 5. 创建数据库集合与索引
-按各云函数中 `db.collection('xxx')` 用到的名字创建集合，主要包括：
-`users`、`families`、`dishes`、`orders`、`checkins`、`wishes`、`periods`、`error_logs`、`upload_logs` 等。
-
-关键索引（控制台 → 集合 → 索引管理）：
-
-| 集合 | 索引字段 | 唯一 |
-| --- | --- | --- |
-| `users` | `openid` | 是 |
-| `families` | `familyCode` | 是 |
-| `dishes` | `familyId + name` | 是 |
-| `orders` | `familyId + orderDate + dishId` | 是 |
-
-### 6. 配置隐私协议
-公众平台 → 设置 → 用户隐私保护指引，声明 openid / 昵称 / 头像 / 相册 的用途，否则提审可能被打回。
-
-### 7. 联调与提审
-真机走一遍「创建 / 加入家庭 → 点菜 → 心愿 / 打卡 / 心情」完整流程 → 开发者工具「上传」填版本号 → 公众平台版本管理 → 真机回归该开发版本 → 提交审核 → 发布。
-
----
+见 [deploy/DEPLOY.md](deploy/DEPLOY.md)（含 Nginx 反向代理、systemd 单元、密钥注入、HTTPS、自测清单）。
 
 ## 工程设计要点
 
-- **并发安全与接口幂等**：点菜采用「归属校验 + 当日查重」，并对 `orders` 的 `familyId + orderDate + dishId` 建**联合唯一索引**兜底，捕获 Duplicate Key（`errCode -50202`）返回「今日已点过」友好提示——查重负责体验、索引负责正确性；家庭 `create / join` 接口幂等，重复调用或超时重进返回现有家庭，避免重复创建与前端状态错乱。
-- **数据一致性与可观测性**：订单以 `dishId` 引用菜品而非冗余菜名，改名后云函数用 `_.in()` **批量 join**（非 N+1）实时查询，避免更新扩散；量级增长后可演进为「快照 + 对账」。结构化 `error_logs`（模块 / 动作 / 堆栈 / 上下文）支持按模块过滤，曾据此定位修复云函数 **UTC 时区跨天**问题。
-- **首屏与图片性能**：真机首次进入约 2~3s，通过小程序 Network 面板（callFunction ≈ 2s）对比云函数日志（`Duration` 仅一百多 ms），定位主因为**云函数冷启动**叠加无缓存、图片偏大；随后做 **SWR 缓存优先 + 后台静默更新**、imageMogr2 按场景出 webp 缩略图 + 懒加载，整页图片体积显著下降；预热 / 预置并发需持续计费故不采用，首次冷启动以 loading 兜底。
-- **上传治理**：图片上传前做限流（每日上限）、端上压缩，再经内容安全 API 检测，防止违规内容与账单被刷爆。
+- **鉴权**：登录用微信 `code2session` 换 openid，签发 HS256 的 JWT（7 天）；退出登录把 token 写进 Redis 黑名单，TTL 取 token 剩余有效期，拦截器验签后再查黑名单。当前用户通过 ThreadLocal 传递，请求结束清理，前端不再传 userId，避免越权伪造。
+- **登录限流**：两层固定窗口（同一 code 5 秒 1 次、同一真实 IP 1 分钟 10 次）。计数与过期时间放在一段 Lua 脚本里由 Redis 原子执行，避免 `INCR` 与 `EXPIRE` 两次往返之间的 key 永不过期；Redis 不可用时放行并告警（限流是保护措施，不应让登录整站 500）。真实 IP 通过 `X-Forwarded-For` / `X-Real-IP` 解析（Nginx 侧用 `$remote_addr` 覆盖该头以防伪造）。
+- **数据正确性**：点菜、打卡、加菜、家庭角色都用**数据库唯一索引**兜底，捕获 `DuplicateKeyException` 并按索引名区分业务分支——查重负责体验，索引负责正确性，不做「先查后插」的竞态写法。加入家庭前校验用户归属，避免跨家庭越权与旧家庭脏状态。
+- **缓存**：菜品列表、订单列表用 Cache-Aside：key 按 `dish:family:{familyId}` / `order:family:{familyId}` 分区，TTL 30 分钟，写操作后删除缓存、下次读重建；反序列化失败降级查库；删除失败只记日志交由 TTL 兜底，不让已成功的写操作变成 500。
+- **工程化**：24 个 JUnit5 单元测试（JWT 签发与密钥强度、真实 IP 解析优先级、限流的放行/超限/Redis 故障降级、家庭归属规则、下单并发防重），全部为不依赖外部服务的纯逻辑测试；GitHub Actions 在每次 push 时自动编译并执行，构建失败即红灯。
+- **可观测性**：统一响应信封 + `@RestControllerAdvice` 全局异常分层（业务异常/唯一键冲突/参数校验/兜底）。未预料异常落 `error_logs`（模块、动作、堆栈、userId/familyId 上下文），每天凌晨 3 点清理 30 天前记录；访问日志记录真实 IP、userId、耗时，超过 500ms 用 WARN 输出便于排查慢请求。
 
----
+## 已知限制 / 下一步
+
+- 自动化测试刚起步（当前覆盖 JWT、真实 IP 解析、限流分支、家庭归属规则），Service 层与缓存层还需补
+- 列表接口未分页（两人场景无实际压力，接口契约保留扩展空间）
+- 缓存只覆盖菜品与订单两个列表，其余模块直查数据库
+- 邀请码为 6 位数字且无有效期，`/family/join` 尚未接入限流
+- `error_logs` 只有写入与定期清理，没有查询入口与告警
+- 小程序端地址尚未切换到自建后端 HTTPS 域名（ICP 备案中），当前线上仍为云开发版
 
 ## License
 

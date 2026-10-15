@@ -8,7 +8,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -60,6 +63,30 @@ public class GlobalExceptionHandler {
                 : e.getBindingResult().getFieldErrors().get(0).getDefaultMessage();
         log.info("参数校验失败: {}", msg);
         return Result.error(400, msg);
+    }
+
+    /**
+     * 请求体不是合法 JSON（字段类型对不上、JSON 语法错误等）：客户端错误，返回 400 且不落 error_logs。
+     * 不单独处理的话它会掉进下面的兜底分支，被当成系统异常记录并告警，污染错误日志。
+     */
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public Result<Void> handleUnreadableBody(HttpMessageNotReadableException e) {
+        log.info("请求体解析失败: {}", e.getMessage());
+        return Result.error(400, "请求参数格式不正确");
+    }
+
+    /** 缺少必填的请求参数（如上传接口少了 file） */
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public Result<Void> handleMissingParam(MissingServletRequestParameterException e) {
+        log.info("缺少请求参数: {}", e.getParameterName());
+        return Result.error(400, "缺少参数：" + e.getParameterName());
+    }
+
+    /** 请求方法不支持（如用 GET 调只接受 POST 的接口） */
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public Result<Void> handleMethodNotSupported(HttpRequestMethodNotSupportedException e) {
+        log.info("请求方法不支持: {}", e.getMessage());
+        return Result.error(405, "请求方法不支持");
     }
 
     /** 兜底：未预料的异常 → 落 error_logs + 返回 500，堆栈只进日志和库，不给前端 */

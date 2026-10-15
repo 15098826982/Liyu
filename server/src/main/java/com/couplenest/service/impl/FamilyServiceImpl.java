@@ -36,8 +36,12 @@ public class FamilyServiceImpl implements FamilyService {
     /** 角色常量 */
     private static final int ROLE_WIFE = 1;
     private static final int ROLE_HUSBAND = 2;
+    /** 家庭状态：刚创建，等另一半加入 */
+    private static final int STATUS_PENDING = 0;
     /** 家庭状态：两人已齐 */
     private static final int STATUS_FULL = 1;
+    /** 家庭满员人数 */
+    private static final int FAMILY_MEMBER_COUNT = 2;
     /** 邀请码最大重试次数 */
     private static final int MAX_RETRY = 5;
 
@@ -53,6 +57,12 @@ public class FamilyServiceImpl implements FamilyService {
     @Override
     @Transactional
     public FamilyVO create(Long userId, String name) {
+        User current = userMapper.selectById(userId);
+        if (current != null && current.getFamilyId() != null) {
+            throw new BusinessException(BusinessException.CODE_ALREADY_IN_FAMILY,
+                    "你已经有小窝了，请先退出再创建新的");
+        }
+
         Family family = null;
         for (int i = 0; i < MAX_RETRY; i++) {
             String inviteCode = randomInviteCode();
@@ -93,6 +103,17 @@ public class FamilyServiceImpl implements FamilyService {
                 Wrappers.<Family>lambdaQuery().eq(Family::getInviteCode, inviteCode));
         if (family == null) {
             throw new BusinessException(BusinessException.CODE_INVALID_INVITE_CODE, "邀请码无效");
+        }
+
+        User current = userMapper.selectById(userId);
+        if (current != null && current.getFamilyId() != null) {
+            // 已在本家庭：直接返回，保持 join 的幂等（超时重试 / 重复点击不报错、不重复写库）
+            if (current.getFamilyId().equals(family.getId())) {
+                return toVO(family);
+            }
+            // 已在别的家庭：拒绝。否则会把旧家庭丢掉，且旧家庭状态仍是「已齐」，形成脏数据
+            throw new BusinessException(BusinessException.CODE_ALREADY_IN_FAMILY,
+                    "你已经有小窝了，请先退出再加入新的");
         }
 
         // 加入者成为老婆；若该角色位已被占用，(family_id, role) 唯一索引会冲突
@@ -177,16 +198,28 @@ public class FamilyServiceImpl implements FamilyService {
     }
 
     @Override
+    @Transactional
     public void leave(Long userId) {
         User user = userMapper.selectById(userId);
         if (user == null || user.getFamilyId() == null) {
             throw new BusinessException(BusinessException.CODE_NOT_IN_FAMILY, "你还没有加入小窝");
         }
+        Long familyId = user.getFamilyId();
+
         // family_id / role 都置为 NULL，MyBatis-Plus 的 updateById 会跳过 null，必须用 UpdateWrapper
         userMapper.update(null, Wrappers.<User>lambdaUpdate()
                 .eq(User::getId, userId)
                 .set(User::getFamilyId, null)
                 .set(User::getRole, null));
+
+        // 退出后家庭人数不再满员，把状态退回「等另一半」，否则会出现「状态已齐但只剩一个人」的脏数据
+        Long remaining = userMapper.selectCount(Wrappers.<User>lambdaQuery()
+                .eq(User::getFamilyId, familyId));
+        Family familyUpdate = new Family();
+        familyUpdate.setId(familyId);
+        familyUpdate.setStatus(remaining != null && remaining >= FAMILY_MEMBER_COUNT
+                ? STATUS_FULL : STATUS_PENDING);
+        familyMapper.updateById(familyUpdate);
     }
 
     /** 组装家庭 VO，categories 解析失败/为空时返回空数组 */

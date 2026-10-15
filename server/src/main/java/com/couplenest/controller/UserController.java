@@ -30,7 +30,7 @@ public class UserController {
     }
 
     @PostMapping("/updateProfile")
-    public Result<UserVO> updateProfile(@RequestBody UserUpdateProfileRequest request) {
+    public Result<UserVO> updateProfile(@Valid @RequestBody UserUpdateProfileRequest request) {
         return Result.ok(toVO(userService.updateProfile(request)));
     }
 

@@ -1,0 +1,32 @@
+# 持续集成：每次 push / PR 自动编译并跑单元测试
+# 说明：这些测试都是纯逻辑单测（Mockito，不连 MySQL/Redis），
+#       因此 CI 里不需要准备 application.yml，也不需要任何服务容器。
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 安装 JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+          cache-dependency-path: server/pom.xml
+
+      - name: 编译 + 单元测试
+        working-directory: server
+        run: mvn -B test
+
+      - name: 打包（验证可产出可部署的 jar）
+        working-directory: server
+        run: mvn -B -DskipTests package

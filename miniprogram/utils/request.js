@@ -5,8 +5,26 @@
 //   2) 处理统一信封 { code, msg, data }
 //   3) 把后端返回的数据翻译成页面期望的形状（_id / category / image / familyCode / role 字符串等）
 
-// TODO: 改成你自己的后端地址
-const BASE_URL = 'http://localhost:8080';
+// 后端地址按小程序运行环境切换，避免每次发版前手改代码（也避免把测试地址带上线）
+// develop = 开发者工具 / 真机调试，trial = 体验版，release = 正式版
+// 注意：真机要求 HTTPS + ICP 备案域名，并在公众平台登记 request 合法域名；
+//      开发者工具的「不校验合法域名」只对工具本身生效，真机一定失败。
+const API_HOSTS = {
+  develop: 'http://localhost:8080',
+  trial: 'https://api.example.com',    // TODO 换成你的备案域名（体验版）
+  release: 'https://api.example.com'   // TODO 换成你的备案域名（正式版）
+};
+
+function resolveBaseUrl() {
+  try {
+    const envVersion = wx.getAccountInfoSync().miniProgram.envVersion;
+    return API_HOSTS[envVersion] || API_HOSTS.release;
+  } catch (e) {
+    return API_HOSTS.release;
+  }
+}
+
+const BASE_URL = resolveBaseUrl();
 const TOKEN_KEY = 'token';
 const USER_KEY = 'user_info';
 const LOGIN_PAGE = '/pages/login/login';

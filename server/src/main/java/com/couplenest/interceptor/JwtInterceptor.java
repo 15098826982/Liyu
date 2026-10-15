@@ -8,6 +8,7 @@ import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -17,9 +18,10 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import java.nio.charset.StandardCharsets;
 
 /**
- * JWT 拦截器：校验 Authorization: Bearer <token>，解析出的 userId 放入 UserContext。
+ * JWT 拦截器：校验 Authorization: Bearer &lt;token&gt;，解析出的 userId 放入 UserContext。
  * 校验签名后额外查一次 Redis 黑名单，退出登录的 token 会被拒绝。
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class JwtInterceptor implements HandlerInterceptor {
@@ -44,24 +46,42 @@ public class JwtInterceptor implements HandlerInterceptor {
         }
 
         String token = header.substring(BEARER_PREFIX.length()).trim();
+
+        // 第一步：验签 + 过期校验。失败一律 401，这里不依赖 Redis。
+        Claims claims;
         try {
-            Claims claims = jwtUtil.parse(token);
-            // 签名校验通过后，再查一次黑名单（退出登录的 token）
-            if (Boolean.TRUE.equals(redisTemplate.hasKey(BLACKLIST_PREFIX + token))) {
-                writeUnauthorized(response);
-                return false;
-            }
-            Object userId = claims.get("userId");
-            if (userId == null) {
-                writeUnauthorized(response);
-                return false;
-            }
-            Long uid = Long.valueOf(userId.toString());
-            UserContext.setUserId(uid);
-            request.setAttribute(ATTR_USER_ID, uid);
-            return true;
+            claims = jwtUtil.parse(token);
         } catch (Exception e) {
             writeUnauthorized(response);
+            return false;
+        }
+
+        // 第二步：查黑名单（退出登录的会话）。黑名单键是 token 里的 jti，不是整串 token。
+        // Redis 不可用时选择放行并告警：token 本身已通过验签，为一次缓存抖动把全站用户登出，
+        // 可用性代价大于「已登出 token 短暂仍可用」的风险。这是刻意的取舍，不是漏写。
+        String jti = claims.getId();
+        if (jti != null && !jti.isEmpty() && isBlacklisted(jti)) {
+            writeUnauthorized(response);
+            return false;
+        }
+
+        Object userId = claims.get("userId");
+        if (userId == null) {
+            writeUnauthorized(response);
+            return false;
+        }
+        Long uid = Long.valueOf(userId.toString());
+        UserContext.setUserId(uid);
+        request.setAttribute(ATTR_USER_ID, uid);
+        return true;
+    }
+
+    /** 查黑名单；Redis 异常时降级为「未拉黑」 */
+    private boolean isBlacklisted(String jti) {
+        try {
+            return Boolean.TRUE.equals(redisTemplate.hasKey(BLACKLIST_PREFIX + jti));
+        } catch (Exception e) {
+            log.error("黑名单校验失败（Redis 不可用），本次放行: {}", e.getMessage());
             return false;
         }
     }

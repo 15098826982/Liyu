@@ -42,8 +42,16 @@ public class OssService {
 
     @PostConstruct
     public void init() {
+        String accessKeyId = ossProperties.getAccessKeyId();
+        String accessKeySecret = ossProperties.getAccessKeySecret();
+        if (accessKeyId == null || accessKeyId.isBlank()
+                || accessKeySecret == null || accessKeySecret.isBlank()) {
+            // 图片上传是可选能力：缺凭证时只让上传接口报错，不拖垮整个应用启动（本地开发也无需云账号）
+            log.warn("未配置 OSS 凭证（OSS_ACCESS_KEY_ID / OSS_ACCESS_KEY_SECRET），图片上传功能不可用");
+            return;
+        }
         ossClient = new OSSClientBuilder()
-                .build(ossProperties.getEndpoint(), ossProperties.getAccessKeyId(), ossProperties.getAccessKeySecret());
+                .build(ossProperties.getEndpoint(), accessKeyId, accessKeySecret);
         log.info("OSSClient 初始化完成: endpoint={}, bucket={}", ossProperties.getEndpoint(), ossProperties.getBucketName());
     }
 
@@ -63,6 +71,9 @@ public class OssService {
      * @return 可直接访问的公网 url
      */
     public String uploadFile(MultipartFile file, String type) {
+        if (ossClient == null) {
+            throw new BusinessException(500, "图片上传未配置，请联系管理员");
+        }
         if (file == null || file.isEmpty()) {
             throw new BusinessException(400, "请选择要上传的图片");
         }
