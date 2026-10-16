@@ -1,18 +1,18 @@
 #!/usr/bin/env bash
 # ===========================================================================
-# 情侣小窝 —— 单机压测脚本（在**服务器上**跑，不要在本地打公网）
+# 情侣小窝 —— 单机压测脚本（在**服务器上**跑，压 127.0.0.1:8080 本机应用）
 #
-# 用法：
-#   ./run-bench.sh                        # 默认打 http://127.0.0.1:8080
-#   ./run-bench.sh http://127.0.0.1:8080 <token>
+# 前置：
+#   1. sudo apt install -y wrk
+#   2. 已导入压测数据：mysql -uroot -p couple_nest < /root/seed.sql
+#   3. 服务处于 WECHAT_MOCK=true（/root/couple-nest.env）
 #
-# 依赖：wrk（apt install wrk）
-# 说明：token 可通过 mock 模式自助获取（见下方说明），无需真实微信登录。
+# 用法：bash /root/run-bench.sh
 # ===========================================================================
 set -u
 
 BASE="${1:-http://127.0.0.1:8080}"
-TOKEN="${2:-}"
+CODE="bench1"
 
 if ! command -v wrk >/dev/null 2>&1; then
   echo "缺少 wrk，请先安装：sudo apt install -y wrk"
@@ -20,61 +20,64 @@ if ! command -v wrk >/dev/null 2>&1; then
 fi
 
 # ---------------------------------------------------------------------------
-# 场景 1：/ping —— 纯 Web 层上限（不查库、不查缓存）
+# 自动 mock 登录拿 token（code=bench1 -> openid=mock_openid_bench1 -> bench 家庭）
 # ---------------------------------------------------------------------------
-echo "=================================================================="
-echo "场景 1：/ping（纯 Web 层，不查库/不查缓存）"
-echo "=================================================================="
-wrk -t2 -c20 -d20s --latency "$BASE/ping"
-
-# 没有 token 就到此为止，并告诉对方怎么拿
+LOGIN=$(curl -s -X POST "$BASE/auth/login" -H 'Content-Type: application/json' -d "{\"code\":\"$CODE\"}")
+TOKEN=$(echo "$LOGIN" | sed -n 's/.*"token":"\([^"]*\)".*/\1/p')
 if [ -z "$TOKEN" ]; then
-  echo
-  echo ">> 未提供 token，跳过业务接口场景。"
-  echo ">> 拿 token 的方式（服务器需处于 WECHAT_MOCK=true 的联调期）："
-  echo "   curl -s -X POST $BASE/auth/login -H 'Content-Type: application/json' -d '{\"code\":\"bench\"}'"
-  echo "   从返回的 data.token 里取值，再执行：./run-bench.sh $BASE <token>"
-  exit 0
+  echo ">> 拿 token 失败，登录返回如下："
+  echo "$LOGIN"
+  echo ">> 请检查：服务是否启动、couple-nest.env 里 WECHAT_MOCK=true、是否已导入 seed.sql"
+  exit 1
 fi
-
+echo "token 已获取（前 24 位）：${TOKEN:0:24}..."
 AUTH="Authorization: Bearer $TOKEN"
 
 # ---------------------------------------------------------------------------
-# 场景 2：/dish/list 缓存命中路径（热路径，走 Redis）
+# 场景 1：/ping —— 纯 Web 层上限（不查库、不查缓存、不验 token）
 # ---------------------------------------------------------------------------
+echo "=================================================================="
+echo "场景 1：/ping（纯 Web 层，不查库/不查缓存/不验 token）"
+echo "=================================================================="
+wrk -t2 -c20 -d20s --latency "$BASE/ping"
+
+# ---------------------------------------------------------------------------
+# 场景 2：/dish/list —— 缓存命中（先请求一次预热，让 Redis 里有数据）
+# 每请求成本：JWT 验签 + Redis 查黑名单 + Redis 读菜品列表
+# ---------------------------------------------------------------------------
+curl -s -H "$AUTH" "$BASE/dish/list" -o /dev/null
 echo
 echo "=================================================================="
-echo "场景 2：/dish/list 缓存命中（热路径，读 Redis）"
+echo "场景 2：/dish/list（缓存命中，读 Redis；50 道菜）"
 echo "=================================================================="
 wrk -t2 -c20 -d20s --latency -H "$AUTH" "$BASE/dish/list"
 
 # ---------------------------------------------------------------------------
-# 场景 3：清掉缓存后再压 —— 每次都穿透到 MySQL
-# 场景 2 与场景 3 的差值，就是你「缓存到底带来多少收益」的实测数字
+# 场景 3：/memo/list —— 无缓存，每次都查 MySQL（50 条备忘 + 一次 user 批量查）
+# 场景 2 与场景 3 的 QPS 差值，就是「缓存带来多少收益」的实测数字
+# （注意：不能用"删一次 dish 缓存再压"——第一个请求就会重建缓存，后面全是假的）
 # ---------------------------------------------------------------------------
 echo
 echo "=================================================================="
-echo "场景 3：清缓存后打同一接口（每次都穿透到 MySQL）"
+echo "场景 3：/memo/list（无缓存，每次查 MySQL；50 条备忘）"
 echo "=================================================================="
-redis-cli -n "${REDIS_DATABASE:-5}" --scan --pattern "dish:family:*" | xargs -r redis-cli -n "${REDIS_DATABASE:-5}" del
-wrk -t2 -c20 -d20s --latency -H "$AUTH" "$BASE/dish/list"
+wrk -t2 -c20 -d20s --latency -H "$AUTH" "$BASE/memo/list"
 
 # ---------------------------------------------------------------------------
-# 场景 4：逐步加压找拐点（QPS 不再涨、P99 开始飙升的那个并发数）
+# 场景 4：逐步加压找拐点（QPS 不再涨、P99 飙升、Non-2xx/ Socket errors 出现）
 # ---------------------------------------------------------------------------
 echo
 echo "=================================================================="
-echo "场景 4：逐步加压找拐点"
+echo "场景 4：/dish/list 逐步加压找拐点"
 echo "=================================================================="
 for C in 10 25 50 100 200; do
-  echo "--- 并发 连接数 = $C ---"
+  echo "--- 并发连接数 = $C ---"
   wrk -t2 -c"$C" -d15s --latency -H "$AUTH" "$BASE/dish/list"
   echo
 done
 
 echo "=================================================================="
-echo "压测结束。请把每个场景的 Requests/sec 与 Latency P99 记到待办清单里。"
-echo "看到错误率上升时，在另一个终端执行："
-echo "  mysql -uroot -p -e 'SHOW PROCESSLIST'      # 连接是否打满"
-echo "  mysql -uroot -p couple_nest -e 'EXPLAIN SELECT * FROM dish WHERE family_id=7 ORDER BY id DESC'"
+echo "压测结束。记录每个场景的 Requests/sec 与 Latency 99% 行。"
+echo "若出现 Socket errors / Non-2xx，说明已超过该并发下的承载拐点。"
+echo "压测完清理数据：mysql -uroot -p couple_nest < /root/cleanup.sql"
 echo "=================================================================="
